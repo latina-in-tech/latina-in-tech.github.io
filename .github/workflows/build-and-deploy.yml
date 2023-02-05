@@ -1,4 +1,4 @@
-name: Github Pages deploy
+name: CI/CD
 
 on:
   push:
