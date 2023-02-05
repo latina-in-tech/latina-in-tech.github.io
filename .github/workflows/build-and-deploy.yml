@@ -8,15 +8,20 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        node-version: [18.13.0]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Use Nodejs
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: 18.13.0
-          cache: npm
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
 
       - name: Build
         run: |
