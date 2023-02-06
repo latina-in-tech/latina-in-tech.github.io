@@ -4,27 +4,24 @@ import { useEffect } from 'react';
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 
 import Thumbnail from '../../components/Thumbnail';
-import { getPost, getAllPosts } from '../../utils/mdxUtils';
+import { getEvent, getAllEvents } from '../../utils/mdxUtils';
 import Prerequisites from '../../components/Prerequisites';
 import { ParsedUrlQuery } from 'querystring';
 import Stacks from '../../components/Stacks';
-import { IPost } from '@/model/post';
+import { IEvent } from '@/model/event';
 import { useMdxComponentsContext } from '@/context/mdxContext';
 
-// props type
 type Props = {
   source: MDXRemoteSerializeResult;
-  frontMatter: Omit<IPost, 'slug'>;
+  frontMatter: Omit<IEvent, 'slug'>;
 };
 
-// components to render
 const components = {
   Prerequisites,
   Stacks,
 };
 
-const PostPage: React.FC<Props> = ({ source, frontMatter }: Props) => {
-  // get setters
+const EventPage: React.FC<Props> = ({ source, frontMatter }: Props) => {
   const { setPrerequisites, setStacks } = useMdxComponentsContext();
 
   useEffect(() => {
@@ -56,7 +53,7 @@ const PostPage: React.FC<Props> = ({ source, frontMatter }: Props) => {
   );
 };
 
-export default PostPage;
+export default EventPage;
 
 interface Iparams extends ParsedUrlQuery {
   slug: string;
@@ -65,7 +62,7 @@ interface Iparams extends ParsedUrlQuery {
 export const getStaticProps: GetStaticProps = async (context) => {
   const { slug } = context.params as Iparams;
   // get the slug
-  const { content, data } = getPost(slug);
+  const { content, data } = getEvent(slug);
   // serialize the data on the server side
   const mdxSource = await serialize(content, { scope: data });
   return {
@@ -77,13 +74,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
 };
 
 export const getStaticPaths: GetStaticPaths = () => {
-  //only get the slug from posts
-  const posts = getAllPosts(['slug']);
+  const events = getAllEvents(['slug']);
 
-  // map through to return post paths
-  const paths = posts.map((post) => ({
+  const paths = events.map((event) => ({
     params: {
-      slug: post.slug,
+      slug: event.slug,
     },
   }));
 

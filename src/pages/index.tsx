@@ -1,16 +1,15 @@
 import Thumbnail from '@/components/Thumbnail';
-import { IPost } from '@/model/post';
-import { getAllPosts } from '@/utils/mdxUtils';
+import { IEvent } from '@/model/event';
+import { getAllEvents } from '@/utils/mdxUtils';
 import { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 
-// props type
 type Props = {
-  posts: [IPost];
+  events: [IEvent];
 };
 
-const Home: NextPage<Props> = ({ posts }: Props) => {
+const Home: NextPage<Props> = ({ events: events }: Props) => {
   return (
     <>
       <Head>
@@ -33,21 +32,21 @@ const Home: NextPage<Props> = ({ posts }: Props) => {
           <h1 className='text-4xl font-bold mb-4'>Technical articles</h1>
 
           <div className='space-y-12'>
-            {posts.map((post) => (
-              <div key={post.slug}>
+            {events.map((event) => (
+              <div key={event.slug}>
                 <div className='mb-4'>
                   <Thumbnail
-                    slug={post.slug}
-                    title={post.title}
-                    src={post.thumbnail}
+                    slug={event.slug}
+                    title={event.title}
+                    src={event.thumbnail}
                   />
                 </div>
 
                 <h2 className='text-2xl font-bold mb-4'>
-                  <Link href={`/posts/${post.slug}`}>{post.title}</Link>
+                  <Link href={`/events/${event.slug}`}>{event.title}</Link>
                 </h2>
 
-                <p>{post.description}</p>
+                <p>{event.description}</p>
               </div>
             ))}
           </div>
@@ -59,9 +58,8 @@ const Home: NextPage<Props> = ({ posts }: Props) => {
 
 export default Home;
 
-// get posts from serverside at build time
 export const getStaticProps: GetStaticProps = async () => {
-  const posts = getAllPosts([
+  const events = getAllEvents([
     'title',
     'slug',
     'date',
@@ -69,6 +67,5 @@ export const getStaticProps: GetStaticProps = async () => {
     'thumbnail',
   ]);
 
-  // retunr the posts props
-  return { props: { posts } };
+  return { props: { events: events } };
 };

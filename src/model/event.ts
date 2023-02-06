@@ -1,4 +1,4 @@
-export interface IPost {
+export interface IEvent {
   slug: string;
   date: string;
   thumbnail: string;

@@ -25,7 +25,7 @@ const Thumbnail: React.FC<Props> = ({ title, src, slug }: Props) => {
   );
 
   // return the Thumbnail cover image slug
-  return <>{slug ? <Link href={`/posts/${slug}`}>{image}</Link> : image}</>;
+  return <>{slug ? <Link href={`/events/${slug}`}>{image}</Link> : image}</>;
 };
 
 // export Thumbnail module
