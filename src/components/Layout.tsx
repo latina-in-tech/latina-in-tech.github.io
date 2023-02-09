@@ -7,9 +7,11 @@ type Props = {
 const Layout: React.FC<Props> = ({ children }: Props) => {
   return (
     <>
-      <div className='max-w-prose mx-auto px-4'>
+      <div className='bg-gray-300 h-screen'>
         <Header />
-        <main className='pt-4 pb-12'>{children}</main>
+        <main className='h-[90%] overflow-y-auto py-5 px-4 my-0'>
+          {children}
+        </main>
       </div>
     </>
   );
