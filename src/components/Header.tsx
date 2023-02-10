@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import logoExtended from '../../public/assets/lit_extended.png';
+import logoLight from '../../public/assets/logo_light.png';
+import logoDark from '../../public/assets/logo_dark.png';
 import Image from 'next/image';
 import {
   BsTelegram,
@@ -76,12 +77,20 @@ const Header: React.FC = () => {
                 <div className='flex flex-shrink-0 items-center'>
                   <Link href='/'>
                     <Image
-                      src={logoExtended}
+                      src={logoLight}
                       alt='Logo LiT'
                       height={60}
                       width={250}
                       title='Home'
-                      className='dark:drop-shadow-xl'
+                      className='dark:drop-shadow-xl dark:hidden'
+                    />
+                    <Image
+                      src={logoDark}
+                      alt='Logo LiT'
+                      height={60}
+                      width={250}
+                      title='Home'
+                      className='dark:drop-shadow-xl hidden dark:block'
                     />
                   </Link>
                 </div>
