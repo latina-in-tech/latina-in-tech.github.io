@@ -1,9 +1,9 @@
-import Thumbnail from '@/components/Thumbnail';
+import Header from '@/components/Header';
+import Hero from '@/components/Hero';
 import { IEvent } from '@/model/event';
 import { getAllEvents } from '@/utils/mdxUtils';
 import { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
-import Link from 'next/link';
 
 type Props = {
   events: [IEvent];
@@ -24,8 +24,11 @@ const Home: NextPage<Props> = ({ events: events }: Props) => {
         ></meta>
         <link rel='icon' href='/favicon.ico' />
       </Head>
+      <Header />
       <main>
-        <div>
+        <Hero />
+
+        {/* <div>
           <h1 className='text-4xl font-bold mb-4'>Technical articles</h1>
 
           <div className='space-y-12'>
@@ -47,7 +50,7 @@ const Home: NextPage<Props> = ({ events: events }: Props) => {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
       </main>
     </>
   );

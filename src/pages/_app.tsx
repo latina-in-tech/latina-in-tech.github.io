@@ -1,6 +1,5 @@
 import 'tailwindcss/tailwind.css';
 import type { AppProps } from 'next/app';
-import Layout from '@/components/Layout';
 import { MdxComponentsProvider } from '@/context/mdxContext';
 import Head from 'next/head';
 
@@ -28,9 +27,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <link rel='manifest' href='/site.webmanifest' />
       </Head>
       <MdxComponentsProvider>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <Component {...pageProps} />
       </MdxComponentsProvider>
     </>
   );
