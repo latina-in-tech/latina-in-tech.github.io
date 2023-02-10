@@ -2,27 +2,98 @@ import Link from 'next/link';
 import logoExtended from '../../public/assets/lit_extended.png';
 import Logo from '../assets/logo';
 import Image from 'next/image';
+import {
+  FaTelegram,
+  FaTwitter,
+  FaFacebook,
+  FaLinkedin,
+  FaGithub,
+} from 'react-icons/fa';
+import { Disclosure } from '@headlessui/react';
+import { XMarkIcon, Bars3Icon } from '@heroicons/react/24/outline';
 
-// add the React Header Element
+const navigationLinks = [
+  {
+    name: 'Telegram',
+    href: 'https://t.me/+QazM4E1vaUM3NDQ0',
+    icon: FaTelegram,
+  },
+  {
+    name: 'Twitter',
+    href: 'https://twitter.com/theLITCommunity',
+    icon: FaTwitter,
+  },
+  {
+    name: 'Linkedin',
+    href: 'https://www.linkedin.com/company/latina-in-tech',
+    icon: FaLinkedin,
+  },
+  {
+    name: 'Facebook',
+    href: 'https://www.facebook.com/LatinaInTech/',
+    icon: FaFacebook,
+  },
+  {
+    name: 'Github',
+    href: 'https://github.com/latina-in-tech',
+    icon: FaGithub,
+  },
+];
+
 const Header: React.FC = () => {
   return (
-    <div className='h-[10%] w-full flex bg-primary-lighter items-center justify-between px-2 py-10 shadow-lg shadow-primary-dark border-b-8 border-primary-dark sticky top-0 left-0'>
-      <Link href='/' className='select-none hidden md:block'>
-        <Image src={logoExtended} alt='Logo LiT' height={75} />
-      </Link>
+    <Disclosure as='nav'>
+      {({ open: isOpen }) => (
+        <>
+          <div className=''>
+            <div>
+              <div>
+                <Disclosure.Button>
+                  <span>Apri menu</span>
+                  {isOpen ? <XMarkIcon></XMarkIcon> : <Bars3Icon></Bars3Icon>}
+                </Disclosure.Button>
+              </div>
 
-      <Logo className='cursor-pointer md:hidden' width={70} />
+              <div>
+                <div>
+                  <Link href='/'>
+                    <Image
+                      src={logoExtended}
+                      alt='Logo LiT'
+                      height={65}
+                      width={300}
+                    />
+                  </Link>
+                </div>
+                <div>
+                  <div>
+                    {navigationLinks.map((item) => (
+                      <Link key={item.name} href={item.href} target='_blank'>
+                        {item.icon && <item.icon></item.icon>}
+                        {item.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
-      <nav className='hidden md:block'>
-        <ul>
-          <li>
-            <Link href='/'>Home</Link>
-            <Link href='/about'>About</Link>
-            <Link href='/events'>Eventi</Link>
-          </li>
-        </ul>
-      </nav>
-    </div>
+          <Disclosure.Panel>
+            <div>
+              {navigationLinks.map((item) => (
+                <Disclosure.Button>
+                  <span>
+                    {item.icon && <item.icon></item.icon>}
+                    {item.name}
+                  </span>
+                </Disclosure.Button>
+              ))}
+            </div>
+          </Disclosure.Panel>
+        </>
+      )}
+    </Disclosure>
   );
 };
 
