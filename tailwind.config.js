@@ -14,6 +14,7 @@ module.exports = {
       'primary-darker': '#0e0e52',
       gray: colors.gray,
       white: colors.white,
+      slate: colors.slate,
     },
     fontFamily: {
       mono: ['"Ubuntu Mono"'],
