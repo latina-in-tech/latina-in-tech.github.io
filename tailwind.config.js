@@ -2,7 +2,7 @@
 const colors = require('tailwindcss/colors');
 
 module.exports = {
-  plugins: [],
+  plugins: [require('@tailwindcss/typography')],
   content: ['./src/**/*.{html,ts,tsx}'],
   theme: {
     extend: {},
@@ -15,6 +15,7 @@ module.exports = {
       gray: colors.gray,
       white: colors.white,
       slate: colors.slate,
+      transparent: colors.transparent,
     },
     fontFamily: {
       mono: ['"Ubuntu Mono"'],
