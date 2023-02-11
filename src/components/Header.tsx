@@ -2,48 +2,10 @@ import Link from 'next/link';
 import logoLight from '../../public/assets/logo_light.png';
 import logoDark from '../../public/assets/logo_dark.png';
 import Image from 'next/image';
-import {
-  BsTelegram,
-  BsTwitter,
-  BsFacebook,
-  BsLinkedin,
-  BsGithub,
-} from 'react-icons/bs';
+
 import { Disclosure } from '@headlessui/react';
 import { XMarkIcon, Bars3Icon } from '@heroicons/react/24/outline';
-
-const navigationLinks = [
-  {
-    name: 'Telegram',
-    href: 'https://t.me/+QazM4E1vaUM3NDQ0',
-    icon: BsTelegram,
-    current: false,
-  },
-  {
-    name: 'Twitter',
-    href: 'https://twitter.com/theLITCommunity',
-    icon: BsTwitter,
-    current: false,
-  },
-  {
-    name: 'Linkedin',
-    href: 'https://www.linkedin.com/company/latina-in-tech',
-    icon: BsLinkedin,
-    current: false,
-  },
-  {
-    name: 'Facebook',
-    href: 'https://www.facebook.com/LatinaInTech/',
-    icon: BsFacebook,
-    current: false,
-  },
-  {
-    name: 'Github',
-    href: 'https://github.com/latina-in-tech',
-    icon: BsGithub,
-    current: false,
-  },
-];
+import navigationLinks from '@/model/navigation';
 
 function classNames(...classes: string[]): string {
   return classes.filter(Boolean).join(' ');

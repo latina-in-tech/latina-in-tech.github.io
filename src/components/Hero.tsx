@@ -1,5 +1,9 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import latina from '../../public/assets/latina.png';
+import navigationLinks from '@/model/navigation';
+
+const telegramNav = navigationLinks.find((item) => item.name === 'Telegram');
 
 const Hero: React.FC = () => {
   return (
@@ -28,8 +32,17 @@ const Hero: React.FC = () => {
               Eventi gratuiti per favorire la condivisione di conoscenze e la
               crescita professionale.
             </p>
-            <div>
-              <button></button>
+            <div className='mx-auto mt-10 flex justify-center'>
+              {telegramNav && (
+                <Link
+                  href={telegramNav.href}
+                  target='_blank'
+                  className='flex items-center justify-between gap-2 rounded-md border border-transparent bg-primary bg-opacity-80 px-4 py-3 text-base font-medium text-white shadow-sm backdrop-blur-sm hover:bg-primary-dark sm:px-8'
+                >
+                  Unisciti al Gruppo Telegram!
+                  {telegramNav.icon && <telegramNav.icon></telegramNav.icon>}
+                </Link>
+              )}
             </div>
           </div>
         </div>
