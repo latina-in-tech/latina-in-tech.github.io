@@ -3,7 +3,7 @@ import { GetStaticProps, GetStaticPaths } from 'next';
 import { useEffect } from 'react';
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 
-import Thumbnail from '../../components/Thumbnail';
+import Thumbnail from '../../components/EventWidget';
 import { getEvent, getAllEvents } from '../../utils/mdxUtils';
 import Prerequisites from '../../components/Prerequisites';
 import { ParsedUrlQuery } from 'querystring';
@@ -39,9 +39,7 @@ const EventPage: React.FC<Props> = ({ source, frontMatter }: Props) => {
   return (
     <div>
       <article className='prose prose-green'>
-        <div className='mb-4'>
-          <Thumbnail title={frontMatter.title} src={frontMatter.thumbnail} />
-        </div>
+        <div className='mb-4'></div>
 
         <h1>{frontMatter.title}</h1>
 

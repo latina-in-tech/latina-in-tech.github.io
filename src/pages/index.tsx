@@ -1,15 +1,36 @@
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
+import EventsList from '@/components/EventsList';
 import { IEvent } from '@/model/event';
 import { getAllEvents } from '@/utils/mdxUtils';
 import { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
+import { DateTime } from 'luxon';
 
 type Props = {
   events: [IEvent];
 };
 
+function filterPastEvents(events: IEvent[]) {
+  const nowDate = DateTime.now();
+  return events.filter((event) => {
+    const eventDate = DateTime.fromISO(event['date']);
+    return eventDate < nowDate;
+  });
+}
+
+function filterNextEvents(events: IEvent[]) {
+  const nowDate = DateTime.now();
+  return events.filter((event) => {
+    const eventDate = DateTime.fromISO(event['date']);
+    return eventDate >= nowDate;
+  });
+}
+
 const Home: NextPage<Props> = ({ events: events }: Props) => {
+  const pastEvents = filterPastEvents(events);
+  const nextEvents = filterNextEvents(events);
+
   return (
     <>
       <Head>
@@ -28,29 +49,25 @@ const Home: NextPage<Props> = ({ events: events }: Props) => {
       <main>
         <Hero />
 
-        {/* <div>
-          <h1 className='text-4xl font-bold mb-4'>Technical articles</h1>
+        <div className='mt-8 mb-8' />
 
-          <div className='space-y-12'>
-            {events.map((event) => (
-              <div key={event.slug}>
-                <div className='mb-4'>
-                  <Thumbnail
-                    slug={event.slug}
-                    title={event.title}
-                    src={event.thumbnail}
-                  />
-                </div>
+        {nextEvents && (
+          <EventsList
+            heading='Prossimi Eventi'
+            caption='Fissa le date e non prendere impegni per i prossimi eventi della community!'
+            events={nextEvents}
+          ></EventsList>
+        )}
 
-                <h2 className='text-2xl font-bold mb-4'>
-                  <Link href={`/events/${event.slug}`}>{event.title}</Link>
-                </h2>
+        <div className='mt-8 mb-8' />
 
-                <p>{event.description}</p>
-              </div>
-            ))}
-          </div>
-        </div> */}
+        {pastEvents && (
+          <EventsList
+            heading='Eventi Passati'
+            caption='Peccato, questi eventi si sono già svolti! Segui la pagina per rimanere aggiornato sui prossimi appuntamenti.'
+            events={pastEvents}
+          ></EventsList>
+        )}
       </main>
     </>
   );
@@ -66,6 +83,5 @@ export const getStaticProps: GetStaticProps = async () => {
     'description',
     'thumbnail',
   ]);
-
   return { props: { events: events } };
 };
