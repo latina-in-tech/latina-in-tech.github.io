@@ -8,7 +8,7 @@ type TelegramGroupInfoResult =
     | undefined;
 
 /**
- * this hook return the number of members and online members of a telegram group
+ * this hook returns the number of members and online members of a telegram group
  * it also returns a function to refresh the data
  */
 export const useTelegramGroupInfo = (
