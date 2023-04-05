@@ -7,7 +7,7 @@ import {useTelegramGroupInfo} from "@/utils/telegram";
 const telegramNav = navigationLinks.find((item) => item.name === 'Telegram');
 
 const Hero: React.FC = () => {
-  const maybeGroupInfo = useTelegramGroupInfo(telegramNav?.href ?? "");
+  const [maybeGroupInfo] = useTelegramGroupInfo(telegramNav?.href ?? "");
   return (
     <div className='relative'>
       <div className='absolute inset-x-0 bottom-0 h-1/2 dark:bg-black dark:bg-opacity-10'></div>
