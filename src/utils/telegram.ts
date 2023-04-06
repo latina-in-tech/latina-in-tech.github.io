@@ -30,8 +30,8 @@ export const useTelegramGroupInfo = (
                 const parsedDocument = parser.parseFromString(html, "text/html");
                 const membersDivBlock =
                     parsedDocument.getElementsByClassName("tgme_page_extra");
-                const membersHtml = membersDivBlock[0]?.innerHTML ?? "";
-                if (membersHtml.length === 0) {
+                const membersHtml : string | undefined = membersDivBlock[0]?.innerHTML;
+                if (!membersHtml) {
                     return;
                 }
                 const membersAndOnline = membersHtml.replace(/(members|online|\s+)/g, "").split(",");
