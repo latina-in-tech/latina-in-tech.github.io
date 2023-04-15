@@ -3,6 +3,7 @@ import Link from 'next/link';
 import latina from '../../public/assets/latina.png';
 import navigationLinks from '@/model/navigation';
 import {useTelegramGroupInfo} from "@/utils/telegram";
+import {Sponsor} from "@/components/Sponsor";
 
 const telegramNav = navigationLinks.find((item) => item.name === 'Telegram');
 
@@ -53,6 +54,7 @@ const Hero: React.FC = () => {
               </div>
             )}
           </div>
+          <Sponsor/>
         </div>
       </div>
     </div>
