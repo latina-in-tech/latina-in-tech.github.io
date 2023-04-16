@@ -2,13 +2,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import latina from '../../public/assets/latina.png';
 import navigationLinks from '@/model/navigation';
-import {useTelegramGroupInfo} from "@/utils/telegram";
-import {Sponsor} from "@/components/Sponsor";
+import { useTelegramGroupInfo } from '@/utils/telegram';
 
-const telegramNav = navigationLinks.find((item) => item.name === 'Telegram');
+const telegramNav = navigationLinks.find(item => item.name === 'Telegram');
 
 const Hero: React.FC = () => {
-  const [maybeGroupInfo] = useTelegramGroupInfo(telegramNav?.href ?? "");
+  const [maybeGroupInfo] = useTelegramGroupInfo(telegramNav?.href ?? '');
   return (
     <div className='relative'>
       <div className='absolute inset-x-0 bottom-0 h-1/2 dark:bg-black dark:bg-opacity-10'></div>
@@ -49,12 +48,10 @@ const Hero: React.FC = () => {
             </div>
             {telegramNav && maybeGroupInfo && (
               <div className='mx-auto mt-2 flex justify-center text-gray-400'>
-                {maybeGroupInfo.members} membri {" "}
-                {maybeGroupInfo.online} online
+                {maybeGroupInfo.members} membri {maybeGroupInfo.online} online
               </div>
             )}
           </div>
-          <Sponsor/>
         </div>
       </div>
     </div>
