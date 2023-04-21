@@ -9,6 +9,7 @@ type Sponsor = {
   logo: StaticImageData;
   url: string;
 };
+
 const sponsors: ReadonlyArray<Sponsor> = [
   {
     name: 'The Space',
@@ -23,8 +24,6 @@ const sponsors: ReadonlyArray<Sponsor> = [
 ];
 
 export const Sponsors = () => {
-  const mdCols = Math.min(sponsors.length, 4);
-  const smCols = Math.min(sponsors.length, 2);
   return (
     <div>
       <span className='block sm:text-white xs:text-black font-normal text-center text-2xl mt-6'>
@@ -32,7 +31,7 @@ export const Sponsors = () => {
       </span>
       <div className={'mx-auto mt-4 flex justify-center'}>
         <div
-          className={`grid md:grid-cols-${mdCols} sm:grid-cols-${smCols} gap-3 place-items-center px-6`}
+          className={`grid md:grid-cols-2 sm:grid-cols-1 gap-3 place-items-center px-6`}
         >
           {sponsors.map(s => (
             <Link key={s.name} href={s.url} target='_blank'>
