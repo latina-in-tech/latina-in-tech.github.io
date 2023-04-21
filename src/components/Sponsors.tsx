@@ -27,7 +27,7 @@ export const Sponsors = () => {
   return (
     <div>
       <span className='block sm:text-white xs:text-black font-normal text-center text-2xl mt-6'>
-        I nostri sponsor
+        Community sponsor
       </span>
       <div className={'mx-auto mt-4 flex justify-center'}>
         <div
