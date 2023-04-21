@@ -5,7 +5,7 @@ import { getAllEvents } from '@/utils/mdxUtils';
 import { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
 import React from 'react';
-import { Sponsor } from '@/components/Sponsor';
+import { Sponsors } from '@/components/Sponsors';
 
 type Props = {
   events: [IEvent];
@@ -29,7 +29,7 @@ const Home: NextPage<Props> = ({ events: events }: Props) => {
       <Header />
       <main>
         <Hero />
-        <Sponsor />
+        <Sponsors />
         {/* <div>
           <h1 className='text-4xl font-bold mb-4'>Technical articles</h1>
 
