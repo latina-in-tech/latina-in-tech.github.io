@@ -2,7 +2,6 @@ import Image, { StaticImageData } from 'next/image';
 import theSpaceLogo from '../../public/assets/sponsors/thespace_logo.png';
 import gruspLogo from '../../public/assets/sponsors/grusp.png';
 import React from 'react';
-import { Transition } from '@headlessui/react';
 import Link from 'next/link';
 
 type Sponsor = {
@@ -24,34 +23,28 @@ const sponsors: ReadonlyArray<Sponsor> = [
 ];
 
 export const Sponsors = () => {
+  const mdCols = Math.min(sponsors.length, 4);
+  const smCols = Math.min(sponsors.length, 2);
   return (
-    <div
-      className={
-        'mx-auto max-w-7xl sm:px-8 md:px-10 lg:px-12 mt-4 flex justify-center'
-      }
-    >
-      <div
-        className={
-          'grid sm:grid-flow-col grid-flow-row grid-col-4 gap-2 place-items-center'
-        }
-      >
-        {sponsors.map(s => (
-          <Link
-            key={s.name}
-            href={s.url}
-            className='some classes'
-            target='_blank'
-          >
-            <Image
-              src={s.logo}
-              alt={s.name}
-              style={{ width: 'auto' }}
-              className={
-                'rounded-md max-h-[60px] md:max-h-[80px] sm:max-h-[80px] xs:max-h-[80px]'
-              }
-            />
-          </Link>
-        ))}
+    <div>
+      <span className='block sm:text-white xs:text-black font-normal text-center text-2xl mt-6'>
+        I nostri sponsor
+      </span>
+      <div className={'mx-auto mt-4 flex justify-center'}>
+        <div
+          className={`grid md:grid-cols-${mdCols} sm:grid-cols-${smCols} gap-3 place-items-center px-6`}
+        >
+          {sponsors.map(s => (
+            <Link key={s.name} href={s.url} target='_blank'>
+              <Image
+                src={s.logo}
+                alt={s.name}
+                style={{ height: 'auto' }}
+                className={'rounded-md w-[180px]'}
+              />
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );
