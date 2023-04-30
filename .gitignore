@@ -16,7 +16,7 @@
 /build
 
 # JetBrains
-.idea/
+.idea
 
 # misc
 .DS_Store
