@@ -1,6 +1,7 @@
 import Image, { StaticImageData } from 'next/image';
 import theSpaceLogo from '../../public/assets/sponsors/thespace_logo.png';
 import gruspLogo from '../../public/assets/sponsors/grusp.png';
+import rnhLogo from '../../public/assets/sponsors/rnh.png';
 import React from 'react';
 import Link from 'next/link';
 
@@ -20,6 +21,11 @@ const sponsors: ReadonlyArray<Sponsor> = [
     name: 'Grusp',
     logo: gruspLogo,
     url: 'https://www.grusp.org/'
+  },
+  {
+    name: 'React Native Heroes',
+    logo: rnhLogo,
+    url: 'https://reactnativeheroes.com/'
   }
 ];
 
