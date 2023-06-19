@@ -2,39 +2,80 @@ import Image, { StaticImageData } from 'next/image';
 import theSpaceLogo from '../../public/assets/sponsors/thespace_logo.png';
 import gruspLogo from '../../public/assets/sponsors/grusp.png';
 import rnhLogo from '../../public/assets/sponsors/rnh.png';
+import codemotionLightLogo from '../../public/assets/sponsors/codemotion/light.png';
+import codemotionDarkLogo from '../../public/assets/sponsors/codemotion/dark.svg';
+import weAreDevelopersLightLogo from '../../public/assets/sponsors/wearedevelopers/light.png';
+import weAreDevelopersDarkLogo from '../../public/assets/sponsors/wearedevelopers/dark.png';
+import viridexLogo from '../../public/assets/sponsors/viridex.png';
 import React from 'react';
 import Link from 'next/link';
 
 type Sponsor = {
   name: string;
-  logo: StaticImageData;
+  logo: {
+    light: StaticImageData;
+    dark: StaticImageData;
+  };
   url: string;
 };
 
 const sponsors: ReadonlyArray<Sponsor> = [
   {
     name: 'The Space',
-    logo: theSpaceLogo,
+    logo: {
+      light: theSpaceLogo,
+      dark: theSpaceLogo
+    },
     url: 'https://www.thespacecoworking.website/'
   },
   {
     name: 'Grusp',
-    logo: gruspLogo,
+    logo: {
+      light: gruspLogo,
+      dark: gruspLogo
+    },
     url: 'https://www.grusp.org/'
   },
   {
+    name: 'Codemotion',
+    logo: {
+      light: codemotionLightLogo,
+      dark: codemotionDarkLogo
+    },
+    url: 'https://www.codemotion.com/'
+  },
+  {
+    name: 'WeAreDevelopers',
+    logo: {
+      light: weAreDevelopersLightLogo,
+      dark: weAreDevelopersDarkLogo
+    },
+    url: 'https://www.wearedevelopers.com/'
+  },
+  {
     name: 'React Native Heroes',
-    logo: rnhLogo,
+    logo: {
+      light: rnhLogo,
+      dark: rnhLogo
+    },
     url: 'https://reactnativeheroes.com/'
+  },
+  {
+    name: 'Viridex s.r.l.',
+    logo: {
+      light: viridexLogo,
+      dark: viridexLogo
+    },
+    url: 'https://www.viridex.it/'
   }
 ];
 
 export const Sponsors = () => {
   return (
-    <div>
-      <span className='block sm:text-white xs:text-black font-normal text-center text-2xl mt-6'>
-        Community sponsor
-      </span>
+    <div className='text-center'>
+      <h2 className='text-3xl font-bold text-gray-900 dark:text-slate-200 sm:text-4xl'>
+        Community Partners
+      </h2>
       <div className={'mx-auto mt-4 flex justify-center'}>
         <div
           className={`grid md:grid-cols-2 sm:grid-cols-1 gap-3 place-items-center px-6`}
@@ -42,10 +83,16 @@ export const Sponsors = () => {
           {sponsors.map(s => (
             <Link key={s.name} href={s.url} target='_blank'>
               <Image
-                src={s.logo}
+                src={s.logo.light}
                 alt={s.name}
                 style={{ height: 'auto' }}
-                className={'rounded-md w-[180px]'}
+                className={'rounded-md w-[180px] dark:hidden'}
+              />
+               <Image
+                src={s.logo.dark}
+                alt={s.name}
+                style={{ height: 'auto' }}
+                className={'rounded-md w-[180px] dark:block hidden'}
               />
             </Link>
           ))}

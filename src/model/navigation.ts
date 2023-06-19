@@ -4,6 +4,7 @@ import {
   FaFacebook as FacebookIcon,
   FaLinkedin as LinkedinIcon,
   FaGithub as GithubIcon,
+  FaYoutube as YoutubeIcon
 } from 'react-icons/fa';
 
 const navigationLinks = [
@@ -35,6 +36,12 @@ const navigationLinks = [
     name: 'Github',
     href: 'https://github.com/latina-in-tech',
     icon: GithubIcon,
+    current: false,
+  },
+  {
+    name: 'Youtube',
+    href: 'https://www.youtube.com/channel/UCSlDl55sw6QbFCDtlWn8Jig',
+    icon: YoutubeIcon,
     current: false,
   },
 ];

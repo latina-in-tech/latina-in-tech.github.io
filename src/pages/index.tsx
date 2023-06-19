@@ -27,7 +27,7 @@ const Home: NextPage<Props> = ({ events: events }: Props) => {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <Header />
-      <main>
+      <main className='flex flex-col gap-4 px-4 pb-4'>
         <Hero />
         <Sponsors />
         {/* <div>
