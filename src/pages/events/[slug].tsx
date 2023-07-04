@@ -3,7 +3,7 @@ import { GetStaticProps, GetStaticPaths } from 'next';
 import { useEffect } from 'react';
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 
-import Thumbnail from '../../components/Thumbnail';
+import EventWidget from '../../components/EventWidget';
 import { getEvent, getAllEvents } from '../../utils/mdxUtils';
 import Prerequisites from '../../components/Prerequisites';
 import { ParsedUrlQuery } from 'querystring';
@@ -18,7 +18,7 @@ type Props = {
 
 const components = {
   Prerequisites,
-  Stacks,
+  Stacks
 };
 
 const EventPage: React.FC<Props> = ({ source, frontMatter }: Props) => {
@@ -33,15 +33,13 @@ const EventPage: React.FC<Props> = ({ source, frontMatter }: Props) => {
     setPrerequisites,
     setStacks,
     frontMatter.prerequisites,
-    frontMatter.stacks,
+    frontMatter.stacks
   ]);
 
   return (
     <div>
       <article className='prose prose-green'>
-        <div className='mb-4'>
-          <Thumbnail title={frontMatter.title} src={frontMatter.thumbnail} />
-        </div>
+        <div className='mb-4'></div>
 
         <h1>{frontMatter.title}</h1>
 
@@ -59,7 +57,7 @@ interface Iparams extends ParsedUrlQuery {
   slug: string;
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getStaticProps: GetStaticProps = async context => {
   const { slug } = context.params as Iparams;
   // get the slug
   const { content, data } = getEvent(slug);
@@ -68,22 +66,22 @@ export const getStaticProps: GetStaticProps = async (context) => {
   return {
     props: {
       source: mdxSource,
-      frontMatter: data,
-    },
+      frontMatter: data
+    }
   };
 };
 
 export const getStaticPaths: GetStaticPaths = () => {
   const events = getAllEvents(['slug']);
 
-  const paths = events.map((event) => ({
+  const paths = events.map(event => ({
     params: {
-      slug: event.slug,
-    },
+      slug: event.slug
+    }
   }));
 
   return {
     paths,
-    fallback: false,
+    fallback: false
   };
 };

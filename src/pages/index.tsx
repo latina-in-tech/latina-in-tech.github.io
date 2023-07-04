@@ -2,16 +2,37 @@ import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import { IEvent } from '@/model/event';
 import { getAllEvents } from '@/utils/mdxUtils';
+import EventsList from '@/components/EventsList';
 import { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
 import React from 'react';
 import { Sponsors } from '@/components/Sponsors';
+import { DateTime } from 'luxon';
 
 type Props = {
   events: [IEvent];
 };
 
+function filterPastEvents(events: IEvent[]) {
+  const nowDate = DateTime.now();
+  return events.filter(event => {
+    const eventDate = DateTime.fromISO(event['date']);
+    return eventDate < nowDate;
+  });
+}
+
+function filterNextEvents(events: IEvent[]) {
+  const nowDate = DateTime.now();
+  return events.filter(event => {
+    const eventDate = DateTime.fromISO(event['date']);
+    return eventDate >= nowDate;
+  });
+}
+
 const Home: NextPage<Props> = ({ events: events }: Props) => {
+  const pastEvents = filterPastEvents(events);
+  const nextEvents = filterNextEvents(events);
+
   return (
     <>
       <Head>
@@ -27,32 +48,25 @@ const Home: NextPage<Props> = ({ events: events }: Props) => {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <Header />
-      <main className='flex flex-col gap-4 px-4 pb-4'>
+      <main className='flex flex-col gap-6 px-4 pb-4'>
         <Hero />
-        <Sponsors />
-        {/* <div>
-          <h1 className='text-4xl font-bold mb-4'>Technical articles</h1>
+       
+        {nextEvents.length > 0 && (
+          <EventsList
+            heading='Prossimi Eventi'
+            caption='Fissa le date e non prendere impegni per i prossimi eventi della community!'
+            events={nextEvents}
+          ></EventsList>
+        )}
+        {pastEvents.length > 0 && (
+          <EventsList
+            heading='Eventi Passati'
+            caption='Peccato, questi eventi si sono già svolti! Segui la pagina per rimanere aggiornato sui prossimi appuntamenti.'
+            events={pastEvents}
+          ></EventsList>
+        )}
 
-          <div className='space-y-12'>
-            {events.map((event) => (
-              <div key={event.slug}>
-                <div className='mb-4'>
-                  <Thumbnail
-                    slug={event.slug}
-                    title={event.title}
-                    src={event.thumbnail}
-                  />
-                </div>
-
-                <h2 className='text-2xl font-bold mb-4'>
-                  <Link href={`/events/${event.slug}`}>{event.title}</Link>
-                </h2>
-
-                <p>{event.description}</p>
-              </div>
-            ))}
-          </div>
-        </div> */}
+      <Sponsors />
       </main>
     </>
   );
@@ -66,8 +80,10 @@ export const getStaticProps: GetStaticProps = async () => {
     'slug',
     'date',
     'description',
-    'thumbnail'
+    'thumbnail',
+    'place'
   ]);
-
+  
+  events.sort((a,b) => a.date < b.date? 1 : (b.date < a.date)? -1 : 0)
   return { props: { events: events } };
 };

@@ -76,9 +76,9 @@ export const Sponsors = () => {
       <h2 className='text-3xl font-bold text-gray-900 dark:text-slate-200 sm:text-4xl'>
         Community Partners
       </h2>
-      <div className={'mx-auto mt-4 flex justify-center'}>
+      <div className={'mx-auto mt-6 flex justify-center'}>
         <div
-          className={`grid md:grid-cols-2 sm:grid-cols-1 gap-3 place-items-center px-6`}
+          className={`grid md:grid-cols-3 sm:grid-cols-1 gap-3 place-items-center px-6`}
         >
           {sponsors.map(s => (
             <Link key={s.name} href={s.url} target='_blank'>
