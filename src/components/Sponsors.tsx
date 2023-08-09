@@ -7,6 +7,7 @@ import codemotionDarkLogo from '../../public/assets/sponsors/codemotion/dark.svg
 import weAreDevelopersLightLogo from '../../public/assets/sponsors/wearedevelopers/light.png';
 import weAreDevelopersDarkLogo from '../../public/assets/sponsors/wearedevelopers/dark.png';
 import viridexLogo from '../../public/assets/sponsors/viridex.png';
+import exoLogo from '../../public/assets/sponsors/exo.png';
 import React from 'react';
 import Link from 'next/link';
 
@@ -67,6 +68,14 @@ const sponsors: ReadonlyArray<Sponsor> = [
       dark: viridexLogo
     },
     url: 'https://www.viridex.it/'
+  },
+  {
+    name: 'Exo',
+    logo: {
+      light: exoLogo,
+      dark: exoLogo
+    },
+    url: 'https://www.exoitalia.it/'
   }
 ];
 
@@ -88,7 +97,7 @@ export const Sponsors = () => {
                 style={{ height: 'auto' }}
                 className={'rounded-md w-[180px] dark:hidden'}
               />
-               <Image
+              <Image
                 src={s.logo.dark}
                 alt={s.name}
                 style={{ height: 'auto' }}
