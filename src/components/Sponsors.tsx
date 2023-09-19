@@ -8,6 +8,8 @@ import weAreDevelopersLightLogo from '../../public/assets/sponsors/wearedevelope
 import weAreDevelopersDarkLogo from '../../public/assets/sponsors/wearedevelopers/dark.png';
 import viridexLogo from '../../public/assets/sponsors/viridex.png';
 import exoLogo from '../../public/assets/sponsors/exo.png';
+import klarnaLightLogo from '../../public/assets/sponsors/klarna/black.svg';
+import klarnaDarkLogo from '../../public/assets/sponsors/klarna/white.svg';
 import React from 'react';
 import Link from 'next/link';
 
@@ -76,6 +78,14 @@ const sponsors: ReadonlyArray<Sponsor> = [
       dark: exoLogo
     },
     url: 'https://www.exoitalia.it/'
+  },
+  {
+    name: 'Klarna',
+    logo: {
+      light: klarnaLightLogo,
+      dark: klarnaDarkLogo
+    },
+    url: 'https://www.klarna.com/'
   }
 ];
 
