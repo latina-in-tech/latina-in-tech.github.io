@@ -4,7 +4,8 @@ import {
   FaFacebook as FacebookIcon,
   FaLinkedin as LinkedinIcon,
   FaGithub as GithubIcon,
-  FaYoutube as YoutubeIcon
+  FaYoutube as YoutubeIcon,
+  FaInstagram as InstagramIcon
 } from 'react-icons/fa';
 
 const navigationLinks = [
@@ -24,6 +25,12 @@ const navigationLinks = [
     name: 'Linkedin',
     href: 'https://www.linkedin.com/company/latina-in-tech',
     icon: LinkedinIcon,
+    current: false,
+  },
+  {
+    name: 'Instagram',
+    href: 'https://www.instagram.com/latinaintech_/',
+    icon: InstagramIcon,
     current: false,
   },
   {
