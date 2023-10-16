@@ -2,32 +2,36 @@ import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import { IEvent } from '@/model/event';
 import { getAllEvents } from '@/utils/mdxUtils';
-import EventsList from '@/components/EventsList';
 import { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
 import React from 'react';
 import { Sponsors } from '@/components/Sponsors';
 import { DateTime } from 'luxon';
+import dynamic from 'next/dynamic';
+
+const EventsList = dynamic(() => import('@/components/EventsList'), {
+  ssr: false
+});
 
 type Props = {
   events: [IEvent];
 };
 
-function filterPastEvents(events: IEvent[]) {
+const filterPastEvents = (events: IEvent[]) => {
   const nowDate = DateTime.now();
   return events.filter(event => {
     const eventDate = DateTime.fromISO(event['date']);
     return eventDate < nowDate;
   });
-}
+};
 
-function filterNextEvents(events: IEvent[]) {
+const filterNextEvents = (events: IEvent[]) => {
   const nowDate = DateTime.now();
   return events.filter(event => {
     const eventDate = DateTime.fromISO(event['date']);
     return eventDate >= nowDate;
   });
-}
+};
 
 const Home: NextPage<Props> = ({ events: events }: Props) => {
   const pastEvents = filterPastEvents(events);
@@ -50,7 +54,7 @@ const Home: NextPage<Props> = ({ events: events }: Props) => {
       <Header />
       <main className='flex flex-col gap-6 px-4 pb-4'>
         <Hero />
-       
+
         {nextEvents.length > 0 && (
           <EventsList
             heading='Prossimi Eventi'
@@ -66,7 +70,7 @@ const Home: NextPage<Props> = ({ events: events }: Props) => {
           ></EventsList>
         )}
 
-      <Sponsors />
+        <Sponsors />
       </main>
     </>
   );
@@ -83,7 +87,7 @@ export const getStaticProps: GetStaticProps = async () => {
     'thumbnail',
     'place'
   ]);
-  
-  events.sort((a,b) => a.date < b.date? 1 : (b.date < a.date)? -1 : 0)
+
+  events.sort((a, b) => (a.date < b.date ? 1 : b.date < a.date ? -1 : 0));
   return { props: { events: events } };
 };
