@@ -5,6 +5,8 @@ import { IEvent } from '@/model/event';
 import { DateTime } from 'luxon';
 import React, { useCallback, useMemo } from 'react';
 import { AddToCalendarButton } from 'add-to-calendar-button-react';
+import ReactMarkdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
 
 type AddToCalendarProps = {
   event: DateTime;
@@ -137,7 +139,26 @@ const EventWidget: React.FC<Props> = ({ event }: Props) => {
         </div>
 
         <div className='italic tracking-wide'>
-          <p>{event.description}</p>
+          <ReactMarkdown
+            components={{
+              a: ({ node, ...props }) => <a {...props} target='_blank' />
+            }}
+            rehypePlugins={[rehypeRaw]}
+            allowedElements={[
+              'p',
+              'b',
+              'i',
+              'em',
+              'strong',
+              'a',
+              'li',
+              'ul',
+              'ol',
+              'br'
+            ]}
+          >
+            {event.description}
+          </ReactMarkdown>
         </div>
       </div>
     </div>
