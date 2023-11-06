@@ -103,13 +103,21 @@ export const Sponsors = () => {
               <Image
                 src={s.logo.light}
                 alt={s.name}
-                style={{ height: 'auto' }}
+                style={{
+                  height: 'auto',
+                  aspectRatio: '3/2',
+                  objectFit: 'contain'
+                }}
                 className={'rounded-md w-[180px] dark:hidden'}
               />
               <Image
                 src={s.logo.dark}
                 alt={s.name}
-                style={{ height: 'auto' }}
+                style={{
+                  height: 'auto',
+                  aspectRatio: '3/2',
+                  objectFit: 'contain'
+                }}
                 className={'rounded-md w-[180px] dark:block hidden'}
               />
             </Link>
