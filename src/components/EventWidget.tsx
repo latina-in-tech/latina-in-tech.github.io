@@ -141,7 +141,13 @@ const EventWidget: React.FC<Props> = ({ event }: Props) => {
         <div className='italic tracking-wide'>
           <ReactMarkdown
             components={{
-              a: ({ node, ...props }) => <a {...props} target='_blank' />
+              a: ({ node, ...props }) => (
+                <a
+                  {...props}
+                  target='_blank'
+                  style={{ textDecoration: 'underline' }}
+                />
+              )
             }}
             rehypePlugins={[rehypeRaw]}
             allowedElements={[
