@@ -85,7 +85,8 @@ export const getStaticProps: GetStaticProps = async () => {
     'date',
     'description',
     'thumbnail',
-    'place'
+    'place',
+    'maps'
   ]);
 
   events.sort((a, b) => (a.date < b.date ? 1 : b.date < a.date ? -1 : 0));
