@@ -4,12 +4,72 @@ import { MapPinIcon, CalendarIcon } from '@heroicons/react/24/outline';
 import { IEvent } from '@/model/event';
 import { DateTime } from 'luxon';
 import React, { useCallback, useMemo } from 'react';
+import { AddToCalendarButton } from 'add-to-calendar-button-react';
 
+type AddToCalendarProps = {
+  event: DateTime;
+  place: string;
+  name: string;
+  description: string;
+};
+const AddToCalendar: React.FC<AddToCalendarProps> = ({
+  event,
+  place,
+  name,
+  description
+}) => {
+  const startDate = useMemo(
+    () =>
+      `${event.year}-${event.month.toString().padStart(2, '0')}-${event.day
+        .toString()
+        .padStart(2, '0')}`,
+    [event.day, event.month, event.year]
+  );
+  const startTime = useMemo(
+    () =>
+      `${event.hour.toString().padStart(2, '0')}:${event.minute
+        .toString()
+        .padStart(2, '0')}`,
+    [event.hour, event.minute]
+  );
+  const endTime = useMemo(
+    () =>
+      `${(event.hour + 2).toString().padStart(2, '0')}:${event.minute
+        .toString()
+        .padStart(2, '0')}`,
+    [event.hour, event.minute]
+  );
+  return (
+    <AddToCalendarButton
+      name={name}
+      description={description}
+      startDate={startDate}
+      startTime={startTime}
+      endTime={endTime}
+      timeZone='Europe/Rome'
+      location={place}
+      buttonStyle='date'
+      buttonsList
+      hideBackground
+      size='3'
+      label='aggiungi al calendario'
+      options={[
+        'Google',
+        'Apple',
+        'Yahoo',
+        'Outlook.com',
+        'Microsoft365',
+        'iCal'
+      ]}
+    />
+  );
+};
+
+const thumbHeight = 400;
 type Props = {
   event: IEvent;
 };
 
-const thumbHeight = 400;
 const EventWidget: React.FC<Props> = ({ event }: Props) => {
   const renderEventImage = useCallback(() => {
     if (event.thumbnail) {
@@ -27,7 +87,7 @@ const EventWidget: React.FC<Props> = ({ event }: Props) => {
     }
   }, [event.thumbnail, event.title]);
   const eventDate = useMemo(() => DateTime.fromISO(event.date), [event.date]);
-
+  const isPastEvent = DateTime.now() > eventDate;
   const getEventWidgetClasses = useCallback(() => {
     const isPastEvent = DateTime.now() > eventDate;
     const baseClasses =
@@ -47,8 +107,19 @@ const EventWidget: React.FC<Props> = ({ event }: Props) => {
       {renderEventImage()}
       <div className='flex flex-1 flex-col gap-2 p-4'>
         <div className='flex gap-2'>
-          <CalendarIcon className='block h-6 w-6' aria-hidden='true' />
-          <p>{formattedDate}</p>
+          {isPastEvent ? (
+            <>
+              <CalendarIcon className='block h-6 w-6' aria-hidden='true' />
+              <p>{formattedDate}</p>
+            </>
+          ) : (
+            <AddToCalendar
+              description={event.description}
+              event={eventDate}
+              place={event.place}
+              name={event.title}
+            />
+          )}
         </div>
         <div className='flex'>
           <Link
