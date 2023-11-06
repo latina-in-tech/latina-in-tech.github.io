@@ -1,10 +1,9 @@
 import { serialize } from 'next-mdx-remote/serialize';
 import { GetStaticProps, GetStaticPaths } from 'next';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 
-import EventWidget from '../../components/EventWidget';
-import { getEvent, getAllEvents } from '../../utils/mdxUtils';
+import { getEvent, getAllEvents } from '@/utils/mdxUtils';
 import Prerequisites from '../../components/Prerequisites';
 import { ParsedUrlQuery } from 'querystring';
 import Stacks from '../../components/Stacks';

@@ -1,7 +1,7 @@
 import matter from 'gray-matter';
 import { join } from 'path';
 import fs from 'fs';
-
+import * as console from 'console';
 
 type Items = {
   [key: string]: string;
@@ -17,11 +17,7 @@ type Event = {
 const EVENTS_PATH = join(process.cwd(), '_events');
 
 function getEventsFilePaths(): string[] {
-  return (
-    fs
-      .readdirSync(EVENTS_PATH)
-      .filter((path) => /\.mdx?$/.test(path))
-  );
+  return fs.readdirSync(EVENTS_PATH).filter(path => /\.mdx?$/.test(path));
 }
 
 export function getEvent(slug: string): Event {
@@ -37,7 +33,7 @@ export function getEventItems(filePath: string, fields: string[] = []): Items {
 
   const items: Items = {};
 
-  fields.forEach((field) => {
+  fields.forEach(field => {
     if (field === 'slug') {
       items[field] = slug;
     }
@@ -54,7 +50,7 @@ export function getEventItems(filePath: string, fields: string[] = []): Items {
 export function getAllEvents(fields: string[]): Items[] {
   const filePaths = getEventsFilePaths();
   const events = filePaths
-    .map((filePath) => getEventItems(filePath, fields))
+    .map(filePath => getEventItems(filePath, fields))
     .sort((event1, event2) => (event1.date > event2.date ? 1 : -1));
   return events;
 }
