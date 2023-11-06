@@ -4,7 +4,7 @@ import { IEvent } from '@/model/event';
 import { getAllEvents } from '@/utils/mdxUtils';
 import { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Sponsors } from '@/components/Sponsors';
 import { DateTime } from 'luxon';
 import dynamic from 'next/dynamic';
@@ -34,8 +34,8 @@ const filterNextEvents = (events: IEvent[]) => {
 };
 
 const Home: NextPage<Props> = ({ events: events }: Props) => {
-  const pastEvents = filterPastEvents(events);
-  const nextEvents = filterNextEvents(events);
+  const pastEvents = useMemo(() => filterPastEvents(events), [events]);
+  const nextEvents = useMemo(() => filterNextEvents(events), [events]);
 
   return (
     <>
@@ -60,14 +60,14 @@ const Home: NextPage<Props> = ({ events: events }: Props) => {
             heading='Prossimi Eventi'
             caption='Fissa le date e non prendere impegni per i prossimi eventi della community!'
             events={nextEvents}
-          ></EventsList>
+          />
         )}
         {pastEvents.length > 0 && (
           <EventsList
             heading='Eventi Passati'
             caption='Peccato, questi eventi si sono già svolti! Segui la pagina per rimanere aggiornato sui prossimi appuntamenti.'
             events={pastEvents}
-          ></EventsList>
+          />
         )}
 
         <Sponsors />

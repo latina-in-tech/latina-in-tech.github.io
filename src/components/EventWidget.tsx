@@ -7,6 +7,7 @@ import React, { useCallback, useMemo } from 'react';
 
 type Props = {
   event: IEvent;
+  calendarButton?: boolean;
 };
 
 const thumbHeight = 400;
