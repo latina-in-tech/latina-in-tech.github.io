@@ -119,7 +119,7 @@ const EventWidget: React.FC<Props> = ({ event }: Props) => {
             <AddToCalendar
               description={event.description}
               event={eventDate}
-              place={event.place}
+              place={event.maps}
               name={event.title}
             />
           )}
