@@ -30,27 +30,25 @@ const AddToCalendar: React.FC<AddToCalendarProps> = ({
         .padStart(2, '0')}-${eventDateTime.day.toString().padStart(2, '0')}`,
     [eventDateTime.day, eventDateTime.month, eventDateTime.year]
   );
-  const startTime = useMemo(
-    () =>
-      `${eventDateTime.hour.toString().padStart(2, '0')}:${eventDateTime.minute
+  const formatTime = useCallback(
+    (date: DateTime) =>
+      `${date.hour.toString().padStart(2, '0')}:${date.minute
         .toString()
         .padStart(2, '0')}`,
-    [eventDateTime.hour, eventDateTime.minute]
+    []
   );
-  const endTime = useMemo(() => {
-    const end = eventDateTime.plus({ minutes: eventDuration });
-    return `${end.hour.toString().padStart(2, '0')}:${end.minute
-      .toString()
-      .padStart(2, '0')}`;
-  }, [eventDateTime, eventDuration]);
+  const eventEndDateTime = useMemo(
+    () => eventDateTime.plus({ minutes: eventDuration }),
+    [eventDateTime, eventDuration]
+  );
 
   return (
     <AddToCalendarButton
       name={name}
       description={description}
       startDate={startDate}
-      startTime={startTime}
-      endTime={endTime}
+      startTime={formatTime(eventDateTime)}
+      endTime={formatTime(eventEndDateTime)}
       timeZone='Europe/Rome'
       location={place}
       buttonStyle='date'
