@@ -23,7 +23,6 @@ const AddToCalendar: React.FC<AddToCalendarProps> = ({
   name,
   description
 }) => {
-  console.log('eventDuration', eventDuration);
   const startDate = useMemo(
     () =>
       `${eventDateTime.year}-${eventDateTime.month
