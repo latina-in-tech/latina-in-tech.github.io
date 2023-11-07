@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { MapPinIcon, CalendarIcon } from '@heroicons/react/24/outline';
-import { IEvent } from '@/model/event';
+import { IEvent, Minute } from '@/model/event';
 import { DateTime } from 'luxon';
 import React, { useCallback, useMemo } from 'react';
 import { AddToCalendarButton } from 'add-to-calendar-button-react';
@@ -9,45 +9,46 @@ import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 
 type AddToCalendarProps = {
-  event: DateTime;
+  eventDateTime: DateTime;
+  eventDuration: Minute;
   place: string;
   name: string;
   description: string;
 };
+const defaultEventDuration: Minute = 120;
 const AddToCalendar: React.FC<AddToCalendarProps> = ({
-  event,
+  eventDateTime,
+  eventDuration,
   place,
   name,
   description
 }) => {
   const startDate = useMemo(
     () =>
-      `${event.year}-${event.month.toString().padStart(2, '0')}-${event.day
+      `${eventDateTime.year}-${eventDateTime.month
+        .toString()
+        .padStart(2, '0')}-${eventDateTime.day.toString().padStart(2, '0')}`,
+    [eventDateTime.day, eventDateTime.month, eventDateTime.year]
+  );
+  const formatTime = useCallback(
+    (date: DateTime) =>
+      `${date.hour.toString().padStart(2, '0')}:${date.minute
         .toString()
         .padStart(2, '0')}`,
-    [event.day, event.month, event.year]
+    []
   );
-  const startTime = useMemo(
-    () =>
-      `${event.hour.toString().padStart(2, '0')}:${event.minute
-        .toString()
-        .padStart(2, '0')}`,
-    [event.hour, event.minute]
+  const eventEndDateTime = useMemo(
+    () => eventDateTime.plus({ minutes: eventDuration }),
+    [eventDateTime, eventDuration]
   );
-  const endTime = useMemo(
-    () =>
-      `${(event.hour + 2).toString().padStart(2, '0')}:${event.minute
-        .toString()
-        .padStart(2, '0')}`,
-    [event.hour, event.minute]
-  );
+
   return (
     <AddToCalendarButton
       name={name}
       description={description}
       startDate={startDate}
-      startTime={startTime}
-      endTime={endTime}
+      startTime={formatTime(eventDateTime)}
+      endTime={formatTime(eventEndDateTime)}
       timeZone='Europe/Rome'
       location={place}
       buttonStyle='date'
@@ -117,8 +118,9 @@ const EventWidget: React.FC<Props> = ({ event }: Props) => {
             </>
           ) : (
             <AddToCalendar
+              eventDuration={event.duration || defaultEventDuration}
               description={event.description}
-              event={eventDate}
+              eventDateTime={eventDate}
               place={event.maps}
               name={event.title}
             />
