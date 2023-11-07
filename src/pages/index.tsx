@@ -85,6 +85,7 @@ export const getStaticProps: GetStaticProps = async () => {
     'date',
     'description',
     'thumbnail',
+    'duration',
     'place',
     'maps'
   ]);
