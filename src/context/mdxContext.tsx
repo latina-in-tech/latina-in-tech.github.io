@@ -7,6 +7,7 @@ import {
   ReactNode,
   SetStateAction
 } from 'react';
+import React from 'react';
 
 type ContextProps = {
   prerequisites: string[];
