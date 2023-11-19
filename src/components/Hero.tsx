@@ -3,6 +3,7 @@ import Link from 'next/link';
 import latina from '../../public/assets/latina.png';
 import navigationLinks from '@/model/navigation';
 import { useTelegramGroupInfo } from '@/utils/telegram';
+import React from 'react';
 
 const telegramNav = navigationLinks.find(item => item.name === 'Telegram');
 
@@ -30,10 +31,12 @@ const Hero: React.FC = () => {
                 Informatici Pontini
               </span>
             </h1>
-            <p className='mx-auto mt-6 max-w-lg text-center text-xl text-slate-100 sm:max-w-3xl'>
-              Eventi gratuiti per favorire la condivisione di conoscenze e la
-              crescita professionale.
-            </p>
+            <div className='py-2 bg-opacity-50 mx-auto mt-6 max-w-lg rounded-md border border-transparent bg-slate-400 sm:max-w-3xl'>
+              <p className='text-center text-xl text-slate-100'>
+                Eventi gratuiti per favorire la condivisione di conoscenze e la
+                crescita professionale.
+              </p>
+            </div>
             <div className='mx-auto mt-10 flex justify-center'>
               {telegramNav && (
                 <Link

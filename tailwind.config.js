@@ -5,7 +5,11 @@ module.exports = {
   plugins: [require('@tailwindcss/typography')],
   content: ['./src/**/*.{html,ts,tsx}'],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ['"Proxima Nova"']
+      }
+    },
     colors: {
       'primary-lighter': '#78c0e0',
       'primary-light': '#449dd1',
@@ -15,11 +19,7 @@ module.exports = {
       gray: colors.gray,
       white: colors.white,
       slate: colors.slate,
-      transparent: colors.transparent,
-    },
-    fontFamily: {
-      mono: ['"Ubuntu Mono"'],
-      sans: ['"Ubuntu"'],
-    },
-  },
+      transparent: colors.transparent
+    }
+  }
 };
