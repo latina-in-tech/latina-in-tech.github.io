@@ -10,7 +10,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.13.0]
+        node-version: [20.9.0]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
@@ -27,7 +27,6 @@ jobs:
         run: |
           npm ci
           npm run build
-          npm run output
           touch out/.nojekyll
 
       - name: Deploy
