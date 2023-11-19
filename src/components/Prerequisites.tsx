@@ -1,4 +1,5 @@
 import { useMdxComponentsContext } from '@/context/mdxContext';
+import React from 'react';
 
 const Prerequisites: React.FC = () => {
   const prerequisites = useMdxComponentsContext().prerequisites;

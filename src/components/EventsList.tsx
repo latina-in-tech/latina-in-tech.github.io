@@ -1,5 +1,6 @@
 import { IEvent } from '@/model/event';
 import EventWidget from './EventWidget';
+import React from 'react';
 
 type Props = {
   heading: string;

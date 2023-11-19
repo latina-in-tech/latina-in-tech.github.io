@@ -16,8 +16,8 @@ type Props = {
 };
 
 const components = {
-  Prerequisites,
-  Stacks
+  Prerequisites: () => <Prerequisites />,
+  Stacks: () => <Stacks />
 };
 
 const EventPage: React.FC<Props> = ({ source, frontMatter }: Props) => {
