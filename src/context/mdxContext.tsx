@@ -5,7 +5,7 @@ import {
   Dispatch,
   ReactElement,
   ReactNode,
-  SetStateAction,
+  SetStateAction
 } from 'react';
 
 type ContextProps = {
@@ -31,7 +31,7 @@ export function MdxComponentsProvider({ children }: Props): ReactElement {
         prerequisites,
         setPrerequisites,
         stacks,
-        setStacks,
+        setStacks
       }}
     >
       {children}
