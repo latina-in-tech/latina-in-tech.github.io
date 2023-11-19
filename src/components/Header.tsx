@@ -58,7 +58,7 @@ const Header: React.FC = () => {
                 </div>
                 <div className='hidden items-center sm:ml-6 lg:flex'>
                   <div className='flex space-x-4'>
-                    {navigationLinks.map((item) => (
+                    {navigationLinks.map(item => (
                       <Link
                         key={item.name}
                         href={item.href}
@@ -83,7 +83,7 @@ const Header: React.FC = () => {
 
           <Disclosure.Panel className='lg:hidden'>
             <div className='space-y-1 px-2 pt-2 pb-3'>
-              {navigationLinks.map((item) => (
+              {navigationLinks.map(item => (
                 <Disclosure.Button
                   as={Link}
                   key={item.name}
