@@ -2,6 +2,7 @@ import 'tailwindcss/tailwind.css';
 import type { AppProps } from 'next/app';
 import { MdxComponentsProvider } from '@/context/mdxContext';
 import Head from 'next/head';
+import React from 'react';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (

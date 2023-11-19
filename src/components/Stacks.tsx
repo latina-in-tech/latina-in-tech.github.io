@@ -1,4 +1,5 @@
 import { useMdxComponentsContext } from '@/context/mdxContext';
+import React from 'react';
 
 const Stacks: React.FC = () => {
   const stacks = useMdxComponentsContext().stacks;

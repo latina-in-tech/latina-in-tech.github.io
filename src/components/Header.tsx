@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { Disclosure } from '@headlessui/react';
 import { XMarkIcon, Bars3Icon } from '@heroicons/react/24/outline';
 import navigationLinks from '@/model/navigation';
+import React from 'react';
 
 function classNames(...classes: string[]): string {
   return classes.filter(Boolean).join(' ');
