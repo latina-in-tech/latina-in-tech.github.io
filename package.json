@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prettify": "prettier --write \"src/**/*.(ts|tsx)\""
+    "prettify": "prettier --write \"src/**/*.(ts|tsx)\"",
+    "prettier:check": "prettier --check \"src/**/*.(ts|tsx)\"",
+    "check:types": "tsc --noemit"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",
