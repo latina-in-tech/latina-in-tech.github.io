@@ -1,0 +1,19 @@
+name: 💫 Feature Request
+description: Suggest an idea to improve Latina In Tech website.
+labels: ["feature"]
+body:
+  - type: textarea
+    id: suggestion_summary
+    attributes:
+      label: '⭐ Suggestion'
+      description: "A summary of what you'd like to see added or changed"
+    validations:
+      required: true
+  - type: textarea
+    id: motivating_example
+    attributes:
+      label: '📃 Motivating Example'
+      description: |
+        If you were announcing this feature in a blog post, what's a short explanation that shows why this is an improvement?
+    validations:
+      required: true
