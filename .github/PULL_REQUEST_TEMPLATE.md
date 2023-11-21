@@ -1,22 +1,13 @@
-<!-- Thanks for submitting a pull request! We appreciate you spending the time to work on these changes. Please provide enough information so that others can review your pull request. The three fields below are mandatory. -->
+# 📚 Description
+## What
+<!-- Explain what this PR addresses: what this will do once merged? -->
+## Why
+<!-- Explain the **motivation** for making this change. What existing problem does the pull request solve? -->
+# 🧪 Testing Guide
+<!-- A testing plan to verify this code is very appreciated. Add here the steps to follow to verify the code -->
 
-## Summary:
+# 🖼 Screenshots/Recordings
+<!-- Do you have any images/videos to attach to this PR as asset in order to add more context for reviewer? -->
 
-<!-- Explain the **motivation** for making this change. What existing problem does the pull request solve? 
-
-Refer to issue if this is related to any.
--->
-
-## Changelog:
-
-<!-- Help reviewers and the release process by writing your own changelog entry.
-
-Pick one each for the category and type tags:
-
-[BREAKING|ADDED|CHANGED|DEPRECATED|REMOVED|FIXED|SECURITY] - Message
-
--->
-
-## Test Plan:
-
-<!-- Demonstrate the code is solid. Example: The exact actions you executed and their output, screenshots / videos if the pull request changes the user interface. -->
+# 📝 To Do
+<!-- Do you have left some known TODOs in the code, that you can not solve now? IF taht's the case, please create an issue for those and reference them here-->
