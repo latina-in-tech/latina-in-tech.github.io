@@ -1,8 +1,10 @@
 name: Verify Code for PR
 
 on:
+  push:
+    branches: ["main"]
   pull_request:
-    types: [opened, reopened]
+    branches: ["main"]
 
 jobs:
   build:
@@ -22,6 +24,9 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
+
+      - name: Install Node dependencies
+        run: npm ci --prefer-offline --no-audit
 
       - name: Check types
         run: |
