@@ -21,13 +21,14 @@ We organize monthly events for knowledge sharing & network.
 
 To build this project, we used [NextJs v. 13](https://nextjs.org/).
 
-_Having [Node JS](https://nodejs.org/en) installed on your machine is a requirement_
+_Having [Node JS](https://nodejs.org/en) installed on your machine is a requirement (see [.node-version](https://github.com/latina-in-tech/latina-in-tech.github.io/blob/main/.node-version) to install the required version)
 
 To build & start run following commands:
 
 - npm i
 - npm run dev
 
+Note: Ensure you have configured prettier (code formatting) in your IDE (see https://prettier.io/docs/en/editors). We use it for a common code style guide for the project and team.
 
 ## 👏 Contribuiting
 

@@ -1,6 +1,6 @@
 # Guidelines for contributing to Latina In Tech
 
-We are very happy that you are interested in Latina In Tech and want to contribute by entering bugs, feature requests, asking questions or even contribute code. 
+We are very happy that you are interested in Latina In Tech and want to contribute by entering bugs, feature requests, asking questions or even contributing code. 
 
 Please play with the rules. It's not only about what you say, but also how you say it. Playing nice increases the chance of getting features/bugfixes faster 😉
 
@@ -11,7 +11,7 @@ Remember that everything you get here is for free and in the end it's about givi
 We consider the issues our concrete work backlog. That means any item there should be on a quality level that it allows working on a topic.
 Discussions are more a playground for talking about ideas, features or problems before we actually derive a work item from it.
 
-Here are some guidance which might help you deciding whether to open a issue or a discussion post:
+Here are some guidance which might help you deciding whether to open an issue or a discussion post:
 
 Open a Discussion if:
 
@@ -21,7 +21,7 @@ Open a Discussion if:
 
 Open an Issue if:
 
-* You found a very obvious bug that something is not working. You can reproduce the issue and provide us the info how we can also reproduce it.
+* You found a very obvious bug that something is not working. You can reproduce the issue and provide us the info on how we can also reproduce it.
 * You found that something is missing on an existing feature and you want to have it extended.
 
 ## When entering an issue
@@ -30,11 +30,11 @@ Open an Issue if:
 
 **We will close issues not following the template or clean structure without further discussion.**
 
-Beside that check if your topic has already been covered. Use the search function and respond to an existing issue instead of opening a new one if you find a match.
+Besides that check if your topic has already been covered. Use the search function and respond to an existing issue instead of opening a new one if you find a match.
 
 ## Contributing Code
 
-Code changes can be offered by opening pull requests. To do so, we recommend following workflow:
+Code changes can be offered by opening pull requests. To do so, we recommend the following workflow:
 
 1. Start with [forking](https://docs.github.com/en/get-started/quickstart/fork-a-repo) this repository.
 This way you get a copy of our repository in your account where you can work.
@@ -47,9 +47,9 @@ This way you make your changes visible to us. Be sure to fill out the template.
 6. We will then review the code, and ensure that the CI system builds and runs your changes.
 7. We might ask for changes to the code style or feature depending to fulfill our guidelines and needs.
 8. If everything goes well, we will approve the change and merge it into the product.
-9. Once we will release a new version, we will of course mention you as contributor of the particular bugfix or feature 😉
+9. Once we will release a new version, we will of course mention you as a contributor of the particular bugfix or feature 😉
 
-If you are new to contributing to Open Source Projects on GitHub you might read through some articles in the web. The principle is usually always very similar, projects just might have different rules to follow.
+If you are new to contributing to Open Source Projects on GitHub you might read through some articles on the web. The principle is usually always very similar, projects just might have different rules to follow.
 
 <https://docs.github.com/en/get-started/quickstart/contributing-to-projects>
 <https://opensource.com/article/19/7/create-pull-request-github>
