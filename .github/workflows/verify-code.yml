@@ -23,6 +23,9 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
 
+      - name: Install Node dependencies
+        run: npm ci --prefer-offline --no-audit
+
       - name: Check types
         run: |
           npm run check:types
