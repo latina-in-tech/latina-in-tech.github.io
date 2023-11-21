@@ -1,8 +1,10 @@
 name: Verify Code for PR
 
 on:
+  push:
+    branches: ["main"]
   pull_request:
-    types: [opened, reopened]
+    branches: ["main"]
 
 jobs:
   build:
