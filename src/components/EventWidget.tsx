@@ -7,6 +7,7 @@ import React, { useCallback, useMemo } from 'react';
 import { AddToCalendarButton } from 'add-to-calendar-button-react';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
+import { SlSocialYoutube } from 'react-icons/sl';
 
 type AddToCalendarProps = {
   eventDateTime: DateTime;
@@ -136,6 +137,18 @@ const EventWidget: React.FC<Props> = ({ event }: Props) => {
             <p>{event.place}</p>
           </Link>
         </div>
+        {event.youtubeUrl && (
+          <div className='flex'>
+            <Link
+              href={event.youtubeUrl}
+              target={'_blank'}
+              className={'flex gap-2 flex-row'}
+            >
+              <SlSocialYoutube className='block h-6 w-6' aria-hidden='true' />
+              <p>vedi su youtube</p>
+            </Link>
+          </div>
+        )}
         <div className='text-xl font-bold text-gray-900 dark:text-slate-200 sm:text-2xl'>
           <p>{event.title}</p>
         </div>
