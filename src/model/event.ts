@@ -5,6 +5,7 @@ export interface IEvent {
   place: string;
   maps: string;
   duration?: Minute;
+  youtubeUrl?: string;
   thumbnail: string;
   title: string;
   description: string;

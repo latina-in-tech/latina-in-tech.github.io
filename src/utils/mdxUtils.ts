@@ -1,7 +1,6 @@
 import matter from 'gray-matter';
 import { join } from 'path';
 import fs from 'fs';
-import * as console from 'console';
 
 type Items = {
   [key: string]: string;
@@ -49,8 +48,7 @@ export function getEventItems(filePath: string, fields: string[] = []): Items {
 
 export function getAllEvents(fields: string[]): Items[] {
   const filePaths = getEventsFilePaths();
-  const events = filePaths
+  return filePaths
     .map(filePath => getEventItems(filePath, fields))
     .sort((event1, event2) => (event1.date > event2.date ? 1 : -1));
-  return events;
 }

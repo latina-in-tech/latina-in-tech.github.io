@@ -86,6 +86,7 @@ export const getStaticProps: GetStaticProps = async () => {
     'description',
     'thumbnail',
     'duration',
+    'youtubeUrl',
     'place',
     'maps'
   ]);
