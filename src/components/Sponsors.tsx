@@ -9,6 +9,7 @@ import weAreDevelopersDarkLogo from '../../public/assets/sponsors/wearedeveloper
 import viridexLogo from '../../public/assets/sponsors/viridex.png';
 import exoLogo from '../../public/assets/sponsors/exo.png';
 import klarnaLogo from '../../public/assets/sponsors/klarna.png';
+import jetbrainsLogo from '../../public/assets/sponsors/jetbrains.png';
 import React from 'react';
 import Link from 'next/link';
 
@@ -83,6 +84,14 @@ const sponsors: ReadonlyArray<Sponsor> = [
     logo: {
       light: klarnaLogo,
       dark: klarnaLogo
+    },
+    url: 'https://www.klarna.com/'
+  },
+  {
+    name: 'Jetbrains',
+    logo: {
+      light: jetbrainsLogo,
+      dark: jetbrainsLogo
     },
     url: 'https://www.klarna.com/'
   }
