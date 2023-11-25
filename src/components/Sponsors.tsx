@@ -93,7 +93,7 @@ const sponsors: ReadonlyArray<Sponsor> = [
       light: jetbrainsLogo,
       dark: jetbrainsLogo
     },
-    url: 'https://www.klarna.com/'
+    url: 'https://www.jetbrains.com/'
   }
 ];
 
