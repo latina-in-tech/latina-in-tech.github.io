@@ -3,9 +3,13 @@ import { IEvent } from '@/model/event';
 import { getAllEvents } from '@/utils/mdxUtils';
 import { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { DateTime } from 'luxon';
 import { Rate } from '@/components/Rate';
+import { Switch } from '@/components/Switch';
+import { Radio } from '@/components/Radio';
+import { TextArea } from '@/components/TextArea';
+import { PaperAirplaneIcon } from '@heroicons/react/24/outline';
 
 type Props = {
   events: [IEvent];
@@ -19,8 +23,32 @@ const filterPastEvents = (events: IEvent[]) => {
   });
 };
 
-const Home: NextPage<Props> = ({ events: events }: Props) => {
+const NOT_CAME_REASONS = [
+  'Motivi Personali',
+  'Non ho avuto tempo ma avrei voluto',
+  'Non mi interessava il programma',
+  'Non ne sapevo nulla'
+];
+
+const MAX_RATE = 5;
+
+const NewFeedback: NextPage<Props> = ({ events: events }: Props) => {
   const pastEvents = useMemo(() => filterPastEvents(events), [events]);
+
+  const lastEvent = pastEvents.sort(
+    (eventA, eventB) =>
+      DateTime.fromISO(eventB.date).toMillis() -
+      DateTime.fromISO(eventA.date).toMillis()
+  )[0];
+
+  const [hasPartecipatedLastEvent, setHasPartecipatedLastEvent] =
+    useState(false);
+  const [notCameReason, setNotCameReason] = useState(NOT_CAME_REASONS[0]);
+  const [generalRate, setGeneralRate] = useState(0);
+  const [eventRate, setEventRate] = useState(0);
+  const [hasLearned, setHasLearned] = useState(false);
+  const [mostImpressive, setMostImpressive] = useState('');
+  const [generalHints, setGeneralHints] = useState('');
 
   return (
     <>
@@ -39,7 +67,7 @@ const Home: NextPage<Props> = ({ events: events }: Props) => {
       <Header />
       <main className='flex flex-col gap-6 px-4 pb-4 sm:mt-8'>
         <div className='flex flex-col items-center'>
-          <h2 className='text-3xl font-bold text-gray-900 dark:text-slate-200 sm:text-4xl'>
+          <h2 className='text-3xl font-bold dark:text-slate-200 sm:text-4xl'>
             Feedback
           </h2>
           <p className='mx-auto mt-2 max-w-2xl text-m text-center text-gray-500 dark:text-slate-400 sm:mt-4'>
@@ -50,83 +78,104 @@ const Home: NextPage<Props> = ({ events: events }: Props) => {
           <div className='flex flex-col items-center gap-4 mt-8'>
             <div className='flex flex-col gap-4 justify-center items-center'>
               <p className='text-center font-bold'>
+                Hai partecipato all&apos;ultimo evento, <i>{lastEvent.title}</i>
+                &nbsp;di&nbsp;
+                {DateTime.fromISO(lastEvent.date).toLocaleString(
+                  DateTime.DATE_HUGE
+                )}
+                ?
+              </p>
+              <Switch
+                checked={hasPartecipatedLastEvent}
+                label={hasPartecipatedLastEvent ? 'Si' : 'No'}
+                onChange={() => {
+                  setHasPartecipatedLastEvent(!hasPartecipatedLastEvent);
+                }}
+              />
+            </div>
+
+            {hasPartecipatedLastEvent && (
+              <>
+                <div className='flex flex-col gap-4 justify-center items-center'>
+                  <p className='text-center font-bold'>
+                    Quanto è stato interessante l&apos;evento?
+                  </p>
+                  <Rate
+                    rate={eventRate}
+                    maxRate={MAX_RATE}
+                    setRate={newRate => setEventRate(newRate)}
+                  />
+                </div>
+
+                <div className='flex flex-col gap-4 justify-center items-center'>
+                  <p className='text-center font-bold'>
+                    C&apos;è qualcosa che ti ha particolarmente colpito durante
+                    l&apos;evento?
+                  </p>
+                  <Switch
+                    checked={hasLearned}
+                    label={hasLearned ? 'Si' : 'No'}
+                    onChange={() => {
+                      setHasLearned(!hasLearned);
+                    }}
+                  />
+                </div>
+
+                {hasLearned && (
+                  <div className='flex flex-col gap-4 justify-center items-center'>
+                    <p className='text-center font-bold'>
+                      Per favore, descrivi brevemente la cosa più interessante
+                      dello scorso evento:
+                    </p>
+                    <TextArea
+                      content={mostImpressive}
+                      onChange={newVal => setMostImpressive(newVal)}
+                      placeholder='Cosa ti ha colpito di più?'
+                    />
+                  </div>
+                )}
+              </>
+            )}
+
+            {!hasPartecipatedLastEvent && (
+              <div className='flex flex-col gap-4 justify-center items-center'>
+                <p className='text-center font-bold'>
+                  Ci dispiace che non ci sei stato, puoi dirci il motivo?
+                </p>
+                <Radio
+                  options={NOT_CAME_REASONS}
+                  selected={notCameReason}
+                  onSelected={selected => setNotCameReason(selected)}
+                />
+              </div>
+            )}
+
+            <div className='flex flex-col gap-4 justify-center items-center'>
+              <p className='text-center font-bold'>
                 Complessivamente quanto sei soddisfatto della community?
               </p>
-              <Rate />
+              <Rate
+                rate={generalRate}
+                maxRate={MAX_RATE}
+                setRate={newRate => setGeneralRate(newRate)}
+              />
             </div>
 
             <div className='flex flex-col gap-4 justify-center items-center'>
               <p className='text-center font-bold'>
-                Come defiiniresti la tua partecipazione agli eventi della
-                community?
+                Hai dei consigli generali per migliorare la community?
               </p>
-              <div className='grid grid-cols-4 gap-2 rounded-xl bg-slate-700 p-2'>
-                <div>
-                  <input
-                    type='radio'
-                    name='option'
-                    id='1'
-                    value='1'
-                    className='peer hidden'
-                    checked
-                  />
-                  <label
-                    htmlFor='1'
-                    className='block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-primary-light peer-checked:font-bold peer-checked:text-white'
-                  >
-                    Non vengo mai
-                  </label>
-                </div>
-
-                <div>
-                  <input
-                    type='radio'
-                    name='option'
-                    id='2'
-                    value='2'
-                    className='peer hidden'
-                  />
-                  <label
-                    htmlFor='2'
-                    className='block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-blue-500 peer-checked:font-bold peer-checked:text-white'
-                  >
-                    Vengo una volta ogni tanto
-                  </label>
-                </div>
-
-                <div>
-                  <input
-                    type='radio'
-                    name='option'
-                    id='3'
-                    value='3'
-                    className='peer hidden'
-                  />
-                  <label
-                    htmlFor='3'
-                    className='block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-blue-500 peer-checked:font-bold peer-checked:text-white'
-                  >
-                    Vengo quasi sempre
-                  </label>
-                </div>
-
-                <div>
-                  <input
-                    type='radio'
-                    name='option'
-                    id='4'
-                    value='3'
-                    className='peer hidden'
-                  />
-                  <label
-                    htmlFor='4'
-                    className='block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-blue-500 peer-checked:font-bold peer-checked:text-white'
-                  >
-                    Vengo sempre!
-                  </label>
-                </div>
-              </div>
+              <TextArea
+                content={generalHints}
+                onChange={newVal => setGeneralHints(newVal)}
+                placeholder='Scrivi ulteriori feedback...'
+              />
             </div>
+
+            <button className='flex items-center justify-between gap-2 rounded-md mt-4 mb-4 border border-transparent bg-primary bg-opacity-80 px-4 py-3 text-base font-medium text-white shadow-sm backdrop-blur-sm hover:bg-primary-dark sm:px-8'>
+              Invia Feedback
+              <PaperAirplaneIcon className='h-6 w-6' />
+            </button>
           </div>
         </div>
       </main>
@@ -134,7 +183,7 @@ const Home: NextPage<Props> = ({ events: events }: Props) => {
   );
 };
 
-export default Home;
+export default NewFeedback;
 
 export const getStaticProps: GetStaticProps = async () => {
   const events = getAllEvents([

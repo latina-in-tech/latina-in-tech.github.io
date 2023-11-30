@@ -16,11 +16,26 @@ const Star = ({ filled }: { filled?: boolean }) => {
   );
 };
 
-export const Rate = () => {
+export type RateProps = {
+  rate: number;
+  maxRate: number;
+  setRate: (newRate: number) => void;
+};
+
+export const Rate = ({ rate, maxRate, setRate }: RateProps) => {
   return (
     <div className='flex'>
-      <Star filled />
-      <Star />
+      {[...Array(maxRate)].map((_, index) => {
+        return (
+          <a
+            key={index}
+            className='cursor-pointer'
+            onClick={() => setRate(index + 1)}
+          >
+            <Star filled={rate > index} />
+          </a>
+        );
+      })}
     </div>
   );
 };
