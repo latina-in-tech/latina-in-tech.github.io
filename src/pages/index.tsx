@@ -8,6 +8,7 @@ import React, { useMemo } from 'react';
 import { Sponsors } from '@/components/Sponsors';
 import { DateTime } from 'luxon';
 import dynamic from 'next/dynamic';
+import { LeaveFeedback } from '@/components/LeaveFeedback';
 
 const EventsList = dynamic(() => import('@/components/EventsList'), {
   ssr: false
@@ -52,7 +53,7 @@ const Home: NextPage<Props> = ({ events: events }: Props) => {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <Header />
-      <main className='flex flex-col gap-6 px-4 pb-4'>
+      <main className='flex flex-col gap-6 px-4 pb-8'>
         <Hero />
 
         {nextEvents.length > 0 && (
@@ -71,6 +72,7 @@ const Home: NextPage<Props> = ({ events: events }: Props) => {
         )}
 
         <Sponsors />
+        <LeaveFeedback />
       </main>
     </>
   );
