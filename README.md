@@ -21,7 +21,7 @@ We organize monthly events for knowledge sharing & network.
 
 To build this project, we used [NextJs v. 13](https://nextjs.org/).
 
-_Having [Node JS](https://nodejs.org/en) installed on your machine is a requirement (see [.node-version](https://github.com/latina-in-tech/latina-in-tech.github.io/blob/main/.node-version) to install the required version)
+Having [Node JS](https://nodejs.org/en) installed on your machine is a requirement (see [.node-version](https://github.com/latina-in-tech/latina-in-tech.github.io/blob/main/.node-version) to install the required version)
 
 To build & start run following commands:
 
