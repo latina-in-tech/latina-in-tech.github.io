@@ -10,6 +10,8 @@ import { Switch } from '@/components/Switch';
 import { Radio } from '@/components/Radio';
 import { TextArea } from '@/components/TextArea';
 import { PaperAirplaneIcon } from '@heroicons/react/24/outline';
+import { saveFeedback } from '@/service/feedback/save';
+import { Alert } from '@/components/Alert';
 
 type Props = {
   events: [IEvent];
@@ -49,6 +51,28 @@ const NewFeedback: NextPage<Props> = ({ events: events }: Props) => {
   const [hasLearned, setHasLearned] = useState(false);
   const [mostImpressive, setMostImpressive] = useState('');
   const [generalHints, setGeneralHints] = useState('');
+
+  const [showError, setShowError] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  const sendFeedback = () => {
+    try {
+      saveFeedback({
+        hasPartecipatedLastEvent,
+        notCameReason,
+        generalHints,
+        generalRate,
+        eventRate,
+        hasLearned,
+        mostImpressive
+      });
+      setShowSuccess(true);
+      setShowError(false);
+    } catch (e) {
+      setShowSuccess(false);
+      setShowError(true);
+    }
+  };
 
   return (
     <>
@@ -172,10 +196,32 @@ const NewFeedback: NextPage<Props> = ({ events: events }: Props) => {
               />
             </div>
 
-            <button className='flex items-center justify-between gap-2 rounded-md mt-4 mb-4 border border-transparent bg-primary bg-opacity-80 px-4 py-3 text-base font-medium text-white shadow-sm backdrop-blur-sm hover:bg-primary-dark sm:px-8'>
+            <button
+              onClick={sendFeedback}
+              className='flex items-center justify-between gap-2 rounded-md mt-4 mb-4 border border-transparent bg-primary bg-opacity-80 px-4 py-3 text-base font-medium text-white shadow-sm backdrop-blur-sm hover:bg-primary-light sm:px-8'
+            >
               Invia Feedback
               <PaperAirplaneIcon className='h-6 w-6' />
             </button>
+
+            {showSuccess && (
+              <Alert
+                title='Grazie!'
+                onGoBackToHome={() => (window.location.href = './../')}
+                content='Abbiamo ricevuto il tuo feedback, grazie del contributo alla community! Puoi tornare alla Home.'
+                type='success'
+                onDismiss={() => setShowSuccess(false)}
+              />
+            )}
+
+            {showError && (
+              <Alert
+                title='Errore'
+                content='Impossibile salvare feedback, si prega di riprovare'
+                type='error'
+                onDismiss={() => setShowError(false)}
+              />
+            )}
           </div>
         </div>
       </main>

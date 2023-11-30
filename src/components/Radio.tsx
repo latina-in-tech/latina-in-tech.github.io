@@ -8,7 +8,7 @@ export type RadioProps = {
 
 export const Radio = ({ options, selected, onSelected }: RadioProps) => {
   return (
-    <div className='grid grid-cols-4 gap-2 rounded-xl bg-slate-700 px-2 sm:py-2 items-center'>
+    <div className='grid grid-cols-4 gap-2 rounded-xl bg-slate-300 dark:bg-slate-700 px-2 sm:py-2 items-center'>
       {options.map((option, index) => {
         return (
           <div key={index}>
@@ -23,7 +23,7 @@ export const Radio = ({ options, selected, onSelected }: RadioProps) => {
             />
             <label
               htmlFor={index + ''}
-              className='block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-primary-light peer-checked:text-white'
+              className='block cursor-pointer select-none rounded-xl p-2 text-center  peer-checked:bg-primary peer-checked:text-white dark:peer-checked:bg-primary-light'
             >
               {option}
             </label>

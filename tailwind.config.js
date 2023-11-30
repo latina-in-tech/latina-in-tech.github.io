@@ -19,7 +19,9 @@ module.exports = {
       gray: colors.gray,
       white: colors.white,
       slate: colors.slate,
-      transparent: colors.transparent
+      transparent: colors.transparent,
+      green: colors.green,
+      red: colors.red
     }
   }
 };
