@@ -55,9 +55,9 @@ const NewFeedback: NextPage<Props> = ({ events: events }: Props) => {
   const [showError, setShowError] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
-  const sendFeedback = () => {
+  const sendFeedback = async () => {
     try {
-      saveFeedback({
+      await saveFeedback({
         hasPartecipatedLastEvent,
         notCameReason,
         generalHints,
