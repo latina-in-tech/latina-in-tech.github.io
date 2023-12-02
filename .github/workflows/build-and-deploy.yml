@@ -29,9 +29,8 @@ jobs:
           sed -i "s/API_KEY_HERE/${{ secrets.API_KEY }}/g" .env 
           sed -i "s/PROJECT_ID_HERE/${{ secrets.PROJECT_ID }}/g" .env 
           sed -i "s/MESSAGING_SENDER_ID_HERE/${{ secrets.MESSAGING_SENDER_ID }}/g" .env 
-          sed -i "s/APP_ID_HERE/$APP_I{{ secrets.APP_ID }}D/g" .env 
+          sed -i "s/APP_ID_HERE/${{ secrets.APP_ID }}/g" .env 
           sed -i "s/MEASUREMENT_ID_HERE/${{ secrets.MEASUREMENT_ID }}/g" .env
-          echo "${{ secrets.TEST }} test"
 
 
       - name: Build
