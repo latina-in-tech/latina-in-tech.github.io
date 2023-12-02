@@ -9,7 +9,7 @@ import { Rate } from '@/components/Rate';
 import { Switch } from '@/components/Switch';
 import { Radio } from '@/components/Radio';
 import { TextArea } from '@/components/TextArea';
-import { PaperAirplaneIcon } from '@heroicons/react/24/outline';
+import { PaperAirplaneIcon, HomeIcon } from '@heroicons/react/24/outline';
 import { saveFeedback } from '@/service/feedback/save';
 import { Alert } from '@/components/Alert';
 
@@ -42,8 +42,11 @@ const NewFeedback: NextPage<Props> = ({ events: events }: Props) => {
 
   const [showError, setShowError] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [sentFeedback, setSentFeedback] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const sendFeedback = async () => {
+    setIsLoading(true);
     try {
       await saveFeedback({
         hasPartecipatedLastEvent,
@@ -56,9 +59,12 @@ const NewFeedback: NextPage<Props> = ({ events: events }: Props) => {
       });
       setShowSuccess(true);
       setShowError(false);
+      setSentFeedback(true);
     } catch (e) {
       setShowSuccess(false);
       setShowError(true);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -184,14 +190,6 @@ const NewFeedback: NextPage<Props> = ({ events: events }: Props) => {
               />
             </div>
 
-            <button
-              onClick={sendFeedback}
-              className='flex items-center justify-between gap-2 rounded-md mt-4 mb-4 border border-transparent bg-primary bg-opacity-80 px-4 py-3 text-base font-medium text-white shadow-sm backdrop-blur-sm hover:bg-primary-light sm:px-8'
-            >
-              Invia Feedback
-              <PaperAirplaneIcon className='h-6 w-6' />
-            </button>
-
             {showSuccess && (
               <Alert
                 title='Grazie!'
@@ -202,6 +200,16 @@ const NewFeedback: NextPage<Props> = ({ events: events }: Props) => {
               />
             )}
 
+            {sentFeedback && (
+              <button
+                onClick={() => (window.location.href = './../')}
+                className='flex items-center justify-between gap-2 rounded-md mt-4 mb-4 border border-transparent bg-primary bg-opacity-80 px-4 py-3 text-base font-medium text-white shadow-sm backdrop-blur-sm hover:bg-primary-light sm:px-8'
+              >
+                Torna Indietro
+                <HomeIcon className='h-6 w-6' />
+              </button>
+            )}
+
             {showError && (
               <Alert
                 title='Errore'
@@ -209,6 +217,17 @@ const NewFeedback: NextPage<Props> = ({ events: events }: Props) => {
                 type='error'
                 onDismiss={() => setShowError(false)}
               />
+            )}
+
+            {!sentFeedback && (
+              <button
+                disabled={isLoading}
+                onClick={sendFeedback}
+                className='flex items-center justify-between gap-2 rounded-md mt-4 mb-4 border border-transparent bg-primary bg-opacity-80 px-4 py-3 text-base font-medium text-white shadow-sm backdrop-blur-sm hover:bg-primary-light sm:px-8'
+              >
+                Invia Feedback
+                <PaperAirplaneIcon className='h-6 w-6' />
+              </button>
             )}
           </div>
         </div>
