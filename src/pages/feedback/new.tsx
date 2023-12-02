@@ -1,5 +1,5 @@
 import Header from '@/components/Header';
-import { filterPastEvents, IEvent, sortEventByDateDesc } from '@/model/event';
+import { filterPastEvents, IEvent, sortEvents } from '@/model/event';
 import { getAllEvents } from '@/utils/mdxUtils';
 import { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
@@ -29,7 +29,7 @@ const MAX_RATE = 5;
 const NewFeedback: NextPage<Props> = ({ events: events }: Props) => {
   const pastEvents = useMemo(() => filterPastEvents(events), [events]);
 
-  const lastEvent = sortEventByDateDesc(pastEvents)[0];
+  const lastEvent = sortEvents(pastEvents)[0];
 
   const [hasPartecipatedLastEvent, setHasPartecipatedLastEvent] =
     useState(false);
