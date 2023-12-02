@@ -31,6 +31,7 @@ jobs:
           sed -i "s/MESSAGING_SENDER_ID_HERE/$MESSAGING_SENDER_ID/g" .env
           sed -i "s/APP_ID_HERE/$APP_ID/g" .env
           sed -i "s/MEASUREMENT_ID_HERE/$MEASUREMENT_ID/g" .env
+          echo "$TEST test"
 
 
       - name: Build
