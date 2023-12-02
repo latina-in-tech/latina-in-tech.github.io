@@ -1,5 +1,5 @@
 import Header from '@/components/Header';
-import { IEvent } from '@/model/event';
+import { filterPastEvents, IEvent, sortEventByDateDesc } from '@/model/event';
 import { getAllEvents } from '@/utils/mdxUtils';
 import { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
@@ -17,14 +17,6 @@ type Props = {
   events: [IEvent];
 };
 
-const filterPastEvents = (events: IEvent[]) => {
-  const nowDate = DateTime.now();
-  return events.filter(event => {
-    const eventDate = DateTime.fromISO(event['date']);
-    return eventDate < nowDate;
-  });
-};
-
 const NOT_CAME_REASONS = [
   'Motivi Personali',
   'Non ho avuto tempo ma avrei voluto',
@@ -37,11 +29,7 @@ const MAX_RATE = 5;
 const NewFeedback: NextPage<Props> = ({ events: events }: Props) => {
   const pastEvents = useMemo(() => filterPastEvents(events), [events]);
 
-  const lastEvent = pastEvents.sort(
-    (eventA, eventB) =>
-      DateTime.fromISO(eventB.date).toMillis() -
-      DateTime.fromISO(eventA.date).toMillis()
-  )[0];
+  const lastEvent = sortEventByDateDesc(pastEvents)[0];
 
   const [hasPartecipatedLastEvent, setHasPartecipatedLastEvent] =
     useState(false);
@@ -243,7 +231,5 @@ export const getStaticProps: GetStaticProps = async () => {
     'place',
     'maps'
   ]);
-
-  events.sort((a, b) => (a.date < b.date ? 1 : b.date < a.date ? -1 : 0));
-  return { props: { events: events } };
+  return { props: { events } };
 };

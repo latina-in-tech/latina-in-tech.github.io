@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { MapPinIcon, CalendarIcon } from '@heroicons/react/24/outline';
-import { IEvent, Minute } from '@/model/event';
+import { IEvent, isPastEvent, Minute } from '@/model/event';
 import { DateTime } from 'luxon';
 import React, { useCallback, useMemo } from 'react';
 import { AddToCalendarButton } from 'add-to-calendar-button-react';
@@ -92,19 +92,19 @@ const EventWidget: React.FC<Props> = ({ event }: Props) => {
     }
   }, [event.thumbnail, event.title]);
   const eventDate = useMemo(() => DateTime.fromISO(event.date), [event.date]);
-  const isPastEvent = DateTime.now() > eventDate;
+  const isPast = useMemo(() => isPastEvent(event), [event]);
   const getEventWidgetClasses = useCallback(() => {
-    const isPastEvent = DateTime.now() > eventDate;
     const baseClasses =
       'flex flex-col overflow-hidden rounded-xl bg-white shadow-lg dark:bg-slate-800';
-    if (isPastEvent) {
+    if (isPast) {
       return `${baseClasses} opacity-70 grayScale`;
     } else {
       return baseClasses;
     }
-  }, [eventDate]);
+  }, [isPast]);
   const formattedDate = eventDate.toLocaleString(
-    DateTime.DATETIME_MED_WITH_WEEKDAY
+    DateTime.DATETIME_MED_WITH_WEEKDAY,
+    { locale: 'it' }
   );
 
   return (
@@ -112,7 +112,7 @@ const EventWidget: React.FC<Props> = ({ event }: Props) => {
       {renderEventImage()}
       <div className='flex flex-1 flex-col gap-2 p-4'>
         <div className='flex gap-2'>
-          {isPastEvent ? (
+          {isPast ? (
             <>
               <CalendarIcon className='block h-6 w-6' aria-hidden='true' />
               <p>{formattedDate}</p>
