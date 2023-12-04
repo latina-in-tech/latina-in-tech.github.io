@@ -1,6 +1,7 @@
 import Image, { StaticImageData } from 'next/image';
 import theSpaceLogo from '../../public/assets/sponsors/thespace_logo.png';
 import gruspLogo from '../../public/assets/sponsors/grusp.png';
+import italiaOpenSourceLogo from '../../public/assets/sponsors/italia_opensource.png';
 import rnhLogo from '../../public/assets/sponsors/rnh.png';
 import codemotionLightLogo from '../../public/assets/sponsors/codemotion/light.png';
 import codemotionDarkLogo from '../../public/assets/sponsors/codemotion/dark.svg';
@@ -94,6 +95,14 @@ const sponsors: ReadonlyArray<Sponsor> = [
       dark: jetbrainsLogo
     },
     url: 'https://www.jetbrains.com/'
+  },
+  {
+    name: 'Italia Open-Source',
+    logo: {
+      light: italiaOpenSourceLogo,
+      dark: italiaOpenSourceLogo
+    },
+    url: 'https://italiaopensource.com/'
   }
 ];
 
