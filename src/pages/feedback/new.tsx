@@ -99,7 +99,8 @@ const NewFeedback: NextPage<Props> = ({ events: events }: Props) => {
                 Hai partecipato all&apos;ultimo evento, <i>{lastEvent.title}</i>
                 &nbsp;di&nbsp;
                 {DateTime.fromISO(lastEvent.date).toLocaleString(
-                  DateTime.DATE_HUGE
+                  DateTime.DATE_HUGE,
+                  { locale: 'it' }
                 )}
                 ?
               </p>
