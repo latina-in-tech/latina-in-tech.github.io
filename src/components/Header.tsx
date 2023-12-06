@@ -6,13 +6,23 @@ import Image from 'next/image';
 import { Disclosure } from '@headlessui/react';
 import { XMarkIcon, Bars3Icon } from '@heroicons/react/24/outline';
 import navigationLinks from '@/model/navigation';
-import React from 'react';
+import React, { useMemo } from 'react';
+import { usePathname } from 'next/navigation';
 
 function classNames(...classes: string[]): string {
   return classes.filter(Boolean).join(' ');
 }
 
 const Header: React.FC = () => {
+  const pathname = usePathname();
+  const links = useMemo(
+    () =>
+      navigationLinks.map(link => ({
+        ...link,
+        current: link.href === pathname
+      })),
+    [pathname]
+  );
   return (
     <Disclosure as='nav'>
       {({ open: isOpen }) => (
@@ -59,21 +69,20 @@ const Header: React.FC = () => {
                 </div>
                 <div className='hidden items-center sm:ml-6 lg:flex'>
                   <div className='flex space-x-4'>
-                    {navigationLinks.map(item => (
+                    {links.map(item => (
                       <Link
                         key={item.name}
                         href={item.href}
-                        target='_blank'
+                        target={item.local ? undefined : '_blank'}
                         className={classNames(
                           item.current
                             ? 'bg-slate-700 text-white dark:bg-black dark:bg-opacity-4 dark:text-slate-300'
                             : 'text-slate-600 hover:bg-slate-200 dark:text-slate-300 dark:hover:bg-black dark:hover:bg-opacity-20',
-                          'flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium'
+                          'flex items-center gap-2 rounded-md px-2 py-2 text-sm font-medium'
                         )}
                         aria-current={item.current ? 'page' : undefined}
                       >
-                        {item.icon && <item.icon></item.icon>}
-                        {item.name}
+                        <item.icon fontSize={24} />
                       </Link>
                     ))}
                   </div>
@@ -99,8 +108,7 @@ const Header: React.FC = () => {
                       'flex cursor-pointer items-center gap-2 rounded-md px-3 py-2 text-base font-medium'
                     )}
                   >
-                    {item.icon && <item.icon></item.icon>}
-                    {item.name}
+                    <item.icon fontSize={24} />
                   </span>
                 </Disclosure.Button>
               ))}
