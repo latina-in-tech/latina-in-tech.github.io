@@ -15,7 +15,7 @@ const navigationLinks = [
     href: '/admins/team',
     local: true,
     icon: RiTeamFill,
-    current: true
+    current: false
   },
   {
     name: 'Telegram',
