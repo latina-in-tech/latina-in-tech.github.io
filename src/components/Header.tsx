@@ -93,7 +93,7 @@ const Header: React.FC = () => {
 
           <Disclosure.Panel className='lg:hidden'>
             <div className='space-y-1 px-2 pt-2 pb-3'>
-              {navigationLinks.map(item => (
+              {links.map(item => (
                 <Disclosure.Button
                   as={Link}
                   key={item.name}
