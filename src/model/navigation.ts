@@ -7,8 +7,16 @@ import {
   FaYoutube as YoutubeIcon,
   FaInstagram as InstagramIcon
 } from 'react-icons/fa';
+import { RiTeamFill } from 'react-icons/ri';
 
 const navigationLinks = [
+  {
+    name: 'Admin team',
+    href: '/admins/team',
+    local: true,
+    icon: RiTeamFill,
+    current: false
+  },
   {
     name: 'Telegram',
     href: 'https://t.me/+QazM4E1vaUM3NDQ0',
