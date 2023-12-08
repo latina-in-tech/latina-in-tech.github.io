@@ -149,7 +149,7 @@ const AdminTeam = () => {
             </h2>
             <p className='mx-auto max-w-2xl text-m text-center text-gray-500 dark:text-slate-400 sm:mt-2'>
               Un gruppo di persone che condividono la passione per la tecnologia
-              ed il proprio territorio.
+              e per il proprio territorio.
             </p>
           </div>
           <div className='grid grid-cols-1 justify-items-center md:grid-cols-3 lg:grid-cols-4 gap-4'>

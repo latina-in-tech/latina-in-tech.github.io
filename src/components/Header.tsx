@@ -8,7 +8,6 @@ import { XMarkIcon, Bars3Icon } from '@heroicons/react/24/outline';
 import navigationLinks from '@/model/navigation';
 import React, { useMemo } from 'react';
 import { usePathname } from 'next/navigation';
-import { useRouter } from 'next/router';
 
 function classNames(...classes: string[]): string {
   return classes.filter(Boolean).join(' ');
@@ -16,7 +15,6 @@ function classNames(...classes: string[]): string {
 
 const Header: React.FC = () => {
   const pathname = usePathname();
-  const router = useRouter();
   const links = useMemo(
     () =>
       navigationLinks.map(link => ({
@@ -77,16 +75,12 @@ const Header: React.FC = () => {
                         href={item.href}
                         target={item.local ? undefined : '_blank'}
                         className={classNames(
-                          item.current && router.pathname === item.href
+                          item.current
                             ? 'bg-slate-700 text-white dark:bg-black dark:bg-opacity-4 dark:text-slate-300'
                             : 'text-slate-600 hover:bg-slate-200 dark:text-slate-300 dark:hover:bg-black dark:hover:bg-opacity-20',
                           'flex items-center gap-2 rounded-md px-2 py-2 text-sm font-medium'
                         )}
-                        aria-current={
-                          item.current && router.pathname === item.href
-                            ? 'page'
-                            : undefined
-                        }
+                        aria-current={item.current ? 'page' : undefined}
                       >
                         <item.icon fontSize={24} />
                       </Link>
@@ -104,15 +98,11 @@ const Header: React.FC = () => {
                   as={Link}
                   key={item.name}
                   href={item.href}
-                  aria-current={
-                    item.current && router.pathname === item.href
-                      ? 'page'
-                      : undefined
-                  }
+                  aria-current={item.current ? 'page' : undefined}
                 >
                   <span
                     className={classNames(
-                      item.current && router.pathname === item.href
+                      item.current
                         ? 'bg-slate-700 text-white dark:bg-black dark:bg-opacity-40 dark:text-slate-300'
                         : 'text-slate-600 hover:bg-slate-200 dark:text-slate-300 dark:hover:bg-black dark:hover:bg-opacity-20',
                       'flex cursor-pointer items-center gap-2 rounded-md px-3 py-2 text-base font-medium'
