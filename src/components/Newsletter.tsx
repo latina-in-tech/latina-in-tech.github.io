@@ -39,6 +39,7 @@ export const Newsletter = () => {
                   name='b_08bff1fa2d8bd95bf693be2ab_8489b0a8a1'
                   tabIndex={-1}
                   value=''
+                  readOnly={true}
                 />
               </span>
               <div hidden>
