@@ -13,6 +13,7 @@ import React, { useMemo } from 'react';
 import { Sponsors } from '@/components/Sponsors';
 import { LeaveFeedback } from '@/components/LeaveFeedback';
 import EventsList from '@/components/EventsList';
+import { Newsletter } from '@/components/Newsletter';
 
 type Props = {
   events: [IEvent];
@@ -46,6 +47,8 @@ const Home: NextPage<Props> = ({ events: events }: Props) => {
       <main className='flex flex-col gap-6 px-4 pb-8'>
         <Hero />
 
+        <div className='mb-4 hidden md:block' />
+
         {nextEvents.length > 0 && (
           <EventsList
             heading='Prossimi Eventi'
@@ -60,9 +63,11 @@ const Home: NextPage<Props> = ({ events: events }: Props) => {
             events={pastEvents}
           />
         )}
-
-        <Sponsors />
+        <Newsletter />
         <LeaveFeedback />
+
+        <div className='mb-4' />
+        <Sponsors />
       </main>
     </>
   );
