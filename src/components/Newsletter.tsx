@@ -16,8 +16,8 @@ export const Newsletter = () => {
                 </span>
               </h2>
               <p className='mt-2 text-lg'>
-                Organizziamo eventi gratuiti incentrati sul mondo tech.
-                Iscrivendoti non rischierai di rimanerne all&apos;oscuro!
+                Iscrivendoti riceverai aggiornamenti sugli eventi e sulle
+                iniziative che organizzeremo.
               </p>
             </div>
             <form
