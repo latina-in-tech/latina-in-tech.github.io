@@ -16,8 +16,9 @@ export const Newsletter = () => {
                 </span>
               </h2>
               <p className='mt-2 text-lg'>
-                Iscrivendoti riceverai aggiornamenti sugli eventi e sulle
-                iniziative che organizzeremo.
+                Unisciti alla nostra community! Iscriviti per non perderti gli
+                eventi e le attività che organizzeremo. Stay connected, stay
+                tech-savvy!
               </p>
             </div>
             <form
