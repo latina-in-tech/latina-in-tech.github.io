@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import latina from '../../public/assets/latina.png';
+import latina from '../../public/assets/latina.jpg';
 import navigationLinks from '@/model/navigation';
 import { useTelegramGroupInfo } from '@/utils/telegram';
 import React from 'react';
