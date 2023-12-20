@@ -13,6 +13,15 @@ export interface IEvent {
   description: string;
   prerequisites: string[];
   stacks: string[];
+  speakers?: string[];
+}
+
+export interface ISpeaker {
+  name: string;
+  role: string;
+  company: string;
+  thumbnail: string;
+  linkedinUrl: string;
 }
 
 export const isPastEvent = (event: IEvent): boolean =>

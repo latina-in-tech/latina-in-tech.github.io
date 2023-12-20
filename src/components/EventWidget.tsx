@@ -4,70 +4,11 @@ import { MapPinIcon, CalendarIcon } from '@heroicons/react/24/outline';
 import { IEvent, isPastEvent, Minute } from '@/model/event';
 import { DateTime } from 'luxon';
 import React, { useCallback, useMemo } from 'react';
-import { AddToCalendarButton } from 'add-to-calendar-button-react';
+import { AddToCalendar, defaultEventDuration } from '@/components/AddToCalendar'
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import { SlSocialYoutube } from 'react-icons/sl';
 
-type AddToCalendarProps = {
-  eventDateTime: DateTime;
-  eventDuration: Minute;
-  place: string;
-  name: string;
-  description: string;
-};
-const defaultEventDuration: Minute = 120;
-const AddToCalendar: React.FC<AddToCalendarProps> = ({
-  eventDateTime,
-  eventDuration,
-  place,
-  name,
-  description
-}) => {
-  const startDate = useMemo(
-    () =>
-      `${eventDateTime.year}-${eventDateTime.month
-        .toString()
-        .padStart(2, '0')}-${eventDateTime.day.toString().padStart(2, '0')}`,
-    [eventDateTime.day, eventDateTime.month, eventDateTime.year]
-  );
-  const formatTime = useCallback(
-    (date: DateTime) =>
-      `${date.hour.toString().padStart(2, '0')}:${date.minute
-        .toString()
-        .padStart(2, '0')}`,
-    []
-  );
-  const eventEndDateTime = useMemo(
-    () => eventDateTime.plus({ minutes: eventDuration }),
-    [eventDateTime, eventDuration]
-  );
-
-  return (
-    <AddToCalendarButton
-      name={name}
-      description={description}
-      startDate={startDate}
-      startTime={formatTime(eventDateTime)}
-      endTime={formatTime(eventEndDateTime)}
-      timeZone='Europe/Rome'
-      location={place}
-      buttonStyle='date'
-      buttonsList
-      hideBackground
-      size='3'
-      label='aggiungi al calendario'
-      options={[
-        'Google',
-        'Apple',
-        'Yahoo',
-        'Outlook.com',
-        'Microsoft365',
-        'iCal'
-      ]}
-    />
-  );
-};
 
 const thumbHeight = 400;
 type Props = {
