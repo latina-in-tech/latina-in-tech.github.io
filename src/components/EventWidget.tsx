@@ -4,11 +4,13 @@ import { MapPinIcon, CalendarIcon } from '@heroicons/react/24/outline';
 import { IEvent, isPastEvent, Minute } from '@/model/event';
 import { DateTime } from 'luxon';
 import React, { useCallback, useMemo } from 'react';
-import { AddToCalendar, defaultEventDuration } from '@/components/AddToCalendar'
+import {
+  AddToCalendar,
+  defaultEventDuration
+} from '@/components/AddToCalendar';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import { SlSocialYoutube } from 'react-icons/sl';
-
 
 const thumbHeight = 400;
 type Props = {
