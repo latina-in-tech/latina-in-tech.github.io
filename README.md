@@ -1,6 +1,6 @@
 # Latina In Tech
 
-[![Official Site](https://img.shields.io/badge/Webiste-latina--in--tech-blue.svg)](https://latina-in-tech.github.io/)
+[![Official Site](https://img.shields.io/badge/Webiste-latina--in--tech-blue.svg)](https://www.latinaintech.org/)
 [![Linkedin](https://img.shields.io/badge/Linked_In-latina--in--tech-blue.svg)](https://www.linkedin.com/company/latina-in-tech)
 [![Telegram](https://img.shields.io/badge/Telegram-latina--in--tech-blue.svg)](https://t.me/+QazM4E1vaUM3NDQ0)
 [![Twitter](https://img.shields.io/badge/X-theLITCommunity-cyan.svg)](https://twitter.com/theLITCommunity)
@@ -30,13 +30,13 @@ To build & start run following commands:
 
 Note: Ensure you have configured prettier (code formatting) in your IDE (see https://prettier.io/docs/en/editors). We use it for a common code style guide for the project and team.
 
-## 👏 Contribuiting
+## 👏 Contributing
 
 First of all, **THANK YOU** for choosing to contribute to this project!
 
-You may want to read our [Contribuiting Guideline](CONTRIBUTING.md) for more info on how to do it, as well as our [Code of Conduct](code-of-conduct.md).
+You may want to read our [Contributing Guideline](CONTRIBUTING.md) for more info on how to do it, as well as our [Code of Conduct](code-of-conduct.md).
 
 
 ## 📄 License
 
-Latina In Tech Webiste is MIT licensed, as found in the [LICENSE](LICENSE) file.
+Latina In Tech Website is MIT licensed, as found in the [LICENSE](LICENSE) file.
