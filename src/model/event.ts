@@ -14,6 +14,7 @@ export interface IEvent {
   prerequisites: string[];
   stacks: string[];
   speakers?: string[];
+  published?: string;
 }
 
 export interface ISpeaker {
@@ -30,11 +31,42 @@ export const isPastEvent = (event: IEvent): boolean =>
 export const isComingEvent = (event: IEvent): boolean =>
   DateTime.fromISO(event.date) >= DateTime.now();
 
-export const filterPastEvents = (events: IEvent[]) =>
-  events.filter(isPastEvent);
+export const isPublished = (event: IEvent): boolean =>
+  (event.published ?? 'true') == 'true';
 
-export const filterComingEvents = (events: IEvent[]) =>
-  events.filter(isComingEvent);
+export const filterPastEvents = (
+  events: IEvent[],
+  eventType: 'published' | 'all' | 'draft' = 'published'
+) => {
+  const all: IEvent[] = events.filter(isPastEvent);
+  switch (eventType) {
+    case 'all':
+      return all;
+    case 'published':
+      return all.filter(isPublished);
+    case 'draft':
+      return all.filter(rk => !isPublished(rk));
+    default:
+      return [];
+  }
+};
+
+export const filterComingEvents = (
+  events: IEvent[],
+  eventType: 'published' | 'all' | 'draft' = 'published'
+) => {
+  const all: IEvent[] = events.filter(isComingEvent);
+  switch (eventType) {
+    case 'all':
+      return all;
+    case 'published':
+      return all.filter(isPublished);
+    case 'draft':
+      return all.filter(rk => !isPublished(rk));
+    default:
+      return [];
+  }
+};
 
 export const sortEvents = (events: IEvent[], order: 'asc' | 'desc' = 'desc') =>
   events.sort(

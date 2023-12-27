@@ -85,7 +85,9 @@ export const getStaticProps: GetStaticProps = async () => {
     'duration',
     'youtubeUrl',
     'place',
-    'maps'
+    'maps',
+    'published',
+    'speakers'
   ]);
 
   return { props: { events } };

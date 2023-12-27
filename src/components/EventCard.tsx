@@ -41,7 +41,7 @@ const EventCard: React.FC<Props> = ({ event }: Props) => {
   return (
     <section className='sm:my-10'>
       <div className='mx-auto px-4 sm:px-6 lg:px-8'>
-        <div className='relative -mx-4 overflow-hidden bg-slate-300 py-16 px-4 dark:bg-slate-800 sm:px-6 md:mx-0 md:rounded-3xl md:px-16 xl:px-24'>
+        <div className='relative -mx-4 overflow-hidden py-16 px-4 bg-slate-300 dark:bg-slate-800 sm:px-6 md:mx-0 md:rounded-3xl md:px-16 xl:px-24'>
           <div className='flex flex-col bg-white shadow-lg rounded-lg overflow-hidden'>
             <div className='flex justify-between bg-gray-200 text-gray-700 text-lg px-6 py-4 dark:bg-blue-300 font-bold'>
               <span className='border-gray-400 rounded-full px-6 py-1 border dark:bg-blue-800 bg-slate-100'>
@@ -52,7 +52,17 @@ const EventCard: React.FC<Props> = ({ event }: Props) => {
                   />
                 </Link>
               </span>
-              <span>{event.title}</span>
+              {(event.published ?? 'true') == 'false' ? (
+                <>
+                  <span>
+                    <span className='animate-ping border-gray-400 rounded-full border px-4 py-1 bg-red-600'></span>
+                    {event.title}
+                    <span className='animate-ping border-gray-400 rounded-full border px-4 py-1 bg-red-600'></span>
+                  </span>
+                </>
+              ) : (
+                <span>{event.title}</span>
+              )}
             </div>
 
             <div className='flex justify-between items-center px-6 py-4 dark:bg-blue-950'>
@@ -120,8 +130,8 @@ const EventCard: React.FC<Props> = ({ event }: Props) => {
             </div>
 
             <div className=''>
-              <div className='md:flex bg-gray-100 dark:bg-blue-600'>
-                <div className='p-8'>
+              <div className='md:flex md:flex-row  bg-gray-100 dark:bg-blue-600'>
+                <div className='basis-3/4 p-8'>
                   <ReactMarkdown
                     components={{
                       a: ({ node, ...props }) => (
@@ -149,7 +159,7 @@ const EventCard: React.FC<Props> = ({ event }: Props) => {
                     {event.description}
                   </ReactMarkdown>
                 </div>
-                <div className='md:shrink-0'>
+                <div className='basis-1/4 md:flex-none'>
                   <br />
                   <Image
                     height={thumbHeight}
