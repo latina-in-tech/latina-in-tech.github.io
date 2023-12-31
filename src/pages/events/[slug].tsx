@@ -24,9 +24,7 @@ const EventPage: React.FC<Props> = ({ source, frontMatter }: Props) => {
   const { setPrerequisites, setStacks } = useMdxComponentsContext();
 
   useEffect(() => {
-    // set prerequisites
     setPrerequisites(frontMatter.prerequisites);
-    // set stacks
     setStacks(frontMatter.stacks);
   }, [
     setPrerequisites,
@@ -58,9 +56,7 @@ interface Iparams extends ParsedUrlQuery {
 
 export const getStaticProps: GetStaticProps = async context => {
   const { slug } = context.params as Iparams;
-  // get the slug
   const { content, data } = getEvent(slug);
-  // serialize the data on the server side
   const mdxSource = await serialize(content, { scope: data });
   return {
     props: {
