@@ -11,9 +11,9 @@ export interface IEvent {
   thumbnail: string;
   title: string;
   description: string;
-  prerequisites: string[];
-  stacks: string[];
+  tags: string[];
   speakers?: string[];
+  signup: string;
 }
 
 export interface ISpeaker {

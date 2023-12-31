@@ -1,50 +1,125 @@
-import { serialize } from 'next-mdx-remote/serialize';
 import { GetStaticProps, GetStaticPaths } from 'next';
-import React, { useEffect } from 'react';
-import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
+import React, { useCallback } from 'react';
 
 import { getEvent, getAllEvents } from '@/utils/mdxUtils';
-import Prerequisites from '../../components/Prerequisites';
 import { ParsedUrlQuery } from 'querystring';
-import Stacks from '../../components/Stacks';
-import { IEvent } from '@/model/event';
-import { useMdxComponentsContext } from '@/context/mdxContext';
+import { IEvent, ISpeaker } from '@/model/event';
+import { BsLinkedin } from 'react-icons/bs';
+import ReactMarkdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
+import Image from 'next/image';
+import Header from '@/components/Header';
+import EventActions from '@/components/event/EventActions';
+import EventDescription from '@/components/event/EventDescription';
+import Head from 'next/head';
 
 type Props = {
-  source: MDXRemoteSerializeResult;
-  frontMatter: Omit<IEvent, 'slug'>;
+  source: string;
+  frontMatter: IEvent;
 };
 
-const components = {
-  Prerequisites: () => <Prerequisites />,
-  Stacks: () => <Stacks />
-};
+const thumbHeight = 250;
 
-const EventPage: React.FC<Props> = ({ source, frontMatter }: Props) => {
-  const { setPrerequisites, setStacks } = useMdxComponentsContext();
+const EventPage: React.FC<Props> = ({ source, frontMatter: event }: Props) => {
+  const speakersObjects = event.speakers?.map<ISpeaker>(rk => JSON.parse(rk));
 
-  useEffect(() => {
-    setPrerequisites(frontMatter.prerequisites);
-    setStacks(frontMatter.stacks);
-  }, [
-    setPrerequisites,
-    setStacks,
-    frontMatter.prerequisites,
-    frontMatter.stacks
-  ]);
+  const renderEventImage = useCallback(() => {
+    if (event.thumbnail) {
+      return (
+        <div className='flex-shrink-0'>
+          <Image
+            height={thumbHeight}
+            width={thumbHeight * 1.77}
+            src={event.thumbnail}
+            className='object-cover group-hover:brightness-110'
+            alt={`Event cover image ${event.title}`}
+          />
+        </div>
+      );
+    }
+  }, [event.thumbnail, event.title]);
 
   return (
-    <div>
-      <article className='prose prose-green'>
-        <div className='mb-4'></div>
+    <>
+      <Head>
+        <title>LiT - {event.title}</title>
+      </Head>
+      <Header />
 
-        <h1>{frontMatter.title}</h1>
+      <article className='flex flex-col gap-4 px-4 pb-8 justify-center items-center'>
+        <h2 className='text-3xl font-extrabold text-center text-gray-900 dark:text-slate-200 sm:text-4xl'>
+          {event.title}
+        </h2>
+        <div className='flex flex-col items-center justify-center gap-8 md:flex-row'>
+          <EventActions event={event} />
+          {speakersObjects && (
+            <div className='grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-4'>
+              {speakersObjects.map(speaker => {
+                return (
+                  <div key={speaker.name} className='flex gap-4 items-center'>
+                    <img
+                      className='object-cover w-32 h-32 mb-4 rounded-full shadow-md'
+                      src={speaker.thumbnail}
+                      alt='avatar'
+                    />
+                    <div className='flex flex-col gap-2'>
+                      <p className='font-bold'>{speaker.name}</p>
+                      <p className='text-sm'>
+                        {speaker.role} @ {speaker.company}
+                      </p>
+                      <a
+                        href={speaker.linkedinUrl}
+                        className='text-slate-800 hover:text-slate-600 dark:text-slate-100 dark:hover:text-white'
+                        target='_blank'
+                        rel='noreferrer'
+                      >
+                        <span className='sr-only'>LinkedIn</span>
+                        <BsLinkedin />
+                      </a>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
 
-        <p>{frontMatter.description}</p>
+        <div className='p-4 md:px-16 md:py-8 flex flex-col gap-8 items-center justify-center md:flex-row'>
+          {renderEventImage()}
+          <EventDescription event={event} />
+        </div>
 
-        <MDXRemote components={components} {...source} />
+        <div className='max-w-6xl'>
+          <ReactMarkdown
+            components={{
+              a: ({ ...props }) => (
+                <a
+                  {...props}
+                  target='_blank'
+                  className='underline hover:bg-primary-lighter hover:rounded-xl hover:p-2 dark:hover:bg-primary-dark'
+                  onClick={event => event.stopPropagation()}
+                />
+              )
+            }}
+            rehypePlugins={[rehypeRaw]}
+            allowedElements={[
+              'p',
+              'b',
+              'i',
+              'em',
+              'strong',
+              'a',
+              'li',
+              'ul',
+              'ol',
+              'br'
+            ]}
+          >
+            {source}
+          </ReactMarkdown>
+        </div>
       </article>
-    </div>
+    </>
   );
 };
 
@@ -57,10 +132,9 @@ interface Iparams extends ParsedUrlQuery {
 export const getStaticProps: GetStaticProps = async context => {
   const { slug } = context.params as Iparams;
   const { content, data } = getEvent(slug);
-  const mdxSource = await serialize(content, { scope: data });
   return {
     props: {
-      source: mdxSource,
+      source: content,
       frontMatter: data
     }
   };
