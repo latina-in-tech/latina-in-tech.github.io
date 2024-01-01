@@ -50,22 +50,27 @@ const EventPage: React.FC<Props> = ({ source, frontMatter: event }: Props) => {
         <h2 className='text-3xl font-extrabold text-center text-gray-900 dark:text-slate-200 sm:text-4xl'>
           {event.title}
         </h2>
-        <div className='flex flex-col items-center justify-center gap-8 md:flex-row'>
+        <div className='flex flex-col items-center justify-center px-16 gap-8 md:flex-row'>
           <EventActions event={event} />
           {speakersObjects && (
-            <div className='grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-4'>
+            <div className='grid grid-cols-1 gap-4 md:grid-cols-3'>
               {speakersObjects.map(speaker => {
                 return (
                   <div key={speaker.name} className='flex gap-4 items-center'>
                     <img
-                      className='object-cover w-32 h-32 mb-4 rounded-full shadow-md'
+                      className='object-cover w-20 h-20 rounded-full shadow-md'
                       src={speaker.thumbnail}
                       alt='avatar'
                     />
                     <div className='flex flex-col gap-2'>
                       <p className='font-bold'>{speaker.name}</p>
                       <p className='text-sm'>
-                        {speaker.role} @ {speaker.company}
+                        {speaker.role}{' '}
+                        {speaker.company && (
+                          <span className='font-semibold'>
+                            @ {speaker.company}
+                          </span>
+                        )}
                       </p>
                       <a
                         href={speaker.linkedinUrl}
@@ -99,6 +104,18 @@ const EventPage: React.FC<Props> = ({ source, frontMatter: event }: Props) => {
                   className='underline hover:bg-primary-lighter hover:rounded-xl hover:p-2 dark:hover:bg-primary-dark'
                   onClick={event => event.stopPropagation()}
                 />
+              ),
+              h1: ({ ...props }) => (
+                <h1
+                  {...props}
+                  className='text-primary dark:text-primary-lighter text-3xl font-bold'
+                />
+              ),
+              h2: ({ ...props }) => (
+                <h2
+                  {...props}
+                  className='text-primary-dark dark:text-primary-light text-xl font-bold'
+                />
               )
             }}
             rehypePlugins={[rehypeRaw]}
@@ -112,7 +129,9 @@ const EventPage: React.FC<Props> = ({ source, frontMatter: event }: Props) => {
               'li',
               'ul',
               'ol',
-              'br'
+              'br',
+              'h1',
+              'h2'
             ]}
           >
             {source}

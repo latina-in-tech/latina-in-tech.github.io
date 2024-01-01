@@ -35,7 +35,7 @@ const EventActions: React.FC<Props> = ({ event }: Props) => {
     return href ? (
       <Link href={href} target={'_blank'}>
         <div
-          className='flex gap-2 hover:bg-primary-lighter rounded-xl p-2 dark:hover:bg-primary-dark'
+          className='flex gap-2 font-bold hover:bg-primary-lighter rounded-xl p-2 dark:hover:bg-primary-dark'
           onClick={event => event.stopPropagation()}
         >
           <Icon className='block h-6 w-6' aria-hidden='true' />
@@ -43,7 +43,7 @@ const EventActions: React.FC<Props> = ({ event }: Props) => {
         </div>
       </Link>
     ) : (
-      <div className='flex gap-2 rounded-xl p-2'>
+      <div className='flex font-bold gap-2 rounded-xl p-2'>
         <Icon className='block h-6 w-6' aria-hidden='true' />
         <p>{label}</p>
       </div>
