@@ -26,7 +26,7 @@
     "luxon": "^3.4.4",
     "next": "14.0.4",
     "next-mdx-remote": "^4.4.1",
-    "npm-check-updates": "^16.14.11",
+    "npm-check-updates": "^16.14.12",
     "postcss": "^8.4.32",
     "react": "18.2.0",
     "react-dom": "18.2.0",
