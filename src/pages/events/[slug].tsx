@@ -11,7 +11,7 @@ import Image from 'next/image';
 import Header from '@/components/Header';
 import EventActions from '@/components/event/EventActions';
 import EventDescription from '@/components/event/EventDescription';
-import Head from 'next/head';
+import { Helmet } from 'react-helmet';
 
 type Props = {
   source: string;
@@ -41,11 +41,15 @@ const EventPage: React.FC<Props> = ({ source, frontMatter: event }: Props) => {
 
   return (
     <>
-      <Head>
+      {/* If you use nextjs's Head component here, you will get a warning in the console:
+    'Warning: a title element received an array with more than 1 child.'
+    I think that's because of how nextjs renders the page, but I'm not sure. 
+    Using react-helmet instead of nextjs's Head component fixes the problem.
+    */}
+      <Helmet>
         <title>LiT - {event.title}</title>
-      </Head>
+      </Helmet>
       <Header />
-
       <article className='flex flex-col gap-4 px-4 pb-8 justify-center items-center'>
         <h2 className='text-3xl font-extrabold text-center text-gray-900 dark:text-slate-200 sm:text-4xl'>
           {event.title}
