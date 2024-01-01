@@ -90,18 +90,7 @@ const Home: NextPage<Props> = ({ events: events }: Props) => {
 export default Home;
 
 export const getStaticProps: GetStaticProps = async () => {
-  const events = getAllEvents([
-    'title',
-    'slug',
-    'date',
-    'description',
-    'thumbnail',
-    'duration',
-    'youtubeUrl',
-    'place',
-    'maps',
-    'signup'
-  ]);
+  const events = getAllEvents();
 
   return { props: { events } };
 };

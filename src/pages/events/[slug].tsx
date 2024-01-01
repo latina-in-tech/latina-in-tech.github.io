@@ -12,6 +12,7 @@ import Header from '@/components/Header';
 import EventActions from '@/components/event/EventActions';
 import EventDescription from '@/components/event/EventDescription';
 import { Helmet } from 'react-helmet';
+import EventTags from '@/components/event/EventTags';
 
 type Props = {
   source: string;
@@ -54,6 +55,10 @@ const EventPage: React.FC<Props> = ({ source, frontMatter: event }: Props) => {
         <h2 className='text-3xl font-extrabold text-center text-gray-900 dark:text-slate-200 sm:text-4xl'>
           {event.title}
         </h2>
+        <div className='md:px-20 w-full md:max-w-[60%]'>
+          <EventTags event={event} />
+        </div>
+
         <div className='flex flex-col items-center justify-center px-16 gap-8 md:flex-row'>
           <EventActions event={event} />
           {speakersObjects && (

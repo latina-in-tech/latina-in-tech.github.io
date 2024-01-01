@@ -4,6 +4,7 @@ import { IEvent, isPastEvent } from '@/model/event';
 import React, { useCallback, useMemo } from 'react';
 import EventActions from './EventActions';
 import EventDescription from './EventDescription';
+import EventTags from './EventTags';
 
 const thumbHeight = 400;
 type Props = {
@@ -44,6 +45,7 @@ const EventWidget: React.FC<Props> = ({ event }: Props) => {
         {renderEventImage()}
         <div className='flex flex-1 flex-col gap-2 p-4'>
           <EventActions event={event} />
+          <EventTags event={event} />
           <div className='text-xl p-2 font-bold text-gray-900 dark:text-slate-200 sm:text-2xl'>
             <p>{event.title}</p>
           </div>

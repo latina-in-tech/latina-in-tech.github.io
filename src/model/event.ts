@@ -24,6 +24,20 @@ export interface ISpeaker {
   linkedinUrl: string;
 }
 
+export const EVENT_FIELDS = [
+  'title',
+  'slug',
+  'date',
+  'description',
+  'thumbnail',
+  'duration',
+  'youtubeUrl',
+  'place',
+  'maps',
+  'signup',
+  'tags'
+];
+
 export const isPastEvent = (event: IEvent): boolean =>
   DateTime.fromISO(event.date) < DateTime.now();
 

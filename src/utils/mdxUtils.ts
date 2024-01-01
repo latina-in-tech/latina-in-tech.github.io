@@ -1,6 +1,7 @@
 import matter from 'gray-matter';
 import { join } from 'path';
 import fs from 'fs';
+import { EVENT_FIELDS } from '@/model/event';
 
 type Items = {
   [key: string]: string;
@@ -46,7 +47,7 @@ export function getEventItems(filePath: string, fields: string[] = []): Items {
   return items;
 }
 
-export function getAllEvents(fields: string[]): Items[] {
+export function getAllEvents(fields: string[] = EVENT_FIELDS): Items[] {
   const filePaths = getEventsFilePaths();
   return filePaths
     .map(filePath => getEventItems(filePath, fields))
