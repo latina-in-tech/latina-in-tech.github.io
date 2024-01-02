@@ -1,1 +1,0 @@
-self.__SSG_MANIFEST=new Set(["\u002F","\u002Fevent","\u002Fevents\u002F[slug]","\u002Ffeedback\u002Fnew"]);self.__SSG_MANIFEST_CB&&self.__SSG_MANIFEST_CB()
