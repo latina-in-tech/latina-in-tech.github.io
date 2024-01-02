@@ -12,22 +12,26 @@ import Head from 'next/head';
 import React, { useMemo } from 'react';
 import { Sponsors } from '@/components/Sponsors';
 import { LeaveFeedback } from '@/components/LeaveFeedback';
-import EventsList from '@/components/EventsList';
+import EventsList from '@/components/event/EventsList';
 import { Newsletter } from '@/components/Newsletter';
 
 type Props = {
   events: [IEvent];
 };
 
+const MAX_PAST_EVENTS = 3;
+
 const Home: NextPage<Props> = ({ events: events }: Props) => {
   const pastEvents = useMemo(
-    () => sortEvents(filterPastEvents(events)),
+    () => sortEvents(filterPastEvents(events)).slice(0, MAX_PAST_EVENTS),
     [events]
   );
   const nextEvents = useMemo(
     () => sortEvents(filterComingEvents(events)),
     [events]
   );
+
+  const hasMorePastEvents = events.length > MAX_PAST_EVENTS + nextEvents.length;
 
   return (
     <>
@@ -63,6 +67,16 @@ const Home: NextPage<Props> = ({ events: events }: Props) => {
             events={pastEvents}
           />
         )}
+        {hasMorePastEvents && (
+          <div className='flex justify-center'>
+            <a
+              href='/events'
+              className='text-primary hover:text-primary-dark dark:text-primary-lighter dark:hover:text-primary-light mt-2 text-lg'
+            >
+              ...e molti altri!
+            </a>
+          </div>
+        )}
         <Newsletter />
         <LeaveFeedback />
 
@@ -76,17 +90,7 @@ const Home: NextPage<Props> = ({ events: events }: Props) => {
 export default Home;
 
 export const getStaticProps: GetStaticProps = async () => {
-  const events = getAllEvents([
-    'title',
-    'slug',
-    'date',
-    'description',
-    'thumbnail',
-    'duration',
-    'youtubeUrl',
-    'place',
-    'maps'
-  ]);
+  const events = getAllEvents();
 
   return { props: { events } };
 };

@@ -109,13 +109,11 @@ const sponsors: ReadonlyArray<Sponsor> = [
 export const Sponsors = () => {
   return (
     <div className='text-center'>
-      <h2 className='text-3xl font-bold text-gray-900 dark:text-slate-200 sm:text-4xl'>
+      <h2 className='text-xl font-bold text-gray-900 dark:text-slate-200 uppercase'>
         Community Partners
       </h2>
       <div className={'mx-auto mt-4 md:mt-6 flex justify-center'}>
-        <div
-          className={`grid md:grid-cols-5 grid-cols-2 gap-3 place-items-center px-6`}
-        >
+        <div className='grid md:grid-cols-5 grid-cols-2 gap-3 place-items-center px-6'>
           {sponsors.map(s => (
             <Link key={s.name} href={s.url} target='_blank'>
               <Image
@@ -126,7 +124,9 @@ export const Sponsors = () => {
                   aspectRatio: '3/2',
                   objectFit: 'contain'
                 }}
-                className={'rounded-md w-[180px] dark:hidden'}
+                className={
+                  'rounded-md opacity-40 hover:opacity-100 w-[180px] dark:hidden'
+                }
               />
               <Image
                 src={s.logo.dark}
@@ -136,7 +136,9 @@ export const Sponsors = () => {
                   aspectRatio: '3/2',
                   objectFit: 'contain'
                 }}
-                className={'rounded-md w-[180px] dark:block hidden'}
+                className={
+                  'rounded-md opacity-40 hover:opacity-100 w-[180px] dark:block hidden'
+                }
               />
             </Link>
           ))}

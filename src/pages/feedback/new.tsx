@@ -240,16 +240,6 @@ const NewFeedback: NextPage<Props> = ({ events: events }: Props) => {
 export default NewFeedback;
 
 export const getStaticProps: GetStaticProps = async () => {
-  const events = getAllEvents([
-    'title',
-    'slug',
-    'date',
-    'description',
-    'thumbnail',
-    'duration',
-    'youtubeUrl',
-    'place',
-    'maps'
-  ]);
+  const events = getAllEvents();
   return { props: { events } };
 };

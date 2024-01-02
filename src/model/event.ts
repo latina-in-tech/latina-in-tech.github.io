@@ -11,9 +11,9 @@ export interface IEvent {
   thumbnail: string;
   title: string;
   description: string;
-  prerequisites: string[];
-  stacks: string[];
+  tags: string[];
   speakers?: string[];
+  signup: string;
 }
 
 export interface ISpeaker {
@@ -23,6 +23,20 @@ export interface ISpeaker {
   thumbnail: string;
   linkedinUrl: string;
 }
+
+export const EVENT_FIELDS = [
+  'title',
+  'slug',
+  'date',
+  'description',
+  'thumbnail',
+  'duration',
+  'youtubeUrl',
+  'place',
+  'maps',
+  'signup',
+  'tags'
+];
 
 export const isPastEvent = (event: IEvent): boolean =>
   DateTime.fromISO(event.date) < DateTime.now();
