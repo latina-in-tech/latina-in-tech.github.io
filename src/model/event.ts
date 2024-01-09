@@ -13,7 +13,14 @@ export interface IEvent {
   description: string;
   tags: string[];
   speakers?: string[];
+  slides?: string[];
   signup: string;
+}
+
+export interface ISlides {
+  url: string;
+  title: string;
+  speakerName: string;
 }
 
 export interface ISpeaker {
@@ -35,7 +42,8 @@ export const EVENT_FIELDS = [
   'place',
   'maps',
   'signup',
-  'tags'
+  'tags',
+  'slides'
 ];
 
 export const isPastEvent = (event: IEvent): boolean =>
