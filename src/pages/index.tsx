@@ -22,16 +22,18 @@ type Props = {
 const MAX_PAST_EVENTS = 3;
 
 const Home: NextPage<Props> = ({ events: events }: Props) => {
-  const pastEvents = useMemo(
-    () => sortEvents(filterPastEvents(events)).slice(0, MAX_PAST_EVENTS),
+  const allPastEvents = useMemo(
+    () => sortEvents(filterPastEvents(events)),
     [events]
   );
+  // we want to preview only the first MAX_PAST_EVENTS past events
+  const pastEventsPreview = allPastEvents.slice(0, MAX_PAST_EVENTS);
   const nextEvents = useMemo(
     () => sortEvents(filterComingEvents(events)),
     [events]
   );
 
-  const hasMorePastEvents = events.length > MAX_PAST_EVENTS + nextEvents.length;
+  const hasMorePastEvents = allPastEvents.length > pastEventsPreview.length;
 
   return (
     <>
@@ -60,11 +62,11 @@ const Home: NextPage<Props> = ({ events: events }: Props) => {
             events={nextEvents}
           />
         )}
-        {pastEvents.length > 0 && (
+        {pastEventsPreview.length > 0 && (
           <EventsList
             heading='Eventi Passati'
             caption='Peccato, questi eventi si sono già svolti! Segui la pagina per rimanere aggiornato sui prossimi appuntamenti.'
-            events={pastEvents}
+            events={pastEventsPreview}
           />
         )}
         {hasMorePastEvents && (

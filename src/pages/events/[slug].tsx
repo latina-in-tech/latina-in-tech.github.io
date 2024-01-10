@@ -3,7 +3,7 @@ import React, { useCallback } from 'react';
 
 import { getEvent, getAllEvents } from '@/utils/mdxUtils';
 import { ParsedUrlQuery } from 'querystring';
-import { IEvent, ISpeaker } from '@/model/event';
+import { IEvent, ISlides, ISpeaker } from '@/model/event';
 import { BsLinkedin } from 'react-icons/bs';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
@@ -13,6 +13,7 @@ import EventActions from '@/components/event/EventActions';
 import EventDescription from '@/components/event/EventDescription';
 import { Helmet } from 'react-helmet';
 import EventTags from '@/components/event/EventTags';
+import EventsSlides from '@/components/event/EventSlides';
 
 type Props = {
   source: string;
@@ -23,6 +24,7 @@ const thumbHeight = 250;
 
 const EventPage: React.FC<Props> = ({ source, frontMatter: event }: Props) => {
   const speakersObjects = event.speakers?.map<ISpeaker>(rk => JSON.parse(rk));
+  const slidesObjects = event.slides?.map<ISlides>(rk => JSON.parse(rk));
 
   const renderEventImage = useCallback(() => {
     if (event.thumbnail) {
@@ -100,7 +102,11 @@ const EventPage: React.FC<Props> = ({ source, frontMatter: event }: Props) => {
 
         <div className='p-4 md:px-16 md:py-8 flex flex-col gap-8 items-center justify-center md:flex-row'>
           {renderEventImage()}
-          <EventDescription event={event} />
+
+          <div className='flex flex-col gap-4'>
+            <EventDescription event={event} />
+            {slidesObjects && <EventsSlides slides={slidesObjects} />}
+          </div>
         </div>
 
         <div className='max-w-6xl'>
