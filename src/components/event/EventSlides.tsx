@@ -1,5 +1,4 @@
 import { ISlides } from '@/model/event';
-import Link from 'next/link';
 import React from 'react';
 import { PresentationChartLineIcon } from '@heroicons/react/24/outline';
 
