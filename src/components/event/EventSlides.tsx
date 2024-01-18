@@ -13,7 +13,7 @@ export default function EventsSlides({ slides }: Props) {
       <h2 className='text-2xl font-bold'>Slides</h2>
       <div className='mx-auto mt-6 grid max-w-lg gap-5 lg:max-w-none lg:grid-cols-3'>
         {slides.map(slide => (
-          <Link href={slide.url} key={slide.url} legacyBehavior>
+          <a target='_blank' rel='noreferrer' href={slide.url} key={slide.url}>
             <div className='flex cursor-pointer items-center justify-center align-baseline gap-2 bg-slate-300 rounded-full py-2 px-4 font-semibold hover:bg-slate-200 dark:bg-slate-700 dark:text-white dark:hover:600 dark:hover:text-slate-600'>
               <div className='flex items-center'>
                 <PresentationChartLineIcon className='block h-6 w-6' />
@@ -23,7 +23,7 @@ export default function EventsSlides({ slides }: Props) {
                 {slide.speakerName} - {slide.title}
               </p>
             </div>
-          </Link>
+          </a>
         ))}
       </div>
     </div>
