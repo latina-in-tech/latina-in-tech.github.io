@@ -15,6 +15,7 @@ jobs:
     steps:
       - uses: actions/stale@v3
         with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
           stale-issue-message: 'This issue is stale because it has been open for 30 days with no activity. If the issue is still present, please leave a comment within 7 days to keep it open, otherwise it will be closed automatically.'
           close-issue-message: 'This issue was closed because it has been inactive for 7 days since being marked as stale.'
           stale-pr-message: 'This pull request is stale because it has been open for 30 days with no activity. If the pull request is still valid, please update it within 7 days to keep it open or merge it, otherwise it will be closed automatically.'
