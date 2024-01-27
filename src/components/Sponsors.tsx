@@ -11,6 +11,7 @@ import viridexLogo from '../../public/assets/sponsors/viridex.png';
 import exoLogo from '../../public/assets/sponsors/exo.png';
 import klarnaLogo from '../../public/assets/sponsors/klarna.png';
 import jetbrainsLogo from '../../public/assets/sponsors/jetbrains.png';
+import schrodingerLogo from '../../public/assets/sponsors/schrodinger.png';
 import React from 'react';
 import Link from 'next/link';
 
@@ -103,6 +104,14 @@ const sponsors: ReadonlyArray<Sponsor> = [
       dark: italiaOpenSourceLogo
     },
     url: 'https://italiaopensource.com/'
+  },
+  {
+    name: 'Schrodinger Hat',
+    logo: {
+      light: schrodingerLogo,
+      dark: schrodingerLogo
+    },
+    url: 'https://www.schrodinger-hat.it/'
   }
 ];
 
