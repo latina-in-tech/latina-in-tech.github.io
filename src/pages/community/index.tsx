@@ -20,6 +20,7 @@ const CommunityMembers: React.FC<
     () => members.filter(isCommunityMember),
     [members]
   );
+  // If there are errors, we display them
   if (errors.length > 0) {
     return (
       <div className='text-center'>

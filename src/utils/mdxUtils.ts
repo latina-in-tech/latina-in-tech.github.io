@@ -60,6 +60,17 @@ export function getAllEvents(fields: string[] = EVENT_FIELDS): Items[] {
 }
 
 const COMMUNITY_MEMBERS_PATH = join(process.cwd(), '_community', 'members');
+const validationSchema = CommunityMemberSchema.refine(
+  data =>
+    !data.picture
+      ? true
+      : data.picture &&
+        fs.existsSync(join(COMMUNITY_MEMBERS_PATH, 'pictures', data.picture)),
+  data => ({
+    message: `Picture [${data.picture}] does not exist`,
+    path: ['picture']
+  })
+);
 /**
  * parse all community members from the file system
  * @returns an array of community members or errors
@@ -75,7 +86,7 @@ export const getAllCommunityMembers = (): Array<CommunityMemberOrError> =>
       );
       const { data } = matter(fileContents);
       // validate parsed data
-      const member = CommunityMemberSchema.safeParse(data);
+      const member = validationSchema.safeParse(data);
       if (member.success) {
         return { kind: 'right', data: member.data };
       }
