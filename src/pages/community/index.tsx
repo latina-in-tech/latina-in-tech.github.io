@@ -2,8 +2,11 @@ import React, { useMemo } from 'react';
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
 import { getAllCommunityMembers } from '@/utils/mdxUtils';
 import {
+  CommunityMember,
   CommunityMemberError,
-  isCommunityError
+  CommunityMemberValid,
+  isCommunityError,
+  isCommunityMember
 } from '@/model/communityMember';
 
 const CommunityMembers: React.FC<
@@ -11,6 +14,10 @@ const CommunityMembers: React.FC<
 > = ({ members }) => {
   const errors: CommunityMemberError[] = useMemo(
     () => members.filter(isCommunityError),
+    [members]
+  );
+  const validMembers: CommunityMemberValid[] = useMemo(
+    () => members.filter(isCommunityMember),
     [members]
   );
   if (errors.length > 0) {
@@ -32,6 +39,11 @@ const CommunityMembers: React.FC<
       <h2 className='text-xl font-bold text-gray-900 dark:text-slate-200 uppercase'>
         {members.length} Community Members
       </h2>
+      <div className={'text-lg text-red-500'}>
+        {validMembers.map(({ data }, index) => (
+          <div key={index}>{data.fullname}</div>
+        ))}
+      </div>
     </div>
   );
 };

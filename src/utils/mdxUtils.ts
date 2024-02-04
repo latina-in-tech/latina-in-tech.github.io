@@ -60,6 +60,10 @@ export function getAllEvents(fields: string[] = EVENT_FIELDS): Items[] {
 }
 
 const COMMUNITY_MEMBERS_PATH = join(process.cwd(), '_community', 'members');
+/**
+ * parse all community members from the file system
+ * @returns an array of community members or errors
+ */
 export const getAllCommunityMembers = (): Array<CommunityMemberOrError> =>
   fs
     .readdirSync(COMMUNITY_MEMBERS_PATH)
@@ -70,6 +74,7 @@ export const getAllCommunityMembers = (): Array<CommunityMemberOrError> =>
         'utf-8'
       );
       const { data } = matter(fileContents);
+      // validate parsed data
       const member = CommunityMemberSchema.safeParse(data);
       if (member.success) {
         return { kind: 'right', data: member.data };
