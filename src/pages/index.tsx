@@ -6,22 +6,22 @@ import {
   IEvent,
   sortEvents
 } from '@/model/event';
-import { getAllEvents } from '@/utils/mdxUtils';
-import { GetStaticProps, NextPage } from 'next';
+import { getAllCommunityMembers, getAllEvents } from '@/utils/mdxUtils';
+import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
 import Head from 'next/head';
 import React, { useMemo } from 'react';
 import { Sponsors } from '@/components/Sponsors';
 import { LeaveFeedback } from '@/components/LeaveFeedback';
 import EventsList from '@/components/event/EventsList';
 import { Newsletter } from '@/components/Newsletter';
-
-type Props = {
-  events: [IEvent];
-};
+import Community from '@/pages/community';
 
 const MAX_PAST_EVENTS = 3;
 
-const Home: NextPage<Props> = ({ events: events }: Props) => {
+const Home: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
+  events,
+  communityMembers
+}) => {
   const allPastEvents = useMemo(
     () => sortEvents(filterPastEvents(events)),
     [events]
@@ -79,11 +79,11 @@ const Home: NextPage<Props> = ({ events: events }: Props) => {
             </a>
           </div>
         )}
+        <div className='mb-2' />
+        <Sponsors />
+        <Community members={communityMembers} />
         <Newsletter />
         <LeaveFeedback />
-
-        <div className='mb-4' />
-        <Sponsors />
       </main>
     </>
   );
@@ -93,6 +93,6 @@ export default Home;
 
 export const getStaticProps: GetStaticProps = async () => {
   const events = getAllEvents();
-
-  return { props: { events } };
+  const communityMembers = getAllCommunityMembers();
+  return { props: { events, communityMembers } };
 };

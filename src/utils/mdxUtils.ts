@@ -2,6 +2,11 @@ import matter from 'gray-matter';
 import { join } from 'path';
 import fs from 'fs';
 import { EVENT_FIELDS } from '@/model/event';
+import {
+  CommunityMember,
+  CommunityMemberOrError,
+  CommunityMemberSchema
+} from '@/model/communityMember';
 
 type Items = {
   [key: string]: string;
@@ -53,3 +58,21 @@ export function getAllEvents(fields: string[] = EVENT_FIELDS): Items[] {
     .map(filePath => getEventItems(filePath, fields))
     .sort((event1, event2) => (event1.date > event2.date ? 1 : -1));
 }
+
+const COMMUNITY_MEMBERS_PATH = join(process.cwd(), '_community', 'members');
+export const getAllCommunityMembers = (): Array<CommunityMemberOrError> =>
+  fs
+    .readdirSync(COMMUNITY_MEMBERS_PATH)
+    .filter(path => /\.mdx?$/.test(path))
+    .map(filePath => {
+      const fileContents = fs.readFileSync(
+        join(COMMUNITY_MEMBERS_PATH, filePath),
+        'utf-8'
+      );
+      const { data } = matter(fileContents);
+      const member = CommunityMemberSchema.safeParse(data);
+      if (member.success) {
+        return { kind: 'right', data: member.data };
+      }
+      return { kind: 'left', error: `[${filePath}]: ${member.error.message}` };
+    });
