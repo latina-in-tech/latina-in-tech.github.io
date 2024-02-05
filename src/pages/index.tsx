@@ -3,11 +3,10 @@ import Hero from '@/components/Hero';
 import {
   filterComingEvents,
   filterPastEvents,
-  IEvent,
   sortEvents
 } from '@/model/event';
-import { getAllCommunityMembers, getAllEvents } from '@/utils/mdxUtils';
-import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
+import { getAllEvents } from '@/utils/mdxUtils';
+import { GetStaticProps, InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
 import React, { useMemo } from 'react';
 import { Sponsors } from '@/components/Sponsors';
@@ -15,6 +14,7 @@ import { LeaveFeedback } from '@/components/LeaveFeedback';
 import EventsList from '@/components/event/EventsList';
 import { Newsletter } from '@/components/Newsletter';
 import Community from '@/pages/community';
+import { getAllCommunityMembers } from '@/utils/community';
 
 const MAX_PAST_EVENTS = 3;
 
