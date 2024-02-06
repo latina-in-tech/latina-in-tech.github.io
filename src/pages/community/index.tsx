@@ -21,7 +21,7 @@ const CommunityMember: React.FC<{ member: CommunityMemberT }> = ({
         height={imageHeight}
         width={imageHeight}
         src={`/assets/community/${member.picture}`}
-        className={`ring-1 ring-gray-400 rounded-full`}
+        className={`ring-1 ring-gray-400 rounded-full grayscale-[90%] hover:grayscale-0 transition-all duration-300`}
         alt={member.fullname}
       />
       <div className={'flex flex-col text-left ml-2'}>
@@ -72,9 +72,15 @@ const CommunityMemberList: React.FC<
   return (
     <div className='flex flex-col items-center justify-center'>
       <h2 className='text-xl font-bold text-gray-900 dark:text-slate-200 uppercase text-center'>
-        {members.length} Community Members
+        Community Members
       </h2>
-      <div className='grid grid-cols-3 mt-2 max-w-screen-md gap-4'>
+      <h3 className='text-md text-gray-900 dark:text-slate-200 text-center max-w-screen-md'>
+        partecipi alle iniziative della community o ci segui online? in ogni
+        caso sei uno di noi!
+        <br />
+        vuoi comparire in questo elenco? niente di più semplice, leggi qui!
+      </h3>
+      <div className='grid grid-cols-2 lg:grid-cols-4 md:grid-cols-3 mt-2 max-w-screen-md gap-4'>
         {validMembers.map(({ data }, index) => (
           <CommunityMember key={`cm_${index}_${data.fullname}`} member={data} />
         ))}
