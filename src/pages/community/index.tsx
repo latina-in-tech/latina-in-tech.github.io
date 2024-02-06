@@ -78,9 +78,9 @@ const CommunityMemberList: React.FC<
         partecipi alle iniziative della community o ci segui online? in ogni
         caso sei uno di noi!
         <br />
-        vuoi comparire in questo elenco? niente di più semplice, leggi qui!
+        se vuoi comparire in questo elenco, niente di più semplice, leggi qui!
       </h3>
-      <div className='grid grid-cols-2 lg:grid-cols-4 md:grid-cols-3 mt-2 max-w-screen-md gap-4'>
+      <div className='grid grid-cols-2 lg:grid-cols-4 md:grid-cols-3 mt-4 max-w-screen-md gap-4'>
         {validMembers.map(({ data }, index) => (
           <CommunityMember key={`cm_${index}_${data.fullname}`} member={data} />
         ))}
