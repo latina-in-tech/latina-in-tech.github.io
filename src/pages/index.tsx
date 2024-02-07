@@ -81,8 +81,8 @@ const Home: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
         )}
         <div className='mb-2' />
         <Sponsors />
-        <Community members={communityMembers} />
         <Newsletter />
+        <Community members={communityMembers} />
         <LeaveFeedback />
       </main>
     </>
