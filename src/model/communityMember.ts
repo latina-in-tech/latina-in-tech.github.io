@@ -1,7 +1,7 @@
 import * as z from 'zod';
 export const CommunityMemberSchema = z.object({
   fullname: z.string().min(1, { message: 'Full name is required' }),
-  bio: z.string().min(1).max(30).optional(),
+  bio: z.string().min(1).max(30),
   picture: z.string(),
   linkedin: z.string().optional(),
   twitter: z.string().optional(),

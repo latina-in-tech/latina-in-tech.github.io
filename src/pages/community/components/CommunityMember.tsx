@@ -33,7 +33,7 @@ export const CommunityMember: React.FC<{ member: CommunityMemberT }> = ({
         >
           {member.fullname}
         </p>
-        {member.bio && !showLinks && (
+        {!showLinks && (
           <p
             className={
               'flex text-sm h-6 dark:text-slate-400 text-slate-600 font-normal'
