@@ -10,6 +10,14 @@ import { getAllCommunityMembers } from '@/utils/community';
 import { isDevEnv } from '@/utils/dev';
 import { CommunityMember } from '@/pages/community/components/CommunityMember';
 
+/**
+ * display the list of community members
+ * 4 members per row on large screens
+ * 3 members per row on medium screens
+ * 2 members per row on small screens
+ * @param members
+ * @constructor
+ */
 const CommunityMemberList: React.FC<
   InferGetStaticPropsType<typeof getStaticProps>
 > = ({ members }) => {
