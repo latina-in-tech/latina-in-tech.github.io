@@ -2,11 +2,6 @@ import matter from 'gray-matter';
 import { join } from 'path';
 import fs from 'fs';
 import { EVENT_FIELDS } from '@/model/event';
-import {
-  CommunityMember,
-  CommunityMemberOrError,
-  CommunityMemberSchema
-} from '@/model/communityMember';
 
 type Items = {
   [key: string]: string;

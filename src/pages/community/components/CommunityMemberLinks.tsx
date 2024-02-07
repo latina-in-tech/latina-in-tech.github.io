@@ -23,7 +23,7 @@ type Props = {
  * @param member
  * @constructor
  */
-export const CommunityMemberLinks: React.FC<Props> = ({ member }) => {
+const CommunityMemberLinks: React.FC<Props> = ({ member }) => {
   return (
     <div className='grid grid-cols-4 gap-x-1 h-6 pt-1'>
       {member.github && (
@@ -73,3 +73,5 @@ export const CommunityMemberLinks: React.FC<Props> = ({ member }) => {
     </div>
   );
 };
+
+export default CommunityMemberLinks;
