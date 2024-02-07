@@ -59,7 +59,7 @@ const CommunityMemberList: React.FC<
         se vuoi comparire in questo elenco, niente di più semplice,{' '}
         <a
           href={
-            'https://github.com/latina-in-tech/latina-in-tech.github.io/blob/main/public/docs/community/README.md'
+            'https://github.com/latina-in-tech/latina-in-tech.github.io/blob/main/docs/community/README.md'
           }
           className={'text-blue-500 dark:text-blue-400'}
           target={'_blank'}
