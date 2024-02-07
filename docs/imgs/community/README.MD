@@ -1,3 +1,5 @@
+<img src="member_badge.png.png" />
+
 ## Join the community
 If you also are a proud member of the LiT community, you can place your self in the community site.<br/>
 It could be worth for us and for you, for several reasons:
