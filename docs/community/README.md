@@ -1,4 +1,4 @@
-<img src="member_badge.png" />
+<img src="imgs/member_badge.png" />
 
 ## Join the community
 If you also are a proud member of the LiT community, you can place your self in the community site.<br/>
@@ -24,7 +24,7 @@ github: https://github.com/gdesossi
 twitter: https://twitter.com/gdesossi
 website: https://www.gdesossi.com/
 ```
-- here the structure of the fields:
+- here is the structure of the fields:
    - `fullname`: your full name (required, min 3 characters)
    - `bio`: a short description of yourself/job title (required, min 3, max 30 characters)
    - `picture`: the name of the picture file
@@ -33,7 +33,7 @@ website: https://www.gdesossi.com/
    - `twitter`: your twitter url profile
    - `website`: your personal url website
 
-<img src="fields_mapping.png" />
+<img src="imgs/fields_mapping.png" />
 
 - for the optional fields, you can leave them empty if or omit at all
 - add your picture in the [public/assets/community]("../../../public/assets/community") folder, with the same name as the picture field in the `.mdx` file
@@ -42,7 +42,7 @@ website: https://www.gdesossi.com/
    - `yarn dev`
    - if there are any errors, they will be shown directly in the web page. In that case, fix them!
 
-<img src="error.png" />
+<img src="imgs/error.png" />
   
 - 🥳 create a pull request with your changes
 - wait for approval from the community maintainers <br/>
