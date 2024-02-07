@@ -7,6 +7,14 @@ import {
 } from '@/pages/community/components/CommunityMemberLinks';
 
 const imageHeight = 48;
+/**
+ * display a community member
+ *  picture | full name
+ *          | bio / links
+ *  bio is shown as default, links are shown on click
+ * @param member
+ * @constructor
+ */
 export const CommunityMember: React.FC<{ member: CommunityMemberT }> = ({
   member
 }) => {
