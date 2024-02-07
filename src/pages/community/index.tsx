@@ -8,7 +8,7 @@ import {
 } from '@/model/communityMember';
 import { getAllCommunityMembers } from '@/utils/community';
 import { isDevEnv } from '@/utils/dev';
-import CommunityMember from '@/pages/community/components/CommunityMember';
+import CommunityMember from '@/components/CommunityMember';
 
 /**
  * display the list of community members

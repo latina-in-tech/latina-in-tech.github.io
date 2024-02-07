@@ -1,6 +1,5 @@
 import { join } from 'path';
 import {
-  CommunityMember,
   CommunityMemberOrError,
   CommunityMemberSchema
 } from '@/model/communityMember';

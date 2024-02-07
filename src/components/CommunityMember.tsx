@@ -3,7 +3,7 @@ import { CommunityMember as CommunityMemberT } from '@/model/communityMember';
 import Image from 'next/image';
 import CommunityMemberLinks, {
   hasAnyLinks
-} from '@/pages/community/components/CommunityMemberLinks';
+} from '@/components/CommunityMemberLinks';
 
 const imageHeight = 48;
 /**
