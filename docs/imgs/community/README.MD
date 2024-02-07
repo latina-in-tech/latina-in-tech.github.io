@@ -41,7 +41,7 @@ website: https://www.gdesossi.com/
 - try your changes locally
    - `yarn dev`
    - if there are any errors, they will be shown directly in the web page. In that case, fix them!
-<img src="errors.png" />
+<img src="error.png" />
 - create a pull request with your changes
 
 
