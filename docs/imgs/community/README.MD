@@ -38,6 +38,10 @@ website: https://www.gdesossi.com/
 - for the optional fields, you can leave them empty if or omit at all
 - add your picture in the [public/assets/community]("../../../public/assets/community") folder, with the same name as the picture field in the `.mdx` file
    - the picture should be a square image (e.g. 200x200px)
+- try your changes locally
+   - `yarn dev`
+   - if there are any errors, they will be shown directly in the web page. In that case, fix them!
+<img src="errors.png" />
 - create a pull request with your changes
 
 
