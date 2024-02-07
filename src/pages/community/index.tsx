@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
 import {
-  CommunityMember as CommunityMemberT,
   CommunityMemberError,
   CommunityMemberValid,
   isCommunityError,
@@ -9,36 +8,7 @@ import {
 } from '@/model/communityMember';
 import { getAllCommunityMembers } from '@/utils/community';
 import { isDevEnv } from '@/utils/dev';
-import Image from 'next/image';
-
-const imageHeight = 48;
-const CommunityMember: React.FC<{ member: CommunityMemberT }> = ({
-  member
-}) => {
-  return (
-    <div className={'flex items-center'}>
-      <Image
-        height={imageHeight}
-        width={imageHeight}
-        src={`/assets/community/${member.picture}`}
-        className={`ring-1 ring-gray-400 rounded-full grayscale-[90%] hover:grayscale-0 transition-all duration-300`}
-        alt={member.fullname}
-      />
-      <div className={'flex flex-col text-left ml-2'}>
-        <p className={'sans text-sm leading-5 text-slate-100 font-normal'}>
-          {member.fullname}
-        </p>
-        {member.bio && (
-          <p
-            className={'sans text-sm leading-[1.6] text-slate-400 font-normal'}
-          >
-            {member.bio}
-          </p>
-        )}
-      </div>
-    </div>
-  );
-};
+import { CommunityMember } from '@/pages/community/components/CommunityMember';
 
 const CommunityMemberList: React.FC<
   InferGetStaticPropsType<typeof getStaticProps>
@@ -72,15 +42,15 @@ const CommunityMemberList: React.FC<
   return (
     <div className='flex flex-col items-center justify-center'>
       <h2 className='text-xl font-bold text-gray-900 dark:text-slate-200 uppercase text-center'>
-        Community Members
+        LiT Community Members
       </h2>
-      <h3 className='text-md text-gray-900 dark:text-slate-200 text-center max-w-screen-md'>
+      <p className='text-lg text-gray-700 dark:text-slate-200 text-center max-w-screen-md my-2'>
         partecipi alle iniziative della community o ci segui online? in ogni
         caso sei uno di noi!
         <br />
         se vuoi comparire in questo elenco, niente di più semplice, leggi qui!
-      </h3>
-      <div className='grid grid-cols-2 lg:grid-cols-4 md:grid-cols-3 mt-4 max-w-screen-md gap-4'>
+      </p>
+      <div className='grid grid-cols-2 lg:grid-cols-4 md:grid-cols-3 mt-4 max-w-screen-md gap-x-4 gap-y-6'>
         {validMembers.map(({ data }, index) => (
           <CommunityMember key={`cm_${index}_${data.fullname}`} member={data} />
         ))}

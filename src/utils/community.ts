@@ -1,5 +1,6 @@
 import { join } from 'path';
 import {
+  CommunityMember,
   CommunityMemberOrError,
   CommunityMemberSchema
 } from '@/model/communityMember';
@@ -14,6 +15,10 @@ const COMMUNITY_MEMBER_PICTURES_PATH = join(
   'community'
 );
 const COMMUNITY_MEMBERS_PATH = join(process.cwd(), '_community', 'members');
+/**
+ * A validation schema for community members
+ * we refine the schema to check if the picture exists and is square
+ */
 const validationSchema = CommunityMemberSchema.refine(
   data => {
     const picturePath = join(COMMUNITY_MEMBER_PICTURES_PATH, data.picture);
@@ -25,7 +30,7 @@ const validationSchema = CommunityMemberSchema.refine(
     return size.height === size.width;
   },
   data => ({
-    message: `Picture [${join(COMMUNITY_MEMBER_PICTURES_PATH, data.picture ?? '')}] does not exist or is not square.`,
+    message: `Picture [${join(COMMUNITY_MEMBER_PICTURES_PATH, data.picture)}] does not exist or is not square.`,
     path: ['picture']
   })
 );
@@ -48,7 +53,7 @@ export const getAllCommunityMembers = (): Array<CommunityMemberOrError> =>
     .sort(() => 0.5 - Math.random())
     .map(({ fileContent, filePath }) => {
       const { data } = matter(fileContent);
-      // validate against a schema the parsed data
+      // validate against a schema the read data
       const member = validationSchema.safeParse(data);
       if (member.success) {
         return { kind: 'right', data: member.data };
