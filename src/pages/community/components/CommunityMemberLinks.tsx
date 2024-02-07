@@ -7,7 +7,7 @@ import {
 import React from 'react';
 import { CommunityMember } from '@/model/communityMember';
 
-// return true if the member has any link
+// return true if the member has at least one no empty link
 export const hasAnyLinks = (member: CommunityMember): boolean =>
   [member.github, member.linkedin, member.twitter, member.website].some(
     link => !!link
