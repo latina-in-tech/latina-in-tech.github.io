@@ -43,11 +43,4 @@ website: https://www.gdesossi.com/
    - if there are any errors, they will be shown directly in the web page. In that case, fix them!
 <img src="error.png" />
 - 🥳 create a pull request with your changes
-- wait for approval from the community maintainers<br/>
-
-
-
-
-
-
-
+- wait for approval from the community maintainers <br/>
