@@ -36,6 +36,9 @@ First of all, **THANK YOU** for choosing to contribute to this project!
 
 You may want to read our [Contributing Guideline](CONTRIBUTING.md) for more info on how to do it, as well as our [Code of Conduct](code-of-conduct.md).
 
+### How can I add myself to the community page?
+It's pretty simple, take a look here: [Community](docs/community/README.md)
+
 
 ## 📄 License
 

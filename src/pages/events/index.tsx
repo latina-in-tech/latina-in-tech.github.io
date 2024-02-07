@@ -3,7 +3,7 @@ import Header from '@/components/Header';
 import EventsList from '@/components/event/EventsList';
 import { GetStaticProps, NextPage } from 'next';
 import { getAllEvents } from '@/utils/mdxUtils';
-import { EVENT_FIELDS, IEvent, sortEvents } from '@/model/event';
+import { IEvent, sortEvents } from '@/model/event';
 import Head from 'next/head';
 
 const EventsPage: NextPage<{ events: [IEvent] }> = ({
@@ -33,6 +33,5 @@ export default EventsPage;
 
 export const getStaticProps: GetStaticProps = async () => {
   const events = getAllEvents();
-
   return { props: { events } };
 };
