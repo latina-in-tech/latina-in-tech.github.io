@@ -16,6 +16,13 @@ export const hasAnyLinks = (member: CommunityMember): boolean =>
 type Props = {
   member: CommunityMember;
 };
+/**
+ * display the links of a community member
+ * it's responsibility of the parent to show the links only if the member has any
+ * github | linkedin | twitter | website
+ * @param member
+ * @constructor
+ */
 export const CommunityMemberLinks: React.FC<Props> = ({ member }) => {
   return (
     <div className='grid grid-cols-4 gap-x-1 h-6 pt-1'>
