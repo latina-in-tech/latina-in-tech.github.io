@@ -48,7 +48,16 @@ const CommunityMemberList: React.FC<
         partecipi alle iniziative della community o ci segui online? in ogni
         caso sei uno di noi!
         <br />
-        se vuoi comparire in questo elenco, niente di più semplice, leggi qui!
+        se vuoi comparire in questo elenco, niente di più semplice,{' '}
+        <a
+          href={
+            'https://github.com/latina-in-tech/latina-in-tech.github.io/blob/main/public/docs/community/README.md'
+          }
+          target={'_blank'}
+          rel={'noreferrer'}
+        >
+          leggi qui!
+        </a>
       </p>
       <div className='grid grid-cols-2 lg:grid-cols-4 md:grid-cols-3 mt-4 max-w-screen-md gap-x-4 gap-y-6'>
         {validMembers.map(({ data }, index) => (
