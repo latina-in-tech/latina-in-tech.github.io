@@ -1,4 +1,4 @@
-<img src="member_badge.png.png" />
+<img src="member_badge.png" />
 
 ## Join the community
 If you also are a proud member of the LiT community, you can place your self in the community site.<br/>
