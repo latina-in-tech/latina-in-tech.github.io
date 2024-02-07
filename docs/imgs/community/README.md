@@ -25,8 +25,8 @@ twitter: https://twitter.com/gdesossi
 website: https://www.gdesossi.com/
 ```
 - here the structure of the fields:
-   - `fullname`: your full name (required)
-   - `bio`: a short description of yourself/job title (required)
+   - `fullname`: your full name (required, min 3 characters)
+   - `bio`: a short description of yourself/job title (required, min 3, max 30 characters)
    - `picture`: the name of the picture file
    - `linkedin`: your linkedin url profile
    - `github`: your github url profile
