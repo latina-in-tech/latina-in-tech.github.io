@@ -22,7 +22,7 @@ export const CommunityMember: React.FC<{ member: CommunityMemberT }> = ({
         height={imageHeight}
         width={imageHeight}
         src={`/assets/community/${member.picture}`}
-        className={`ring-1 dark:ring-gray-400 ring-gray-500 rounded-full grayscale-[${showLinks ? '0' : '90%'}] hover:grayscale-0 transition-all duration-300`}
+        className={`ring-2 dark:ring-gray-100 ring-gray-500 rounded-full grayscale-[${showLinks ? '0' : '90%'}] hover:grayscale-0 transition-all duration-300`}
         alt={member.fullname}
       />
       <div className={'flex flex-col text-left ml-2 max-w-30'}>
