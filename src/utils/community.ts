@@ -48,8 +48,6 @@ export const getAllCommunityMembers = (): Array<CommunityMemberOrError> =>
       ),
       filePath
     }))
-    // shuffle the array to avoid always showing the same members at the same position
-    .sort(() => 0.5 - Math.random())
     .map(({ fileContent, filePath }) => {
       const { data } = matter(fileContent);
       // validate against a schema the read data
