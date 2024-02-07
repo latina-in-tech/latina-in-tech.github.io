@@ -53,6 +53,7 @@ const CommunityMemberList: React.FC<
           href={
             'https://github.com/latina-in-tech/latina-in-tech.github.io/blob/main/public/docs/community/README.md'
           }
+          className={'text-blue-500 dark:text-blue-400'}
           target={'_blank'}
           rel={'noreferrer'}
         >
