@@ -13,6 +13,7 @@ import klarnaLogo from '../../public/assets/sponsors/klarna.png';
 import jetbrainsLogo from '../../public/assets/sponsors/jetbrains.png';
 import schrodingerLogo from '../../public/assets/sponsors/schrodinger.png';
 import ngRomeLogo from '../../public/assets/sponsors/ngrome.png';
+import kcdLogo from '../../public/assets/sponsors/kcd.svg';
 import React from 'react';
 import Link from 'next/link';
 
@@ -121,6 +122,14 @@ const sponsors: ReadonlyArray<Sponsor> = [
       dark: ngRomeLogo
     },
     url: 'https://ngrome.io/'
+  },
+  {
+    name: 'KCD Italy',
+    logo: {
+      light: kcdLogo,
+      dark: kcdLogo
+    },
+    url: 'https://community.cncf.io/events/details/cncf-kcd-italy-presents-kcd-italy-2024/'
   }
 ];
 
