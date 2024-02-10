@@ -26,11 +26,7 @@ const CommunityMemberList: React.FC<
     [members]
   );
   const validMembers: CommunityMemberValid[] = useMemo(
-    () =>
-      members
-        .filter(isCommunityMember)
-        // shuffle the array to avoid always showing the same members at the same position
-        .sort(() => 0.5 - Math.random()),
+    () => members.filter(isCommunityMember),
     [members]
   );
   /**
