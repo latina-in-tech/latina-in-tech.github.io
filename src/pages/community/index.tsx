@@ -35,7 +35,7 @@ const CommunityMemberList: React.FC<
   }, [isClient, members]);
   // set the client flag to true when the component is fully rendered
   // we change the order of the members on the client side
-  // this is to avoid async error between server and client rendering.
+  // this is to avoid HTML mismatch between server and client on first render
   useEffect(() => {
     setIsClient(true);
   }, []);
