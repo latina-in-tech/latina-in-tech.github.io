@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
 import {
   CommunityMemberError,
@@ -21,14 +21,24 @@ import CommunityMember from '@/components/CommunityMember';
 const CommunityMemberList: React.FC<
   InferGetStaticPropsType<typeof getStaticProps>
 > = ({ members }) => {
+  const [isClient, setIsClient] = React.useState(false);
   const errors: CommunityMemberError[] = useMemo(
     () => members.filter(isCommunityError),
     [members]
   );
-  const validMembers: CommunityMemberValid[] = useMemo(
-    () => members.filter(isCommunityMember),
-    [members]
-  );
+  const validMembers: CommunityMemberValid[] = useMemo(() => {
+    const valids = members.filter(isCommunityMember);
+    if (isClient) {
+      return valids.sort(() => 0.5 - Math.random());
+    }
+    return valids;
+  }, [isClient, members]);
+  // set the client flag to true when the component is fully rendered
+  // we change the order of the members on the client side
+  // this is to avoid HTML mismatch between server and client on first render
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
   /**
    * If there are errors, display them
    * This should be a way to detect any error in the data at development time
