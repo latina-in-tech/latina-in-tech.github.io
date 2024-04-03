@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon';
-
+import * as z from 'zod';
 export type Minute = number;
 export interface IEvent {
   slug: string;
@@ -17,19 +17,23 @@ export interface IEvent {
   signup: string;
 }
 
-export interface ISlides {
-  url: string;
-  title: string;
-  speakerName: string;
-}
+export const slidesSchema = z.object({
+  url: z.string().url(),
+  title: z.string(),
+  speakerName: z.string()
+});
 
-export interface ISpeaker {
-  name: string;
-  role: string;
-  company: string;
-  thumbnail: string;
-  linkedinUrl: string;
-}
+export type ISlides = z.infer<typeof slidesSchema>;
+
+export const speakerSchema = z.object({
+  name: z.string(),
+  role: z.string(),
+  company: z.string(),
+  thumbnail: z.string(),
+  linkedinUrl: z.string().url()
+});
+
+export type ISpeaker = z.infer<typeof speakerSchema>;
 
 export const EVENT_FIELDS = [
   'title',

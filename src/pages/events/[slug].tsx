@@ -1,9 +1,9 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 
 import { getEvent, getAllEvents } from '@/utils/mdxUtils';
 import { ParsedUrlQuery } from 'querystring';
-import { IEvent, ISlides, ISpeaker } from '@/model/event';
+import { IEvent, slidesSchema, speakerSchema } from '@/model/event';
 import { BsLinkedin } from 'react-icons/bs';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
@@ -14,17 +14,53 @@ import EventDescription from '@/components/event/EventDescription';
 import { Helmet } from 'react-helmet';
 import EventTags from '@/components/event/EventTags';
 import EventsSlides from '@/components/event/EventSlides';
+import { ZodSchema } from 'zod';
+import { isDevEnv } from '@/utils/dev';
 
 type Props = {
   source: string;
   frontMatter: IEvent;
 };
 
+type ParseItemReturn<T> = {
+  items: T[];
+  errors: string[];
+};
+
+const parseItems = <T,>(
+  items: string[],
+  schema: ZodSchema<T>
+): ParseItemReturn<T> => {
+  const parsed = items.map(item => schema.safeParse(JSON.parse(item)));
+  return parsed.reduce(
+    (acc, curr) => {
+      if (curr.success) {
+        return { ...acc, items: [...acc.items, curr.data] };
+      }
+      return {
+        ...acc,
+        errors: [...acc.errors, ...curr.error.errors.map(e => e.message)]
+      };
+    },
+    { items: [], errors: [] } as ParseItemReturn<T>
+  );
+};
+
 const thumbHeight = 250;
 
 const EventPage: React.FC<Props> = ({ source, frontMatter: event }: Props) => {
-  const speakersObjects = event.speakers?.map<ISpeaker>(rk => JSON.parse(rk));
-  const slidesObjects = event.slides?.map<ISlides>(rk => JSON.parse(rk));
+  const speakersObjects = useMemo(
+    () => parseItems(event.speakers ?? [], speakerSchema),
+    [event.speakers]
+  );
+  const slidesObjects = useMemo(
+    () => parseItems(event.slides ?? [], slidesSchema),
+    [event.slides]
+  );
+
+  const speakers = speakersObjects.items;
+  const slides = slidesObjects.items;
+  const errors = [...speakersObjects.errors, ...slidesObjects.errors];
 
   const renderEventImage = useCallback(() => {
     if (event.thumbnail) {
@@ -41,6 +77,21 @@ const EventPage: React.FC<Props> = ({ source, frontMatter: event }: Props) => {
       );
     }
   }, [event.thumbnail, event.title]);
+
+  if (errors.length > 0 && isDevEnv) {
+    return (
+      <div className='text-center'>
+        <h2 className='text-xl font-bold text-gray-900 dark:text-slate-200'>
+          Oops! Something went wrong while parsing speakers/slides
+        </h2>
+        <div className={'text-lg text-red-500'}>
+          {errors.map((error, index) => (
+            <div key={index}>{error}</div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -65,7 +116,7 @@ const EventPage: React.FC<Props> = ({ source, frontMatter: event }: Props) => {
           <EventActions event={event} />
           {speakersObjects && (
             <div className='grid grid-cols-1 gap-4 md:grid-cols-3'>
-              {speakersObjects.map(speaker => {
+              {speakers.map(speaker => {
                 return (
                   <div key={speaker.name} className='flex gap-4 items-center'>
                     <img
@@ -105,7 +156,7 @@ const EventPage: React.FC<Props> = ({ source, frontMatter: event }: Props) => {
 
           <div className='flex flex-col gap-4'>
             <EventDescription event={event} />
-            {slidesObjects && <EventsSlides slides={slidesObjects} />}
+            {slidesObjects && <EventsSlides slides={slides} />}
           </div>
         </div>
 
