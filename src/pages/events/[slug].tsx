@@ -27,7 +27,11 @@ type ParseItemsReturn<T> = {
   errors: string[];
 };
 
-// given a list of string representing a JSON
+/**
+ * given a list of string representing a T object, it tries
+ * to parse each string into a T object using the provided schema
+ * if the parsing fails, it returns the errors
+ */
 const parseItems = <T,>(
   items: string[],
   schema: ZodSchema<T>
