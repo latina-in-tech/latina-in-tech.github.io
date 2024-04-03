@@ -22,15 +22,16 @@ type Props = {
   frontMatter: IEvent;
 };
 
-type ParseItemReturn<T> = {
+type ParseItemsReturn<T> = {
   items: T[];
   errors: string[];
 };
 
+// given a list of string representing a JSON
 const parseItems = <T,>(
   items: string[],
   schema: ZodSchema<T>
-): ParseItemReturn<T> => {
+): ParseItemsReturn<T> => {
   const parsed = items.map(item => schema.safeParse(JSON.parse(item)));
   return parsed.reduce(
     (acc, curr) => {
@@ -42,7 +43,7 @@ const parseItems = <T,>(
         errors: [...acc.errors, ...curr.error.errors.map(e => e.message)]
       };
     },
-    { items: [], errors: [] } as ParseItemReturn<T>
+    { items: [], errors: [] } as ParseItemsReturn<T>
   );
 };
 
