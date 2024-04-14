@@ -14,9 +14,11 @@ const EventsPage: NextPage<{ events: [IEvent] }> = ({
 }: {
   events: [IEvent];
 }) => {
-  const router = useRouter()
-  const locale = i18n.locales.filter(locale => router?.query.lang === locale)[0]
-  
+  const router = useRouter();
+  const locale = i18n.locales.filter(
+    locale => router?.query.lang === locale
+  )[0];
+
   const sortedEvents = useMemo(() => sortEvents(events), [events]);
   return (
     <>
@@ -38,7 +40,7 @@ const EventsPage: NextPage<{ events: [IEvent] }> = ({
 export default EventsPage;
 
 export const getStaticPaths = async () => {
-  const locales = getAllLocales()
+  const locales = getAllLocales();
 
   return {
     paths: locales.map(locale => {
@@ -46,10 +48,10 @@ export const getStaticPaths = async () => {
         params: {
           lang: locale
         }
-      }
+      };
     }),
     fallback: false
-  }
+  };
 };
 
 export const getStaticProps: GetStaticProps = async () => {

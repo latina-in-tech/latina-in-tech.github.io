@@ -29,8 +29,8 @@ const MAX_RATE = 5;
 
 const NewFeedback = () => {
   useEffect(() => {
-    window.location.href = `/${i18n.defaultLocale}`
-  }, [])
+    window.location.href = `/${i18n.defaultLocale}`;
+  }, []);
 
   return;
 };

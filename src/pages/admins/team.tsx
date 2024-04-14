@@ -140,8 +140,8 @@ const AdminCard: React.FC<Admin> = ({
 
 const AdminTeam = () => {
   useEffect(() => {
-    window.location.href = `/${i18n.defaultLocale}`
-  }, [])
+    window.location.href = `/${i18n.defaultLocale}`;
+  }, []);
 
   return;
 };

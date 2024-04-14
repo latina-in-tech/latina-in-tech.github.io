@@ -60,8 +60,8 @@ const EventPage = ({ source, frontMatter: event }: Props) => {
     [event.speakers]
   );
   useEffect(() => {
-    window.location.href = `/${i18n.defaultLocale}`
-  }, [])
+    window.location.href = `/${i18n.defaultLocale}`;
+  }, []);
 
   return;
 };

@@ -16,9 +16,7 @@ function classNames(...classes: string[]): string {
   return classes.filter(Boolean).join(' ');
 }
 
-const Header = (props: {
-  lang: Locale
-}) => {
+const Header = (props: { lang: Locale }) => {
   const router = useRouter();
   const pathname = usePathname();
   const links = useMemo(
@@ -79,7 +77,11 @@ const Header = (props: {
                     {links.map(item => (
                       <Link
                         key={item.name}
-                        href={item.name === 'Admin team' ? router.query.lang + item.href : item.href}
+                        href={
+                          item.name === 'Admin team'
+                            ? router.query.lang + item.href
+                            : item.href
+                        }
                         target={item.local ? undefined : '_blank'}
                         className={classNames(
                           item.current

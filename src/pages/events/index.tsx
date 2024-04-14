@@ -7,14 +7,10 @@ import { IEvent, sortEvents } from '@/model/event';
 import Head from 'next/head';
 import { i18n } from 'i18n.config';
 
-const EventsPage = ({
-  events
-}: {
-  events: [IEvent];
-}) => {
+const EventsPage = ({ events }: { events: [IEvent] }) => {
   useEffect(() => {
-    window.location.href = `/${i18n.defaultLocale}`
-  }, [])
+    window.location.href = `/${i18n.defaultLocale}`;
+  }, []);
 
   return;
 };

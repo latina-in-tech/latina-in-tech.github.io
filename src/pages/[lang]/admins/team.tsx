@@ -140,8 +140,10 @@ const AdminCard: React.FC<Admin> = ({
 };
 
 const AdminTeam = () => {
-  const router = useRouter()
-  const locale = i18n.locales.filter(locale => router?.query.lang === locale)[0]
+  const router = useRouter();
+  const locale = i18n.locales.filter(
+    locale => router?.query.lang === locale
+  )[0];
 
   return (
     <div>

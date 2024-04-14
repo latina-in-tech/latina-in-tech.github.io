@@ -30,9 +30,11 @@ const NOT_CAME_REASONS = [
 const MAX_RATE = 5;
 
 const NewFeedback: NextPage<Props> = ({ events: events }: Props) => {
-  const router = useRouter()
-  const locale = i18n.locales.filter(locale => router?.query.lang === locale)[0]
-  
+  const router = useRouter();
+  const locale = i18n.locales.filter(
+    locale => router?.query.lang === locale
+  )[0];
+
   const pastEvents = useMemo(() => filterPastEvents(events), [events]);
 
   const lastEvent = sortEvents(pastEvents)[0];
@@ -246,7 +248,7 @@ const NewFeedback: NextPage<Props> = ({ events: events }: Props) => {
 export default NewFeedback;
 
 export const getStaticPaths = async () => {
-  const locales = getAllLocales()
+  const locales = getAllLocales();
 
   return {
     paths: locales.map(locale => {
@@ -254,10 +256,10 @@ export const getStaticPaths = async () => {
         params: {
           lang: locale
         }
-      }
+      };
     }),
     fallback: false
-  }
+  };
 };
 
 export const getStaticProps: GetStaticProps = async () => {

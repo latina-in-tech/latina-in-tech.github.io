@@ -56,8 +56,10 @@ const parseItems = <T,>(
 const thumbHeight = 250;
 
 const EventPage: React.FC<Props> = ({ source, frontMatter: event }: Props) => {
-  const router = useRouter()
-  const locale = i18n.locales.filter(locale => router?.query.lang === locale)[0]
+  const router = useRouter();
+  const locale = i18n.locales.filter(
+    locale => router?.query.lang === locale
+  )[0];
 
   const speakersObjects = useMemo(
     () => parseItems(event.speakers ?? [], speakerSchema),
