@@ -8,12 +8,18 @@ import { XMarkIcon, Bars3Icon } from '@heroicons/react/24/outline';
 import navigationLinks from '@/model/navigation';
 import React, { useMemo } from 'react';
 import { usePathname } from 'next/navigation';
+import { Locale } from 'i18n.config';
+import { useRouter } from 'next/router';
+import LocaleSwitcher from './LocaleSwitcher';
 
 function classNames(...classes: string[]): string {
   return classes.filter(Boolean).join(' ');
 }
 
-const Header: React.FC = () => {
+const Header = (props: {
+  lang: Locale
+}) => {
+  const router = useRouter();
   const pathname = usePathname();
   const links = useMemo(
     () =>
@@ -23,6 +29,7 @@ const Header: React.FC = () => {
       })),
     [pathname]
   );
+
   return (
     <Disclosure as='nav'>
       {({ open: isOpen }) => (
@@ -48,7 +55,7 @@ const Header: React.FC = () => {
 
               <div className='flex w-full flex-1 items-center justify-center lg:items-stretch lg:justify-between'>
                 <div className='flex flex-shrink-0 items-center'>
-                  <Link href='/'>
+                  <Link href={`/${router.query.lang}`}>
                     <Image
                       src={logoLight}
                       alt='Logo LiT'
@@ -72,7 +79,7 @@ const Header: React.FC = () => {
                     {links.map(item => (
                       <Link
                         key={item.name}
-                        href={item.href}
+                        href={item.name === 'Admin team' ? router.query.lang + item.href : item.href}
                         target={item.local ? undefined : '_blank'}
                         className={classNames(
                           item.current
@@ -87,6 +94,7 @@ const Header: React.FC = () => {
                     ))}
                   </div>
                 </div>
+                <LocaleSwitcher lang={props.lang} />
               </div>
             </div>
           </div>

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Header from '@/components/Header';
 import {
   BsLinkedin,
@@ -7,6 +7,7 @@ import {
   BsFillHouseDoorFill
 } from 'react-icons/bs';
 import { i18n } from 'i18n.config';
+import { useRouter } from 'next/router';
 
 type Admin = {
   name: string;
@@ -139,11 +140,32 @@ const AdminCard: React.FC<Admin> = ({
 };
 
 const AdminTeam = () => {
-  useEffect(() => {
-    window.location.href = `/${i18n.defaultLocale}`
-  }, [])
+  const router = useRouter()
+  const locale = i18n.locales.filter(locale => router?.query.lang === locale)[0]
 
-  return;
+  return (
+    <div>
+      <Header lang={locale} />
+      <div className='flex justify-center items-center'>
+        <div className='w-[100%] md:w-fit p-4 m-4 justify-center rounded-md shadow-md bg-slate-200 dark:bg-slate-800'>
+          <div className='flex flex-col items-center justify-center space-y-5 mb-4 sm:space-y-4 md:max-w-xl lg:max-w-3xl xl:max-w-none'>
+            <h2 className='text-3xl font-bold dark:text-slate-200 sm:text-4xl text-center'>
+              Il team di Latina In Tech
+            </h2>
+            <p className='mx-auto max-w-2xl text-m text-center text-gray-500 dark:text-slate-400 sm:mt-2'>
+              Un gruppo di persone che condividono la passione per la tecnologia
+              e per il proprio territorio.
+            </p>
+          </div>
+          <div className='grid grid-cols-1 justify-items-center md:grid-cols-3 lg:grid-cols-4 gap-4'>
+            {admins.map(admin => (
+              <AdminCard key={admin.name} {...admin} />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default AdminTeam;

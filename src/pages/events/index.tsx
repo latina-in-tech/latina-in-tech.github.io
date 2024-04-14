@@ -1,32 +1,22 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import Header from '@/components/Header';
 import EventsList from '@/components/event/EventsList';
 import { GetStaticProps, NextPage } from 'next';
 import { getAllEvents } from '@/utils/mdxUtils';
 import { IEvent, sortEvents } from '@/model/event';
 import Head from 'next/head';
+import { i18n } from 'i18n.config';
 
-const EventsPage: NextPage<{ events: [IEvent] }> = ({
+const EventsPage = ({
   events
 }: {
   events: [IEvent];
 }) => {
-  const sortedEvents = useMemo(() => sortEvents(events), [events]);
-  return (
-    <>
-      <Head>
-        <title>LiT - Eventi</title>
-      </Head>
-      <Header />
-      <div className='p-4'>
-        <EventsList
-          heading='Eventi'
-          caption='Qui puoi vedere tutti gli eventi della community Latina In Tech!'
-          events={sortedEvents}
-        />
-      </div>
-    </>
-  );
+  useEffect(() => {
+    window.location.href = `/${i18n.defaultLocale}`
+  }, [])
+
+  return;
 };
 
 export default EventsPage;
