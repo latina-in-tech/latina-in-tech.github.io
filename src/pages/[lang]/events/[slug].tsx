@@ -18,6 +18,7 @@ import { ZodSchema } from 'zod';
 import { isDevEnv } from '@/utils/dev';
 import { i18n } from 'i18n.config';
 import { useRouter } from 'next/router';
+import { getAllLocales } from '@/utils/locale';
 
 type Props = {
   source: string;
@@ -239,12 +240,16 @@ export const getStaticProps: GetStaticProps = async context => {
 
 export const getStaticPaths: GetStaticPaths = () => {
   const events = getAllEvents(['slug']);
+  const locales = getAllLocales();
 
-  const paths = events.map(event => ({
-    params: {
-      slug: event.slug
-    }
-  }));
+  const paths = locales.flatMap(l =>
+    events.map(event => ({
+      params: {
+        slug: event.slug,
+        lang: l
+      }
+    }))
+  );
 
   return {
     paths,

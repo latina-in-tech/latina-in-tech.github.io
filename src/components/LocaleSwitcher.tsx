@@ -5,7 +5,10 @@ import { useRouter } from 'next/router';
 import { Locale, i18n } from 'i18n.config';
 import { usePathname } from 'next/navigation';
 
-export default function LocaleSwitcher(props: { lang: Locale }) {
+export default function LocaleSwitcher(props: {
+  lang: Locale;
+  mobile: boolean;
+}) {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -29,15 +32,17 @@ export default function LocaleSwitcher(props: { lang: Locale }) {
         // not works: onclick runs twice ######
         // console.log("old path: " + pathname)
         // console.log("new path: " + pathname.replace(regex, changeLocale))
-        router.push(pathname.replace(regex, changeLocale));
+        void router.replace(pathname.replace(regex, changeLocale));
       } else {
-        router.push(`/${changeLocale}${pathname}`);
+        void router.replace(`/${changeLocale}${pathname}`);
       }
     };
   };
 
   return (
-    <div className='flex flex-row p-4 gap-x-1 items-center'>
+    <div
+      className={`${props.mobile ? 'flex flex-row px-3 py-2' : 'hidden p-4 items-center lg:flex lg:flex-row'} gap-x-1`}
+    >
       <span
         className='fi fi-it'
         style={{ display: 'block', width: '32px', height: '16px' }}

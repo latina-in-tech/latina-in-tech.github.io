@@ -73,6 +73,7 @@ const Header = (props: { lang: Locale }) => {
                   </Link>
                 </div>
                 <div className='hidden items-center sm:ml-6 lg:flex'>
+                  <LocaleSwitcher lang={props.lang} mobile={false} />
                   <div className='flex space-x-4'>
                     {links.map(item => (
                       <Link
@@ -96,13 +97,13 @@ const Header = (props: { lang: Locale }) => {
                     ))}
                   </div>
                 </div>
-                <LocaleSwitcher lang={props.lang} />
               </div>
             </div>
           </div>
 
           <Disclosure.Panel className='lg:hidden'>
             <div className='space-y-1 px-2 pt-2 pb-3'>
+              <LocaleSwitcher lang={props.lang} mobile={true} />
               {links.map(item => (
                 <Disclosure.Button
                   as={Link}

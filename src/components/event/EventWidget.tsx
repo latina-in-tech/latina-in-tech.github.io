@@ -5,6 +5,7 @@ import React, { useCallback, useMemo } from 'react';
 import EventActions from './EventActions';
 import EventDescription from './EventDescription';
 import EventTags from './EventTags';
+import { useRouter } from 'next/router';
 
 const thumbHeight = 400;
 type Props = {
@@ -12,6 +13,8 @@ type Props = {
 };
 
 const EventWidget: React.FC<Props> = ({ event }: Props) => {
+  const router = useRouter();
+
   const renderEventImage = useCallback(() => {
     if (event.thumbnail) {
       return (
@@ -40,7 +43,7 @@ const EventWidget: React.FC<Props> = ({ event }: Props) => {
   }, [isPast]);
 
   return (
-    <Link href={`/events/${event.slug}`} legacyBehavior>
+    <Link href={`${router.query.lang}/events/${event.slug}`} legacyBehavior>
       <div className={getEventWidgetClasses()}>
         {renderEventImage()}
         <div className='flex flex-1 flex-col gap-2 p-4'>
