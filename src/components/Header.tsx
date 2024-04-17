@@ -21,10 +21,16 @@ const Header = (props: { lang: Locale }) => {
   const pathname = usePathname();
   const links = useMemo(
     () =>
-      navigationLinks.map(link => ({
-        ...link,
-        current: link.href === pathname
-      })),
+      navigationLinks.map(link => {
+        if (link.name === 'Admin team') {
+          link.href = `/${router.query.lang}/admins/team`;
+        }
+
+        return {
+          ...link,
+          current: link.href === pathname
+        };
+      }),
     [pathname]
   );
 
@@ -78,11 +84,7 @@ const Header = (props: { lang: Locale }) => {
                     {links.map(item => (
                       <Link
                         key={item.name}
-                        href={
-                          item.name === 'Admin team'
-                            ? router.query.lang + item.href
-                            : item.href
-                        }
+                        href={item.href}
                         target={item.local ? undefined : '_blank'}
                         className={classNames(
                           item.current
