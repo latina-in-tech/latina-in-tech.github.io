@@ -4,6 +4,20 @@ const nextConfig = {
   reactStrictMode: true,
   images: {
     unoptimized: true
+  },
+  async redirects() {
+    return [
+      '/',
+      '/admins/team',
+      '/events/:eventId',
+      '/feedback/new',
+      '/newsletter',
+      '/community'
+    ].map(r => ({
+      source: r,
+      destination: '/it' + r,
+      permanent: true
+    }));
   }
 };
 

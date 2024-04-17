@@ -9,12 +9,12 @@ import {
 import { getAllEvents } from '@/utils/mdxUtils';
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { Sponsors } from '@/components/Sponsors';
 import { LeaveFeedback } from '@/components/LeaveFeedback';
 import EventsList from '@/components/event/EventsList';
 import { Newsletter } from '@/components/Newsletter';
-import Community from '@/pages/community';
+import Community from '@/pages/[lang]/community';
 import { getAllCommunityMembers } from '@/utils/community';
 import { getAllLocales } from '@/utils/locale';
 import { useRouter } from 'next/router';
