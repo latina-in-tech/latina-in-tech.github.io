@@ -1,3 +1,12 @@
 {
-    "test": "ciao"
+    "description": "Community che raccoglie gli sviluppatori della provincia di Latina",
+    "prox_events": {
+        "heading": "Prossimi Eventi",
+        "caption": "Fissa le date e non prendere impegni per i prossimi eventi della community!"
+    },
+    "past_events": {
+        "heading": "Eventi Passati",
+        "caption": "Peccato, questi eventi si sono già svolti! Segui la pagina per rimanere aggiornato sui prossimi appuntamenti."
+    },
+    "has_more_events": "...e molti altri!"
 }
