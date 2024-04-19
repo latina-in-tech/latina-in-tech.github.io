@@ -8,10 +8,10 @@ export default function Document() {
 
   useEffect(() => {
     const router = useRouter();
-    if (router.query.lang === 'en') {
+    if (router.query.lang !== i18n.defaultLocale) {
       setLocale('en');
     }
-  }, []);
+  }, [locale]);
 
   return (
     <Html lang={locale}>
