@@ -7,12 +7,19 @@ import { useRouter } from 'next/router';
 import { i18n } from 'i18n.config';
 
 const oldPaths = [
+  '/',
   '/admins/team',
   '/events/\\d+',
   '/feedback/new',
   '/newsletter',
   '/community'
-].map(p => new RegExp(`^${p}`));
+].map(p => {
+  if(p === '/') {
+    return new RegExp(`^${p}$`);
+  }
+
+  return new RegExp(`^${p}`);
+});
 
 const useBackRouteCompatibility = () => {
   const router = useRouter();
