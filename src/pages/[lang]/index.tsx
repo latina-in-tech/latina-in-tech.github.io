@@ -18,19 +18,20 @@ import Community from '@/pages/[lang]/community';
 import { getAllCommunityMembers } from '@/utils/community';
 import { getAllLocales } from '@/utils/locale';
 import { useRouter } from 'next/router';
-import { i18n } from 'i18n.config';
+import { Locale, i18n } from 'i18n.config';
+import { getDictionary } from '@/utils/dictionary';
 
 const MAX_PAST_EVENTS = 3;
 
 const Home: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   events,
-  communityMembers
+  communityMembers,
+  translations
 }) => {
   const router = useRouter();
   const locale = i18n.locales.filter(
     locale => router?.query.lang === locale
   )[0];
-  // const dictionary = await getDictionary(locale);
 
   const allPastEvents = useMemo(
     () => sortEvents(filterPastEvents(events)),
@@ -67,15 +68,15 @@ const Home: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 
         {nextEvents.length > 0 && (
           <EventsList
-            heading='Prossimi Eventi'
-            caption='Fissa le date e non prendere impegni per i prossimi eventi della community!'
+            heading={translations.nextEventsTitle}
+            caption={translations.nextEventsSubtitle}
             events={nextEvents}
           />
         )}
         {pastEventsPreview.length > 0 && (
           <EventsList
-            heading='Eventi Passati'
-            caption='Peccato, questi eventi si sono già svolti! Segui la pagina per rimanere aggiornato sui prossimi appuntamenti.'
+            heading={translations.previousEventsTitle}
+            caption={translations.previousEventsSubtitle}
             events={pastEventsPreview}
           />
         )}
@@ -85,7 +86,7 @@ const Home: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
               href={`/${router.query.lang}/events`}
               className='text-primary hover:text-primary-dark dark:text-primary-lighter dark:hover:text-primary-light mt-2 text-lg'
             >
-              ...e molti altri!
+              {translations.andManyOthers}
             </a>
           </div>
         )}
@@ -114,10 +115,12 @@ export const getStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async context => {
+  const lang = context.params?.lang as string;
+  const dictionary = await getDictionary(lang as Locale);
   const events = getAllEvents();
   const communityMembers = getAllCommunityMembers();
-  return { props: { events, communityMembers } };
+  return { props: { events, communityMembers, translations: dictionary.home } };
 };
 
 export default Home;

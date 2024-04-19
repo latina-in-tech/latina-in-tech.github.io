@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import { i18n } from 'i18n.config';
 
 const oldPaths = [
+  '/$',
   '/admins/team',
   '/events/\\d+',
   '/feedback/new',
