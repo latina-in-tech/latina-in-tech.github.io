@@ -9,6 +9,7 @@ import {
 import { getAllCommunityMembers } from '@/utils/community';
 import { isDevEnv } from '@/utils/dev';
 import CommunityMember from '@/components/CommunityMember';
+import { getAllLocales } from '@/utils/locale';
 
 /**
  * display the list of community members
@@ -85,6 +86,21 @@ const CommunityMemberList: React.FC<
       </div>
     </div>
   );
+};
+
+export const getStaticPaths = async () => {
+  const locales = getAllLocales();
+
+  return {
+    paths: locales.map(locale => {
+      return {
+        params: {
+          lang: locale
+        }
+      };
+    }),
+    fallback: false
+  };
 };
 
 export const getStaticProps = (() => ({

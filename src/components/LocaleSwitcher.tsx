@@ -25,13 +25,10 @@ export default function LocaleSwitcher(props: {
     setLocale(changeLocale);
     setAnimation(props.lang === defaultLocale ? 'slide-out' : 'slide-in');
 
-    container.onanimationend = e => {
+    container.onanimationend = () => {
       const regex = /it|en/;
 
       if (regex.test(pathname)) {
-        // not works: onclick runs twice ######
-        // console.log("old path: " + pathname)
-        // console.log("new path: " + pathname.replace(regex, changeLocale))
         void router.replace(pathname.replace(regex, changeLocale));
       } else {
         void router.replace(`/${changeLocale}${pathname}`);

@@ -82,7 +82,7 @@ const Home: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
         {hasMorePastEvents && (
           <div className='flex justify-center'>
             <a
-              href='/events'
+              href={`/${router.query.lang}/events`}
               className='text-primary hover:text-primary-dark dark:text-primary-lighter dark:hover:text-primary-light mt-2 text-lg'
             >
               ...e molti altri!

@@ -242,11 +242,11 @@ export const getStaticPaths: GetStaticPaths = () => {
   const events = getAllEvents(['slug']);
   const locales = getAllLocales();
 
-  const paths = locales.flatMap(l =>
+  const paths = locales.flatMap(locale =>
     events.map(event => ({
       params: {
         slug: event.slug,
-        lang: l
+        lang: locale
       }
     }))
   );

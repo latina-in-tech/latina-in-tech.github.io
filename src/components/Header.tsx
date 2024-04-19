@@ -9,7 +9,6 @@ import navigationLinks from '@/model/navigation';
 import React, { useMemo } from 'react';
 import { usePathname } from 'next/navigation';
 import { Locale } from 'i18n.config';
-import { useRouter } from 'next/router';
 import LocaleSwitcher from './LocaleSwitcher';
 
 function classNames(...classes: string[]): string {
@@ -17,13 +16,12 @@ function classNames(...classes: string[]): string {
 }
 
 const Header = (props: { lang: Locale }) => {
-  const router = useRouter();
   const pathname = usePathname();
   const links = useMemo(
     () =>
       navigationLinks.map(link => {
         if (link.name === 'Admin team') {
-          link.href = `/${router.query.lang}/admins/team`;
+          link.href = `/${props.lang}/admins/team`;
         }
 
         return {
@@ -31,7 +29,7 @@ const Header = (props: { lang: Locale }) => {
           current: link.href === pathname
         };
       }),
-    [pathname]
+    [pathname, props.lang]
   );
 
   return (
@@ -59,7 +57,7 @@ const Header = (props: { lang: Locale }) => {
 
               <div className='flex w-full flex-1 items-center justify-center lg:items-stretch lg:justify-between'>
                 <div className='flex flex-shrink-0 items-center'>
-                  <Link href={`/${router.query.lang}`}>
+                  <Link href={`/${props.lang}`}>
                     <Image
                       src={logoLight}
                       alt='Logo LiT'
