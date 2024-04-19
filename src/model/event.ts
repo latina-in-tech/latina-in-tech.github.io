@@ -28,7 +28,7 @@ export type ISlides = z.infer<typeof slidesSchema>;
 export const speakerSchema = z.object({
   name: z.string(),
   role: z.string(),
-  company: z.string(),
+  company: z.string().optional(),
   thumbnail: z.string(),
   linkedinUrl: z.string().url()
 });
