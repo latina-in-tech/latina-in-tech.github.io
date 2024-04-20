@@ -1,9 +1,40 @@
 import 'tailwindcss/tailwind.css';
+import '@/globals.css';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import React from 'react';
+import { useRouter } from 'next/router';
+import { i18n } from 'i18n.config';
+
+const oldPaths = [
+  '/',
+  '/admins/team',
+  '/events/\\d+',
+  '/feedback/new',
+  '/newsletter',
+  '/community'
+].map(p => {
+  if (p === '/') {
+    return new RegExp(`^${p}$`);
+  }
+
+  return new RegExp(`^${p}`);
+});
+
+const useBackRouteCompatibility = () => {
+  const router = useRouter();
+  React.useEffect(() => {
+    if (oldPaths.some(p => p.test(router.asPath))) {
+      void router.replace(
+        router.asPath,
+        `/${i18n.defaultLocale}${router.asPath}`
+      );
+    }
+  }, [router]);
+};
 
 export default function App({ Component, pageProps }: AppProps) {
+  useBackRouteCompatibility();
   return (
     <>
       <Head>

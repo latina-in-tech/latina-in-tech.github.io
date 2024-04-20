@@ -1,0 +1,9 @@
+{
+    "home": {
+        "nextEventsTitle": "Next Events",
+        "nextEventsSubtitle": "Save dates and don't make commitments for upcoming community events!",
+         "previousEventsTitle": "Previous Events",
+        "previousEventsSubtitle": "Too bad, these events have already taken place! Follow the page to stay updated on upcoming events.",
+        "andManyOthers": "...and many others!"
+    }
+}

@@ -12,6 +12,9 @@ import { TextArea } from '@/components/TextArea';
 import { PaperAirplaneIcon, HomeIcon } from '@heroicons/react/24/outline';
 import { saveFeedback } from '@/service/feedback/save';
 import { Alert } from '@/components/Alert';
+import { i18n } from 'i18n.config';
+import { useRouter } from 'next/router';
+import { getAllLocales } from '@/utils/locale';
 
 type Props = {
   events: [IEvent];
@@ -27,6 +30,11 @@ const NOT_CAME_REASONS = [
 const MAX_RATE = 5;
 
 const NewFeedback: NextPage<Props> = ({ events: events }: Props) => {
+  const router = useRouter();
+  const locale = i18n.locales.filter(
+    locale => router?.query.lang === locale
+  )[0];
+
   const pastEvents = useMemo(() => filterPastEvents(events), [events]);
 
   const lastEvent = sortEvents(pastEvents)[0];
@@ -82,7 +90,7 @@ const NewFeedback: NextPage<Props> = ({ events: events }: Props) => {
         ></meta>
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <Header />
+      <Header lang={locale} />
       <main className='flex flex-col gap-6 px-4 pb-4 sm:mt-8'>
         <div className='flex flex-col items-center'>
           <h2 className='text-3xl font-bold dark:text-slate-200 sm:text-4xl'>
@@ -238,6 +246,21 @@ const NewFeedback: NextPage<Props> = ({ events: events }: Props) => {
 };
 
 export default NewFeedback;
+
+export const getStaticPaths = async () => {
+  const locales = getAllLocales();
+
+  return {
+    paths: locales.map(locale => {
+      return {
+        params: {
+          lang: locale
+        }
+      };
+    }),
+    fallback: false
+  };
+};
 
 export const getStaticProps: GetStaticProps = async () => {
   const events = getAllEvents();

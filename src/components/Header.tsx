@@ -8,21 +8,30 @@ import { XMarkIcon, Bars3Icon } from '@heroicons/react/24/outline';
 import navigationLinks from '@/model/navigation';
 import React, { useMemo } from 'react';
 import { usePathname } from 'next/navigation';
+import { Locale } from 'i18n.config';
+import LocaleSwitcher from './LocaleSwitcher';
 
 function classNames(...classes: string[]): string {
   return classes.filter(Boolean).join(' ');
 }
 
-const Header: React.FC = () => {
+const Header = (props: { lang: Locale }) => {
   const pathname = usePathname();
   const links = useMemo(
     () =>
-      navigationLinks.map(link => ({
-        ...link,
-        current: link.href === pathname
-      })),
-    [pathname]
+      navigationLinks.map(link => {
+        if (link.name === 'Admin team') {
+          link.href = `/${props.lang}/admins/team`;
+        }
+
+        return {
+          ...link,
+          current: link.href === pathname
+        };
+      }),
+    [pathname, props.lang]
   );
+
   return (
     <Disclosure as='nav'>
       {({ open: isOpen }) => (
@@ -48,7 +57,7 @@ const Header: React.FC = () => {
 
               <div className='flex w-full flex-1 items-center justify-center lg:items-stretch lg:justify-between'>
                 <div className='flex flex-shrink-0 items-center'>
-                  <Link href='/'>
+                  <Link href={`/${props.lang}`}>
                     <Image
                       src={logoLight}
                       alt='Logo LiT'
@@ -68,6 +77,7 @@ const Header: React.FC = () => {
                   </Link>
                 </div>
                 <div className='hidden items-center sm:ml-6 lg:flex'>
+                  <LocaleSwitcher lang={props.lang} mobile={false} />
                   <div className='flex space-x-4'>
                     {links.map(item => (
                       <Link
@@ -93,6 +103,7 @@ const Header: React.FC = () => {
 
           <Disclosure.Panel className='lg:hidden'>
             <div className='space-y-1 px-2 pt-2 pb-3'>
+              <LocaleSwitcher lang={props.lang} mobile={true} />
               {links.map(item => (
                 <Disclosure.Button
                   as={Link}

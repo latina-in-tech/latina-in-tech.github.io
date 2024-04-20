@@ -6,6 +6,8 @@ import {
   BsTwitter,
   BsFillHouseDoorFill
 } from 'react-icons/bs';
+import { i18n } from 'i18n.config';
+import { useRouter } from 'next/router';
 
 type Admin = {
   name: string;
@@ -138,9 +140,14 @@ const AdminCard: React.FC<Admin> = ({
 };
 
 const AdminTeam = () => {
+  const router = useRouter();
+  const locale = i18n.locales.filter(
+    locale => router?.query.lang === locale
+  )[0];
+
   return (
     <div>
-      <Header />
+      <Header lang={locale} />
       <div className='flex justify-center items-center'>
         <div className='w-[100%] md:w-fit p-4 m-4 justify-center rounded-md shadow-md bg-slate-200 dark:bg-slate-800'>
           <div className='flex flex-col items-center justify-center space-y-5 mb-4 sm:space-y-4 md:max-w-xl lg:max-w-3xl xl:max-w-none'>

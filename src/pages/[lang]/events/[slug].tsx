@@ -16,6 +16,9 @@ import EventTags from '@/components/event/EventTags';
 import EventsSlides from '@/components/event/EventSlides';
 import { ZodSchema } from 'zod';
 import { isDevEnv } from '@/utils/dev';
+import { i18n } from 'i18n.config';
+import { useRouter } from 'next/router';
+import { getAllLocales } from '@/utils/locale';
 
 type Props = {
   source: string;
@@ -54,6 +57,11 @@ const parseItems = <T,>(
 const thumbHeight = 250;
 
 const EventPage: React.FC<Props> = ({ source, frontMatter: event }: Props) => {
+  const router = useRouter();
+  const locale = i18n.locales.filter(
+    locale => router?.query.lang === locale
+  )[0];
+
   const speakersObjects = useMemo(
     () => parseItems(event.speakers ?? [], speakerSchema),
     [event.speakers]
@@ -108,7 +116,7 @@ const EventPage: React.FC<Props> = ({ source, frontMatter: event }: Props) => {
       <Helmet>
         <title>LiT - {event.title}</title>
       </Helmet>
-      <Header />
+      <Header lang={locale} />
       <article className='flex flex-col gap-4 px-4 pb-8 justify-center items-center'>
         <h2 className='text-3xl font-extrabold text-center text-gray-900 dark:text-slate-200 sm:text-4xl'>
           {event.title}
@@ -232,12 +240,16 @@ export const getStaticProps: GetStaticProps = async context => {
 
 export const getStaticPaths: GetStaticPaths = () => {
   const events = getAllEvents(['slug']);
+  const locales = getAllLocales();
 
-  const paths = events.map(event => ({
-    params: {
-      slug: event.slug
-    }
-  }));
+  const paths = locales.flatMap(locale =>
+    events.map(event => ({
+      params: {
+        slug: event.slug,
+        lang: locale
+      }
+    }))
+  );
 
   return {
     paths,

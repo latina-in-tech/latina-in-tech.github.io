@@ -1,3 +1,4 @@
+'use client';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import {
@@ -13,15 +14,25 @@ import { Sponsors } from '@/components/Sponsors';
 import { LeaveFeedback } from '@/components/LeaveFeedback';
 import EventsList from '@/components/event/EventsList';
 import { Newsletter } from '@/components/Newsletter';
-import Community from '@/pages/community';
+import Community from '@/pages/[lang]/community';
 import { getAllCommunityMembers } from '@/utils/community';
+import { getAllLocales } from '@/utils/locale';
+import { useRouter } from 'next/router';
+import { Locale, i18n } from 'i18n.config';
+import { getDictionary } from '@/utils/dictionary';
 
 const MAX_PAST_EVENTS = 3;
 
 const Home: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   events,
-  communityMembers
+  communityMembers,
+  translations
 }) => {
+  const router = useRouter();
+  const locale = i18n.locales.filter(
+    locale => router?.query.lang === locale
+  )[0];
+
   const allPastEvents = useMemo(
     () => sortEvents(filterPastEvents(events)),
     [events]
@@ -49,7 +60,7 @@ const Home: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
         ></meta>
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <Header />
+      <Header lang={locale} />
       <main className='flex flex-col gap-6 px-4 pb-8'>
         <Hero />
 
@@ -57,25 +68,25 @@ const Home: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 
         {nextEvents.length > 0 && (
           <EventsList
-            heading='Prossimi Eventi'
-            caption='Fissa le date e non prendere impegni per i prossimi eventi della community!'
+            heading={translations.nextEventsTitle}
+            caption={translations.nextEventsSubtitle}
             events={nextEvents}
           />
         )}
         {pastEventsPreview.length > 0 && (
           <EventsList
-            heading='Eventi Passati'
-            caption='Peccato, questi eventi si sono già svolti! Segui la pagina per rimanere aggiornato sui prossimi appuntamenti.'
+            heading={translations.previousEventsTitle}
+            caption={translations.previousEventsSubtitle}
             events={pastEventsPreview}
           />
         )}
         {hasMorePastEvents && (
           <div className='flex justify-center'>
             <a
-              href='/events'
+              href={`/${router.query.lang}/events`}
               className='text-primary hover:text-primary-dark dark:text-primary-lighter dark:hover:text-primary-light mt-2 text-lg'
             >
-              ...e molti altri!
+              {translations.andManyOthers}
             </a>
           </div>
         )}
@@ -89,10 +100,27 @@ const Home: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   );
 };
 
-export default Home;
+export const getStaticPaths = async () => {
+  const locales = getAllLocales();
 
-export const getStaticProps: GetStaticProps = async () => {
+  return {
+    paths: locales.map(locale => {
+      return {
+        params: {
+          lang: locale
+        }
+      };
+    }),
+    fallback: false
+  };
+};
+
+export const getStaticProps: GetStaticProps = async context => {
+  const lang = context.params?.lang as string;
+  const dictionary = await getDictionary(lang as Locale);
   const events = getAllEvents();
   const communityMembers = getAllCommunityMembers();
-  return { props: { events, communityMembers } };
+  return { props: { events, communityMembers, translations: dictionary.home } };
 };
+
+export default Home;

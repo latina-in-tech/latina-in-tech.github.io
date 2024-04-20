@@ -1,0 +1,39 @@
+.en {
+    position: relative;
+    left: calc(100% - 16px);
+}
+
+.it {
+    position: relative;
+    left: 0;
+}
+
+.slide-in {
+    animation-name: slidein;
+    animation-duration: 750ms;
+}
+
+.slide-out {
+    animation-name: slideout;
+    animation-duration: 750ms;
+}
+
+@keyframes slideout {
+    from {
+        left: 0%;
+    }
+    
+    to {
+        left: calc(100% - 16px);
+    }
+}
+
+@keyframes slidein {
+    from {
+        left: calc(100% - 16px);
+    }
+    
+    to {
+        left: 0%;
+    }
+}
