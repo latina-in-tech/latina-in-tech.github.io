@@ -1,17 +1,17 @@
 import { Locale, i18n } from 'i18n.config';
 import { Html, Head, Main, NextScript } from 'next/document';
-import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/compat/router';
+import React from 'react';
 
 export default function Document() {
-  const [locale, setLocale] = useState<Locale>(i18n.defaultLocale);
+  const router = useRouter();
+  const [locale, setLocale] = React.useState<Locale>(i18n.defaultLocale);
 
-  useEffect(() => {
-    const router = useRouter();
-    if (router.query.lang !== i18n.defaultLocale) {
+  React.useEffect(() => {
+    if (router?.query.lang !== i18n.defaultLocale) {
       setLocale('en');
     }
-  }, [locale]);
+  }, [router]);
 
   return (
     <Html lang={locale}>
