@@ -12,7 +12,7 @@
     "check:types": "tsc --noemit"
   },
   "dependencies": {
-    "add-to-calendar-button-react": "^2.6.10",
+    "add-to-calendar-button-react": "^2.6.13",
     "autoprefixer": "^10.4.19",
     "firebase": "^10.11.0",
     "flag-icons": "^7.2.1",
