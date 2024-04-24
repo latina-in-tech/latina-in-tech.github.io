@@ -12,7 +12,6 @@ export default function LocaleSwitcher(props: {
   const router = useRouter();
   const pathname = usePathname();
 
-  const defaultLocale = i18n.defaultLocale;
   const [animation, setAnimation] = React.useState('');
   const [locale, setLocale] = React.useState(props.lang);
 
@@ -23,7 +22,7 @@ export default function LocaleSwitcher(props: {
     )[0];
 
     setLocale(changeLocale);
-    setAnimation(props.lang === defaultLocale ? 'slide-out' : 'slide-in');
+    setAnimation(props.lang === i18n.defaultLocale ? 'slide-out' : 'slide-in');
 
     container.onanimationend = () => {
       const regex = /it|en/;
