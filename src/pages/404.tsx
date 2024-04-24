@@ -31,16 +31,12 @@ export default function Custom404() {
   useBackRouteCompatibility();
 
   React.useEffect(() => {
-    setIsNeedToRedirect(oldPaths.some(p => p.test(window.location.pathname)));    
-  }, [])
-  
+    setIsNeedToRedirect(oldPaths.some(p => p.test(window.location.pathname)));
+  }, []);
+
   if (isNeedToRedirect) {
-    return (
-      <div id='loader'></div>
-    );
+    return <div id='loader'></div>;
   }
 
-  return (
-    <h1>404 - Page Not Found</h1>
-  );
+  return <h1>404 - Page Not Found</h1>;
 }

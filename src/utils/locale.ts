@@ -10,4 +10,4 @@ export const getAllLocales = () => {
 
 export const setLocaleAttribute = (locale: Locale): void => {
   document.documentElement.lang = locale;
-}
+};

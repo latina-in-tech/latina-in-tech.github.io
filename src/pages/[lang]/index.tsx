@@ -36,7 +36,7 @@ const Home: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   React.useEffect(() => {
     const locale = router.query.lang as Locale;
     setLocaleAttribute(locale);
-  })
+  });
 
   const allPastEvents = useMemo(
     () => sortEvents(filterPastEvents(events)),
