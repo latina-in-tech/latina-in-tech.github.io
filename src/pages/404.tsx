@@ -39,6 +39,4 @@ export default function Custom404() {
   if (isNeedToRedirect) {
     return <div id='loader'></div>;
   }
-
-  return <h1>404 - Page Not Found</h1>;
 }
