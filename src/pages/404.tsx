@@ -22,7 +22,7 @@ const useBackRouteCompatibility = () => {
     const { pathname } = window.location;
     if (oldPaths.some(p => p.test(pathname)) && pathname !== '/') {
       window.location.replace(`/${i18n.defaultLocale}${pathname}`);
-    } else if(pathname === '/') {
+    } else if (pathname === '/') {
       window.location.replace(`/${i18n.defaultLocale}`);
     }
   }, []);
