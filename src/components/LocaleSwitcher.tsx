@@ -37,7 +37,7 @@ export default function LocaleSwitcher(props: {
 
   return (
     <div
-      className={`${props.mobile ? 'flex flex-row px-3 py-2' : 'hidden p-4 items-center lg:flex lg:flex-row'} gap-x-1`}
+      className={`${props.mobile ? 'flex flex-row px-2 py-2' : 'hidden items-center lg:flex lg:flex-row'} gap-x-1`}
     >
       <span
         className='fi fi-it'
