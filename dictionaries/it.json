@@ -5,10 +5,5 @@
         "previousEventsTitle": "Eventi Passati",
         "previousEventsSubtitle": "Peccato, questi eventi si sono già svolti! Segui la pagina per rimanere aggiornato sui prossimi appuntamenti.",
         "andManyOthers": "...e molti  altri!"
-    },
-    "404": {
-        "paragraph1": "Sembra che tua sia finito in un vicolo cieco.",
-        "paragraph2": "Ma niente panico, basta cliccare sotto per tornare sulla tua strada!",
-        "link": "Homepage"
     }
 }

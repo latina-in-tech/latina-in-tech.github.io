@@ -5,10 +5,5 @@
         "previousEventsTitle": "Previous Events",
         "previousEventsSubtitle": "Too bad, these events have already taken place! Follow the page to stay updated on upcoming events.",
         "andManyOthers": "...and many others!"
-    },
-    "404": {
-        "paragraph1": "Looks like you've stumbled into the void.",
-        "paragraph2": "But don't panic, just click below to get back on track!",
-        "link": "Go Home"
     }
 }

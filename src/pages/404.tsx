@@ -38,9 +38,7 @@ const useBackRouteCompatibility = () => {
   }, []);
 };
 
-export default function Custom404({
-  translations
-}: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function Custom404() {
   const [locale, setLocale] = React.useState(i18n.defaultLocale as string);
   const [dict, setDict] = React.useState<dictionary>();
   const [isNeedToRedirect, setIsNeedToRedirect] = React.useState(false);
@@ -52,17 +50,27 @@ export default function Custom404({
   }, []);
 
   React.useEffect(() => {
-    setDict({
-      paragraph1:
-        locale === 'it'
-          ? translations.paragraph1
-          : "Looks like you've stumbled into the void.",
-      paragraph2:
-        locale === 'it'
-          ? translations.paragraph2
-          : "But don't panic, just click below to get back on track!",
-      link: locale === 'it' ? translations.link : 'Go Home'
-    });
+    let text: dictionary;
+
+    switch (locale) {
+      case 'en':
+        text = {
+          paragraph1: "Looks like you've stumbled into the void.",
+          paragraph2: "But don't panic, just click below to get back on track!",
+          link: 'Go Home'
+        };
+        break;
+      default:
+        text = {
+          paragraph1: 'Sembra che tua sia finito in un vicolo cieco.',
+          paragraph2:
+            'Ma niente panico, basta cliccare sotto per tornare sulla tua strada!',
+          link: 'Homepage'
+        };
+        break;
+    }
+
+    setDict(text);
   }, [locale]);
 
   if (isNeedToRedirect) {
@@ -72,7 +80,7 @@ export default function Custom404({
       <div className='container'>
         <div className='content'>
           <h1>Oops!</h1>
-          <p>{dict?.paragraph1 ?? translations.paragraph1}</p>
+          <p>{dict?.paragraph1}</p>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             width='200'
@@ -90,8 +98,8 @@ export default function Custom404({
             <line x1='12' y1='8' x2='12' y2='12'></line>
             <line x1='12' y1='16' x2='12' y2='16'></line>
           </svg>
-          <p>{dict?.paragraph2 ?? translations.paragraph2}</p>
-          <Link href={`/${locale}`}>{dict?.link ?? translations.link}</Link>
+          <p>{dict?.paragraph2}</p>
+          <Link href={`/${locale}`}>{dict?.link}</Link>
         </div>
         <style>{`
           .container {
@@ -130,9 +138,3 @@ export default function Custom404({
     );
   }
 }
-
-export const getStaticProps: GetStaticProps = async context => {
-  const lang = context.params?.lang as string;
-  const dictionary = await getDictionary(lang as Locale);
-  return { props: { translations: dictionary['404'] } };
-};
