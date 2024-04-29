@@ -16,7 +16,7 @@ import EventsList from '@/components/event/EventsList';
 import { Newsletter } from '@/components/Newsletter';
 import Community from '@/pages/[lang]/community';
 import { getAllCommunityMembers } from '@/utils/community';
-import { getAllLocales } from '@/utils/locale';
+import { getAllLocales, setLocaleAttribute } from '@/utils/locale';
 import { useRouter } from 'next/router';
 import { Locale, i18n } from 'i18n.config';
 import { getDictionary } from '@/utils/dictionary';
@@ -33,10 +33,16 @@ const Home: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
     locale => router?.query.lang === locale
   )[0];
 
+  React.useEffect(() => {
+    const locale = router.query.lang as Locale;
+    setLocaleAttribute(locale);
+  });
+
   const allPastEvents = useMemo(
     () => sortEvents(filterPastEvents(events)),
     [events]
   );
+
   // we want to preview only the first MAX_PAST_EVENTS past events
   const pastEventsPreview = allPastEvents.slice(0, MAX_PAST_EVENTS);
   const nextEvents = useMemo(

@@ -1,3 +1,4 @@
+/* Locale Switcher component */
 .en {
     position: relative;
     left: calc(100% - 16px);
@@ -36,4 +37,22 @@
     to {
         left: 0%;
     }
+}
+
+/* Loader styles ***************/
+#loader {
+    position: absolute;
+    top: calc(50% - 50px);
+    left: calc(50% - 50px);
+    width: 100px;
+    height: 100px;
+    border: 16px solid #f3f3f3;
+    border-top: 16px solid #192bc2;
+    border-radius: 50%;
+    animation: spin 2s linear infinite;
+}
+  
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

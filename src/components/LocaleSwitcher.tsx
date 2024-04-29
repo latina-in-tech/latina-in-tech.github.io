@@ -1,6 +1,6 @@
 'use client';
 import 'flag-icons';
-import { MouseEvent, useState } from 'react';
+import React from 'react';
 import { useRouter } from 'next/router';
 import { Locale, i18n } from 'i18n.config';
 import { usePathname } from 'next/navigation';
@@ -12,18 +12,17 @@ export default function LocaleSwitcher(props: {
   const router = useRouter();
   const pathname = usePathname();
 
-  const defaultLocale = i18n.defaultLocale;
-  const [animation, setAnimation] = useState('');
-  const [locale, setLocale] = useState(props.lang);
+  const [animation, setAnimation] = React.useState('');
+  const [locale, setLocale] = React.useState(props.lang);
 
-  const toggle = (e: MouseEvent<HTMLDivElement>) => {
+  const toggle = (e: React.MouseEvent<HTMLDivElement>) => {
     const container = e.target as HTMLDivElement;
     const changeLocale = i18n.locales.filter(
       locale => locale !== props.lang
     )[0];
 
     setLocale(changeLocale);
-    setAnimation(props.lang === defaultLocale ? 'slide-out' : 'slide-in');
+    setAnimation(props.lang === i18n.defaultLocale ? 'slide-out' : 'slide-in');
 
     container.onanimationend = () => {
       const regex = /it|en/;
@@ -38,7 +37,7 @@ export default function LocaleSwitcher(props: {
 
   return (
     <div
-      className={`${props.mobile ? 'flex flex-row px-3 py-2' : 'hidden p-4 items-center lg:flex lg:flex-row'} gap-x-1`}
+      className={`${props.mobile ? 'flex flex-row px-2 py-2' : 'hidden items-center lg:flex lg:flex-row'} gap-x-1`}
     >
       <span
         className='fi fi-it'

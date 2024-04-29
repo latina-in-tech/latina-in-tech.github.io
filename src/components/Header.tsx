@@ -38,7 +38,7 @@ const Header = (props: { lang: Locale }) => {
         <>
           <div className='mx-auto max-w-7xl px-2 py-2 sm:px-6 lg:px-8'>
             <div className='relative flex h-16 items-center justify-between'>
-              <div className='absolute inset-y-0 left-0 flex items-center lg:hidden'>
+              <div className='px-4 absolute inset-y-0 left-0 flex items-center lg:hidden'>
                 <Disclosure.Button className='inline-flex items-center justify-center rounded-md p-2 text-slate-400 hover:bg-slate-300 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-slate-200 dark:text-slate-400 dark:hover:bg-slate-800 dark:focus:ring-slate-800'>
                   <span className='sr-only'>Apri menu</span>
                   {isOpen ? (
@@ -76,7 +76,7 @@ const Header = (props: { lang: Locale }) => {
                     />
                   </Link>
                 </div>
-                <div className='hidden items-center sm:ml-6 lg:flex'>
+                <div className='hidden space-x-4 sm:ml-6 lg:flex'>
                   <LocaleSwitcher lang={props.lang} mobile={false} />
                   <div className='flex space-x-4'>
                     {links.map(item => (
@@ -101,8 +101,8 @@ const Header = (props: { lang: Locale }) => {
             </div>
           </div>
 
-          <Disclosure.Panel className='lg:hidden'>
-            <div className='space-y-1 px-2 pt-2 pb-3'>
+          <Disclosure.Panel className='px-4 lg:hidden'>
+            <div className='space-y-1 px-4 pt-2 pb-3'>
               <LocaleSwitcher lang={props.lang} mobile={true} />
               {links.map(item => (
                 <Disclosure.Button
