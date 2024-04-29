@@ -74,14 +74,15 @@ export default function Custom404() {
             height='200'
             viewBox='0 0 24 24'
             fill='none'
-            stroke='#ffffff'
+            stroke='#78c0e0'
             strokeWidth='2'
             strokeLinecap='round'
             strokeLinejoin='round'
             className='icon'
           >
+            <circle cx="12" cy="12" r="10" stroke="#000" strokeWidth="3" />
             <circle cx='12' cy='12' r='10'></circle>
-            <line x1='12' y1='8' x2='12' y2='16'></line>
+            <line x1='12' y1='8' x2='12' y2='16' stroke="#000" strokeWidth="3"></line>
             <line x1='12' y1='8' x2='12' y2='12'></line>
             <line x1='12' y1='16' x2='12' y2='16'></line>
           </svg>
@@ -96,16 +97,21 @@ export default function Custom404() {
             height: 100vh;
           }
           .content {
+            background-color: #e4f2f9;
+            border: 3px solid #000;
+            padding: 10vh;
+            border-radius: 3px;
             text-align: center;
           }
           .icon {
+            display: block;
             width: 100px;
             height: 100px;
-            margin: 20px auto;
-            display: block;
+            margin: 20px auto calc(1.5em + 20px) auto;
           }
           h1 {
             font-size: 2em;
+            font-weight: 800;
             margin-bottom: 0.5em;
           }
           p {
@@ -113,12 +119,20 @@ export default function Custom404() {
             margin-bottom: 1em;
           }
           a {
-            color: #0070f3;
+            display: inline-block;
+            color: #000;
+            padding: 10px 30px;
+            background-color: #78c0e0;
+            border: 1px solid #000;
+            border-radius: 3px;
             text-decoration: none;
             font-weight: bold;
           }
           a:hover {
-            text-decoration: underline;
+            color: #fff;
+            background-color: #192bc2;
+            border: 1px solid #78c0e0;
+            text-decoration: none;
           }
         `}</style>
       </div>
