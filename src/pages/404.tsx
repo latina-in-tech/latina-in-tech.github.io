@@ -1,11 +1,11 @@
 'use client';
-import React from 'react';
-import { Locale, i18n } from '../../i18n.config';
+import React, { useEffect } from 'react';
+import { i18n, Locale } from '../../i18n.config';
 import Link from 'next/link';
+import { getDefaultLocale } from '@/utils/locale';
 import { getDictionary } from '@/utils/dictionary';
-import { GetStaticProps, InferGetStaticPropsType } from 'next';
 
-type dictionary = {
+type LocalizedCopy = {
   paragraph1: string;
   paragraph2: string;
   link: string;
@@ -26,9 +26,13 @@ const oldPaths = [
   return new RegExp(`^${p}`);
 });
 
+const getNavigatorLanguage = (): Locale =>
+  i18n.locales.find(l => l === navigator.language.split('-')[0]) ??
+  getDefaultLocale();
+
 const useBackRouteCompatibility = () => {
   React.useEffect(() => {
-    const locale = navigator.language.split('-')[0];
+    const locale = getNavigatorLanguage();
     const { pathname } = window.location;
     if (oldPaths.some(p => p.test(pathname)) && pathname !== '/') {
       window.location.replace(`/${locale}${pathname}`);
@@ -39,48 +43,31 @@ const useBackRouteCompatibility = () => {
 };
 
 export default function Custom404() {
-  const [locale, setLocale] = React.useState(i18n.defaultLocale as string);
-  const [dict, setDict] = React.useState<dictionary>();
   const [isNeedToRedirect, setIsNeedToRedirect] = React.useState(false);
+  const [locale, setLocale] = React.useState<Locale | undefined>();
+  const [localizedCopy, setLocalizedCopy] = React.useState<
+    LocalizedCopy | undefined
+  >(undefined);
   useBackRouteCompatibility();
+  useEffect(() => setLocale(getNavigatorLanguage()), []);
+  useEffect(() => {
+    if (locale && !localizedCopy) {
+      getDictionary(locale).then(dict => setLocalizedCopy(dict.notFound));
+    }
+  }, [locale, localizedCopy]);
 
   React.useEffect(() => {
-    setLocale(navigator.language.split('-')[0]);
     setIsNeedToRedirect(oldPaths.some(p => p.test(window.location.pathname)));
   }, []);
 
-  React.useEffect(() => {
-    let text: dictionary;
-
-    switch (locale) {
-      case 'en':
-        text = {
-          paragraph1: "Looks like you've stumbled into the void.",
-          paragraph2: "But don't panic, just click below to get back on track!",
-          link: 'Go Home'
-        };
-        break;
-      default:
-        text = {
-          paragraph1: 'Sembra che tua sia finito in un vicolo cieco.',
-          paragraph2:
-            'Ma niente panico, basta cliccare sotto per tornare sulla tua strada!',
-          link: 'Homepage'
-        };
-        break;
-    }
-
-    setDict(text);
-  }, [locale]);
-
-  if (isNeedToRedirect) {
+  if (isNeedToRedirect || !localizedCopy) {
     return <div id='loader'></div>;
   } else {
     return (
       <div className='container'>
         <div className='content'>
           <h1>Oops!</h1>
-          <p>{dict?.paragraph1}</p>
+          <p>{localizedCopy.paragraph1}</p>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             width='200'
@@ -98,8 +85,8 @@ export default function Custom404() {
             <line x1='12' y1='8' x2='12' y2='12'></line>
             <line x1='12' y1='16' x2='12' y2='16'></line>
           </svg>
-          <p>{dict?.paragraph2}</p>
-          <Link href={`/${locale}`}>{dict?.link}</Link>
+          <p>{localizedCopy.paragraph2}</p>
+          <Link href={`/${locale}`}>{localizedCopy.link}</Link>
         </div>
         <style>{`
           .container {
