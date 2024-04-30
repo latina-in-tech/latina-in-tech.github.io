@@ -30,7 +30,7 @@ export default function LocaleSwitcher(props: {
         pathname: pathname,
         query: { lang: changeLocale }
       };
-      
+
       router.replace(url, pathname.replace(regex, changeLocale), options);
     };
   };
