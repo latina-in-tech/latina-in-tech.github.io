@@ -3,19 +3,18 @@ import 'flag-icons';
 import React from 'react';
 import { useRouter } from 'next/router';
 import { Locale, i18n } from 'i18n.config';
-import { usePathname } from 'next/navigation';
 
 export default function LocaleSwitcher(props: {
   lang: Locale;
   mobile: boolean;
 }) {
   const router = useRouter();
-  const pathname = usePathname();
+  const pathname = router.pathname;
 
   const [animation, setAnimation] = React.useState('');
   const [locale, setLocale] = React.useState(props.lang);
 
-  const toggle = (e: React.MouseEvent<HTMLDivElement>) => {
+  const toggle = (e: React.MouseEvent<HTMLDivElement>): void => {
     const container = e.target as HTMLDivElement;
     const changeLocale = i18n.locales.filter(
       locale => locale !== props.lang
@@ -25,13 +24,14 @@ export default function LocaleSwitcher(props: {
     setAnimation(props.lang === i18n.defaultLocale ? 'slide-out' : 'slide-in');
 
     container.onanimationend = () => {
-      const regex = /it|en/;
-
-      if (regex.test(pathname)) {
-        void router.replace(pathname.replace(regex, changeLocale));
-      } else {
-        void router.replace(`/${changeLocale}${pathname}`);
-      }
+      const regex = /\[lang\]/;
+      const options = { shallow: true };
+      const url = {
+        pathname: pathname,
+        query: { lang: changeLocale }
+      };
+      
+      router.replace(url, pathname.replace(regex, changeLocale), options);
     };
   };
 
@@ -46,7 +46,7 @@ export default function LocaleSwitcher(props: {
       <div
         className='cursor-pointer w-8 h-4 rounded'
         style={{ backgroundColor: 'rgb(71 85 105 / 1)' }}
-        onClick={e => toggle(e)}
+        onClick={toggle}
       >
         <div
           className={`bg-white w-1/2 h-full rounded-full ${locale} ${animation}`}
