@@ -25,13 +25,12 @@ export default function LocaleSwitcher(props: {
 
     container.onanimationend = () => {
       const regex = /\[lang\]/;
-      const options = { shallow: true };
       const url = {
         pathname: pathname,
         query: { lang: changeLocale }
       };
 
-      router.replace(url, pathname.replace(regex, changeLocale), options);
+      router.replace(url, pathname.replace(regex, changeLocale));
     };
   };
 
