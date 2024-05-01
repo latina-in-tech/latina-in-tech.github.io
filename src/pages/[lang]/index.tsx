@@ -52,12 +52,21 @@ const Home: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   );
 
   const hasMorePastEvents = allPastEvents.length > pastEventsPreview.length;
-  
+
   const metadata = {
     title: 'LiT - Latina In Tech',
-    description: 'Community che raccoglie gli sviluppatori della provincia di Latina',
-    keywords: ['Latina', 'User Group', 'Lazio', 'Roma', 'Sviluppatori Latina', 'Latina In Tech', 'LiT'],
-  }
+    description:
+      'Community che raccoglie gli sviluppatori della provincia di Latina',
+    keywords: [
+      'Latina',
+      'User Group',
+      'Lazio',
+      'Roma',
+      'Sviluppatori Latina',
+      'Latina In Tech',
+      'LiT'
+    ]
+  };
 
   return (
     <>
