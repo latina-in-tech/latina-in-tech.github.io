@@ -8,7 +8,6 @@ import {
 } from '@/model/event';
 import { getAllEvents } from '@/utils/mdxUtils';
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
-import Head from 'next/head';
 import React, { useMemo } from 'react';
 import { Sponsors } from '@/components/Sponsors';
 import { LeaveFeedback } from '@/components/LeaveFeedback';
@@ -20,7 +19,7 @@ import { getAllLocales, setLocaleAttribute } from '@/utils/locale';
 import { useRouter } from 'next/router';
 import { Locale, i18n } from 'i18n.config';
 import { getDictionary } from '@/utils/dictionary';
-import CommunityEditionHead from '@/components/CommunityEditionHead';
+import Head from '@/components/HeadComponent';
 
 const MAX_PAST_EVENTS = 3;
 
@@ -70,9 +69,9 @@ const Home: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 
   return (
     <>
-      <CommunityEditionHead metadata={metadata}>
+      <Head metadata={metadata}>
         <link rel='icon' href='/favicon.ico' />
-      </CommunityEditionHead>
+      </Head>
       <Header lang={locale} />
       <main className='flex flex-col gap-6 px-4 pb-8'>
         <Hero />

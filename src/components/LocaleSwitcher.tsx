@@ -3,13 +3,14 @@ import 'flag-icons';
 import React from 'react';
 import { useRouter } from 'next/router';
 import { Locale, i18n } from 'i18n.config';
+import { usePathname } from 'next/navigation';
 
 export default function LocaleSwitcher(props: {
   lang: Locale;
   mobile: boolean;
 }) {
   const router = useRouter();
-  const pathname = router.pathname;
+  const pathname = usePathname();
 
   const [animation, setAnimation] = React.useState('');
   const [locale, setLocale] = React.useState(props.lang);
@@ -24,13 +25,8 @@ export default function LocaleSwitcher(props: {
     setAnimation(props.lang === i18n.defaultLocale ? 'slide-out' : 'slide-in');
 
     container.onanimationend = () => {
-      const regex = /\[lang\]/;
-      const url = {
-        pathname: pathname,
-        query: { lang: changeLocale }
-      };
-
-      router.replace(url, pathname.replace(regex, changeLocale));
+      const regex = /it|en/;
+      router.replace(pathname.replace(regex, changeLocale));
     };
   };
 

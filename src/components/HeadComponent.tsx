@@ -1,9 +1,9 @@
 import { Locale } from 'i18n.config';
 import Head from 'next/head';
-import { ReactNode } from 'react';
+import React from 'react';
 
 type Props = {
-  children?: ReactNode;
+  children?: React.ReactNode;
   metadata: {
     title: string;
     description: string;
@@ -33,7 +33,7 @@ type Props = {
   };
 };
 
-export default function CommunityEditionHead({ children, metadata }: Props) {
+export default function HeadComponent({ children, metadata }: Props) {
   const opengraph = metadata.opengraph;
   const twitter = metadata.twitter;
 
