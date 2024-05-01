@@ -20,6 +20,7 @@ import { getAllLocales, setLocaleAttribute } from '@/utils/locale';
 import { useRouter } from 'next/router';
 import { Locale, i18n } from 'i18n.config';
 import { getDictionary } from '@/utils/dictionary';
+import CommunityEditionHead from '@/components/CommunityEditionHead';
 
 const MAX_PAST_EVENTS = 3;
 
@@ -51,21 +52,18 @@ const Home: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
   );
 
   const hasMorePastEvents = allPastEvents.length > pastEventsPreview.length;
+  
+  const metadata = {
+    title: 'LiT - Latina In Tech',
+    description: 'Community che raccoglie gli sviluppatori della provincia di Latina',
+    keywords: ['Latina', 'User Group', 'Lazio', 'Roma', 'Sviluppatori Latina', 'Latina In Tech', 'LiT'],
+  }
 
   return (
     <>
-      <Head>
-        <title>LiT - Latina In Tech</title>
-        <meta
-          name='description'
-          content='Community che raccoglie gli sviluppatori della provincia di Latina'
-        />
-        <meta
-          name='keywords'
-          content='Latina, User Group, Lazio, Roma, Sviluppatori Latina, Latina In Tech, LiT'
-        ></meta>
+      <CommunityEditionHead metadata={metadata}>
         <link rel='icon' href='/favicon.ico' />
-      </Head>
+      </CommunityEditionHead>
       <Header lang={locale} />
       <main className='flex flex-col gap-6 px-4 pb-8'>
         <Hero />
