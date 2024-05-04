@@ -33,7 +33,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@headlessui/react": "^1.7.18",
+    "@headlessui/react": "^1.7.19",
     "@heroicons/react": "^2.1.3",
     "@tailwindcss/typography": "^0.5.12",
     "@types/image-size": "^0.8.0",
