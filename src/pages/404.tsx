@@ -101,12 +101,14 @@ export default function Custom404() {
             display: flex;
             align-items: center;
             justify-content: center;
+            margin: 0 auto;
             height: 100vh;
           }
           .content {
             background-color: #e4f2f9;
             border: 3px solid #000;
             padding: 10vh;
+            margin: 0 10vw;
             border-radius: 3px;
             text-align: center;
           }

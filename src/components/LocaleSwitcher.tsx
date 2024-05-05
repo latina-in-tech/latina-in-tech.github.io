@@ -15,7 +15,7 @@ export default function LocaleSwitcher(props: {
   const [animation, setAnimation] = React.useState('');
   const [locale, setLocale] = React.useState(props.lang);
 
-  const toggle = (e: React.MouseEvent<HTMLDivElement>) => {
+  const toggle = (e: React.MouseEvent<HTMLDivElement>): void => {
     const container = e.target as HTMLDivElement;
     const changeLocale = i18n.locales.filter(
       locale => locale !== props.lang
@@ -26,18 +26,13 @@ export default function LocaleSwitcher(props: {
 
     container.onanimationend = () => {
       const regex = /it|en/;
-
-      if (regex.test(pathname)) {
-        void router.replace(pathname.replace(regex, changeLocale));
-      } else {
-        void router.replace(`/${changeLocale}${pathname}`);
-      }
+      router.replace(pathname.replace(regex, changeLocale));
     };
   };
 
   return (
     <div
-      className={`${props.mobile ? 'flex flex-row px-2 py-2' : 'hidden items-center lg:flex lg:flex-row'} gap-x-1`}
+      className={`${props.mobile ? 'flex flex-row p-2' : 'hidden items-center lg:flex lg:flex-row'} gap-x-1`}
     >
       <span
         className='fi fi-it'
@@ -46,7 +41,7 @@ export default function LocaleSwitcher(props: {
       <div
         className='cursor-pointer w-8 h-4 rounded'
         style={{ backgroundColor: 'rgb(71 85 105 / 1)' }}
-        onClick={e => toggle(e)}
+        onClick={toggle}
       >
         <div
           className={`bg-white w-1/2 h-full rounded-full ${locale} ${animation}`}

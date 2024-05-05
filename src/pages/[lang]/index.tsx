@@ -8,7 +8,6 @@ import {
 } from '@/model/event';
 import { getAllEvents } from '@/utils/mdxUtils';
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
-import Head from 'next/head';
 import React, { useMemo } from 'react';
 import { Sponsors } from '@/components/Sponsors';
 import { LeaveFeedback } from '@/components/LeaveFeedback';
@@ -20,6 +19,7 @@ import { getAllLocales, setLocaleAttribute } from '@/utils/locale';
 import { useRouter } from 'next/router';
 import { Locale, i18n } from 'i18n.config';
 import { getDictionary } from '@/utils/dictionary';
+import Head from '@/components/HeadComponent';
 
 const MAX_PAST_EVENTS = 3;
 
@@ -52,18 +52,24 @@ const Home: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
 
   const hasMorePastEvents = allPastEvents.length > pastEventsPreview.length;
 
+  const metadata = {
+    title: 'LiT - Latina In Tech',
+    description:
+      'Community che raccoglie gli sviluppatori della provincia di Latina',
+    keywords: [
+      'Latina',
+      'User Group',
+      'Lazio',
+      'Roma',
+      'Sviluppatori Latina',
+      'Latina In Tech',
+      'LiT'
+    ]
+  };
+
   return (
     <>
-      <Head>
-        <title>LiT - Latina In Tech</title>
-        <meta
-          name='description'
-          content='Community che raccoglie gli sviluppatori della provincia di Latina'
-        />
-        <meta
-          name='keywords'
-          content='Latina, User Group, Lazio, Roma, Sviluppatori Latina, Latina In Tech, LiT'
-        ></meta>
+      <Head metadata={metadata}>
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <Header lang={locale} />
