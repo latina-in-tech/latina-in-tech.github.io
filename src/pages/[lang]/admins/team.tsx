@@ -58,6 +58,11 @@ const admins: ReadonlyArray<Admin> = [
     linkedIn: 'https://www.linkedin.com/in/matteo-boschi/',
     github: 'https://github.com/Undermaken',
     website: 'http://matteoboschi.com/'
+  },
+  {
+    name: 'Lorenzo Tronchin',
+    image: '/assets/admin/team/ltronchin.jpg',
+    linkedIn: 'https://www.linkedin.com/in/lorenzotronchin/'
   }
 ];
 
