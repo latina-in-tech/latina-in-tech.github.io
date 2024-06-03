@@ -4,10 +4,11 @@ import Hero from '@/components/Hero';
 import {
   filterComingEvents,
   filterPastEvents,
+  IEvent,
   sortEvents
 } from '@/model/event';
 import { getAllEvents } from '@/utils/mdxUtils';
-import { GetStaticProps, InferGetStaticPropsType } from 'next';
+import { GetStaticProps } from 'next';
 import React, { useMemo } from 'react';
 import { Sponsors } from '@/components/Sponsors';
 import { LeaveFeedback } from '@/components/LeaveFeedback';
@@ -20,10 +21,30 @@ import { useRouter } from 'next/router';
 import { Locale, i18n } from 'i18n.config';
 import { getDictionary } from '@/utils/dictionary';
 import Head from '@/components/HeadComponent';
+import { CommunityMemberOrError } from '@/model/communityMember';
 
 const MAX_PAST_EVENTS = 3;
 
-const Home: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
+type StaticProps = {
+  events: IEvent[];
+  communityMembers: Array<CommunityMemberOrError>;
+  translations: {
+    nextEventsTitle: string;
+    nextEventsSubtitle: string;
+    previousEventsTitle: string;
+    previousEventsSubtitle: string;
+    andManyOthers: string;
+  };
+};
+export const getStaticProps: GetStaticProps = (async context => {
+  const lang = context.params?.lang as string;
+  const dictionary = await getDictionary(lang as Locale);
+  const events = getAllEvents();
+  const communityMembers = getAllCommunityMembers();
+  return { props: { events, communityMembers, translations: dictionary.home } };
+}) satisfies GetStaticProps<StaticProps>;
+
+const Home: React.FC<StaticProps> = ({
   events,
   communityMembers,
   translations
@@ -125,14 +146,6 @@ export const getStaticPaths = async () => {
     }),
     fallback: false
   };
-};
-
-export const getStaticProps: GetStaticProps = async context => {
-  const lang = context.params?.lang as string;
-  const dictionary = await getDictionary(lang as Locale);
-  const events = getAllEvents();
-  const communityMembers = getAllCommunityMembers();
-  return { props: { events, communityMembers, translations: dictionary.home } };
 };
 
 export default Home;

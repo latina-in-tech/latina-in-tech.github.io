@@ -1,21 +1,24 @@
 import { DateTime } from 'luxon';
 import * as z from 'zod';
 export type Minute = number;
-export interface IEvent {
-  slug: string;
-  date: string;
-  place: string;
-  maps: string;
-  duration?: Minute;
-  youtubeUrl?: string;
-  thumbnail: string;
-  title: string;
-  description: string;
-  tags: string[];
-  speakers?: string[];
-  slides?: string[];
-  signup: string;
-}
+
+export const eventSchema = z.object({
+  slug: z.string(),
+  date: z.string(),
+  place: z.string(),
+  maps: z.string(),
+  duration: z.number().optional(),
+  youtubeUrl: z.string().optional(),
+  thumbnail: z.string(),
+  title: z.string(),
+  description: z.string(),
+  tags: z.array(z.string()),
+  speakers: z.array(z.string()).optional(),
+  slides: z.array(z.string()).optional(),
+  signup: z.string().optional()
+});
+
+export type IEvent = z.infer<typeof eventSchema>;
 
 export const slidesSchema = z.object({
   url: z.string().url(),
