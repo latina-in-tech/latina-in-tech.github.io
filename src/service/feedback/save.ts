@@ -1,6 +1,6 @@
 import { IFeedback } from '@/model/feedback';
 
-import { getAuth, signInAnonymously } from '@firebase/auth';
+import { getAuth, signInAnonymously } from 'firebase/auth';
 import { collection, addDoc } from '@firebase/firestore';
 import { firebaseApp, firestoreDb } from '../firebaseConfig';
 
