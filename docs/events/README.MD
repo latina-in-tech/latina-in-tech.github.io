@@ -19,3 +19,12 @@
      - `tags`: an array of tags related to the event - - **array of string**
 
 <img src="./how_to_create_event.png">
+
+## Is my event ready?
+To check if your event is ready, you can run the application:
+```bash
+npm run dev
+```
+then if there are any errors, they will be shown directly in the page.
+
+<img src="./error.png">
