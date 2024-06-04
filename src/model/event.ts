@@ -2,6 +2,12 @@ import { DateTime } from 'luxon';
 import * as z from 'zod';
 export type Minute = number;
 
+export const slidesSchema = z.object({
+  url: z.string().url(),
+  title: z.string(),
+  speakerName: z.string()
+});
+
 export const eventSchema = z.object({
   slug: z.string(),
   date: z.string(),
@@ -20,12 +26,6 @@ export const eventSchema = z.object({
 
 export type IEvent = z.infer<typeof eventSchema>;
 
-export const slidesSchema = z.object({
-  url: z.string().url(),
-  title: z.string(),
-  speakerName: z.string()
-});
-
 export type ISlides = z.infer<typeof slidesSchema>;
 
 export const speakerSchema = z.object({
@@ -35,8 +35,6 @@ export const speakerSchema = z.object({
   thumbnail: z.string(),
   linkedinUrl: z.string().url()
 });
-
-export type ISpeaker = z.infer<typeof speakerSchema>;
 
 export const EVENT_FIELDS = [
   'title',
