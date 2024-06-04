@@ -1,7 +1,8 @@
 import matter from 'gray-matter';
 import { join } from 'path';
 import fs from 'fs';
-import { EVENT_FIELDS } from '@/model/event';
+import { EVENT_FIELDS, eventSchema, IEvent } from '@/model/event';
+const EVENTS_PICTURES_PATH = join(process.cwd(), 'public');
 
 type Items = {
   [key: string]: string;
@@ -27,12 +28,10 @@ export function getEvent(slug: string): Event {
   return { data, content };
 }
 
-export function getEventItems(filePath: string, fields: string[] = []): Items {
+export function getEventItems(filePath: string, fields: string[] = []): IEvent {
   const slug = filePath.replace(/\.mdx?$/, '');
   const { data, content } = getEvent(slug);
-
   const items: Items = {};
-
   fields.forEach(field => {
     if (field === 'slug') {
       items[field] = slug;
@@ -44,10 +43,27 @@ export function getEventItems(filePath: string, fields: string[] = []): Items {
       items[field] = data[field];
     }
   });
-  return items;
+  const maybeEvent = eventSchema
+    .refine(
+      data => {
+        const thumbPath = join(EVENTS_PICTURES_PATH, data.thumbnail);
+        return fs.existsSync(thumbPath);
+      },
+      data => ({
+        message: `Picture [${join(EVENTS_PICTURES_PATH, data.thumbnail)}] does not exist`,
+        path: ['thumbnail']
+      })
+    )
+    .safeParse(items);
+  if (!maybeEvent.success) {
+    throw new Error(
+      `Error parsing ${filePath}: ${maybeEvent.error.errors.map(e => `${e.path} - ${e.message}`).join(', ')}`
+    );
+  }
+  return maybeEvent.data;
 }
 
-export function getAllEvents(fields: string[] = EVENT_FIELDS): Items[] {
+export function getAllEvents(fields: string[] = EVENT_FIELDS): IEvent[] {
   const filePaths = getEventsFilePaths();
   return filePaths
     .map(filePath => getEventItems(filePath, fields))
