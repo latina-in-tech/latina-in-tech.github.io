@@ -28,7 +28,7 @@ export function getEvent(slug: string): Event {
   return { data, content };
 }
 
-export function getEventItems(filePath: string, fields: string[] = []): IEvent {
+function getEventItems(filePath: string, fields: string[] = []): IEvent {
   const slug = filePath.replace(/\.mdx?$/, '');
   const { data, content } = getEvent(slug);
   const items: Items = {};
@@ -54,7 +54,7 @@ export function getEventItems(filePath: string, fields: string[] = []): IEvent {
         path: ['thumbnail']
       })
     )
-    .safeParse(items);
+    .safeParse({ ...data, slug });
   if (!maybeEvent.success) {
     throw new Error(
       `Error parsing ${filePath}: ${maybeEvent.error.errors.map(e => `${e.path} - ${e.message}`).join(', ')}`
