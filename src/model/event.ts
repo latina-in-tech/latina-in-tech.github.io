@@ -1,5 +1,7 @@
 import { DateTime } from 'luxon';
 import * as z from 'zod';
+import { join } from 'path';
+import fs from 'fs';
 export type Minute = number;
 
 export const slidesSchema = z.object({
@@ -8,21 +10,33 @@ export const slidesSchema = z.object({
   speakerName: z.string()
 });
 
-export const eventSchema = z.object({
-  slug: z.string(),
-  date: z.string(),
-  place: z.string(),
-  maps: z.string(),
-  duration: z.number().optional(),
-  youtubeUrl: z.string().optional(),
-  thumbnail: z.string(),
-  title: z.string(),
-  description: z.string(),
-  tags: z.array(z.string()),
-  speakers: z.array(z.string()).optional(),
-  slides: z.array(z.string()).optional(),
-  signup: z.string().optional()
-});
+const EVENTS_PICTURES_PATH = join(process.cwd(), 'public');
+export const eventSchema = z
+  .object({
+    slug: z.string(),
+    date: z.string(),
+    place: z.string(),
+    maps: z.string(),
+    duration: z.number().optional(),
+    youtubeUrl: z.string().optional(),
+    thumbnail: z.string(),
+    title: z.string(),
+    description: z.string(),
+    tags: z.array(z.string()),
+    speakers: z.array(z.string()).optional(),
+    slides: z.array(z.string()).optional(),
+    signup: z.string().optional()
+  })
+  .refine(
+    data => {
+      const thumbPath = join(EVENTS_PICTURES_PATH, data.thumbnail);
+      return fs.existsSync(thumbPath);
+    },
+    data => ({
+      message: `Picture [${join(EVENTS_PICTURES_PATH, data.thumbnail)}] does not exist`,
+      path: ['thumbnail']
+    })
+  );
 
 export type IEvent = z.infer<typeof eventSchema>;
 
