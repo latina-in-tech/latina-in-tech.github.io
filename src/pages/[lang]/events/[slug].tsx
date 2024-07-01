@@ -1,9 +1,9 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
 import React, { useCallback, useMemo } from 'react';
 
-import { getEvent, getAllEvents } from '@/utils/mdxUtils';
+import { getEvent, getAllEvents, getEventFromSlug } from '@/utils/mdxUtils';
 import { ParsedUrlQuery } from 'querystring';
-import { IEvent, slidesSchema, speakerSchema } from '@/model/event';
+import { IEvent, slidesSchema } from '@/model/event';
 import { BsLinkedin } from 'react-icons/bs';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
@@ -15,7 +15,6 @@ import { Helmet } from 'react-helmet';
 import EventTags from '@/components/event/EventTags';
 import EventsSlides from '@/components/event/EventSlides';
 import { ZodSchema } from 'zod';
-import { isDevEnv } from '@/utils/dev';
 import { i18n } from 'i18n.config';
 import { useRouter } from 'next/router';
 import { getAllLocales } from '@/utils/locale';
@@ -62,18 +61,13 @@ const EventPage: React.FC<Props> = ({ source, frontMatter: event }: Props) => {
     locale => router?.query.lang === locale
   )[0];
 
-  const speakersObjects = useMemo(
-    () => parseItems(event.speakers ?? [], speakerSchema),
-    [event.speakers]
-  );
   const slidesObjects = useMemo(
     () => parseItems(event.slides ?? [], slidesSchema),
     [event.slides]
   );
-
-  const speakers = speakersObjects.items;
   const slides = slidesObjects.items;
-  const errors = [...speakersObjects.errors, ...slidesObjects.errors];
+
+  const speakers = useMemo(() => event.speakers ?? [], [event.speakers]);
 
   const renderEventImage = useCallback(() => {
     if (event.thumbnail) {
@@ -90,21 +84,6 @@ const EventPage: React.FC<Props> = ({ source, frontMatter: event }: Props) => {
       );
     }
   }, [event.thumbnail, event.title]);
-
-  if (errors.length > 0 && isDevEnv) {
-    return (
-      <div className='text-center'>
-        <h2 className='text-xl font-bold text-gray-900 dark:text-slate-200'>
-          Oops! Something went wrong while parsing speakers/slides
-        </h2>
-        <div className={'text-lg text-red-500'}>
-          {errors.map((error, index) => (
-            <div key={index}>{error}</div>
-          ))}
-        </div>
-      </div>
-    );
-  }
 
   return (
     <>
@@ -229,11 +208,12 @@ interface Iparams extends ParsedUrlQuery {
 
 export const getStaticProps: GetStaticProps = async context => {
   const { slug } = context.params as Iparams;
-  const { content, data } = getEvent(slug);
+  const { content } = getEvent(slug);
+  const events = getEventFromSlug(slug);
   return {
     props: {
       source: content,
-      frontMatter: data
+      frontMatter: events
     }
   };
 };
