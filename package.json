@@ -21,7 +21,7 @@
     "image-size": "^1.1.1",
     "luxon": "^3.4.4",
     "next": "14.2.4",
-    "postcss": "^8.4.36",
+    "postcss": "^8.4.39",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-helmet": "^6.1.0",
@@ -34,12 +34,12 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@headlessui/react": "^2.1.0",
+    "@headlessui/react": "^2.1.1",
     "@heroicons/react": "^2.1.4",
     "@tailwindcss/typography": "^0.5.13",
     "@types/image-size": "^0.8.0",
     "@types/luxon": "^3.4.2",
-    "@types/node": "^20.14.8",
+    "@types/node": "^20.14.9",
     "@types/react": "18.3.3",
     "@types/react-dom": "18.3.0",
     "@types/react-helmet": "^6.1.11",
@@ -57,6 +57,6 @@
     "npm-check-updates": "^16.14.20",
     "prettier": "^3.3.2",
     "ts-node": "^10.9.2",
-    "typescript": "5.5.2"
+    "typescript": "5.5.3"
   }
 }
