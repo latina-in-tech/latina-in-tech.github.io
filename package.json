@@ -9,7 +9,8 @@
     "lint": "next lint",
     "prettify": "prettier --write \"src/**/*.(ts|tsx)\"",
     "prettier:check": "prettier --check \"src/**/*.(ts|tsx)\"",
-    "check:types": "tsc --noemit"
+    "check:types": "tsc --noemit",
+    "check:events": "ts-node src/scripts/checkEvents.ts"
   },
   "dependencies": {
     "add-to-calendar-button-react": "^2.6.18",
@@ -55,6 +56,7 @@
     "eslint-plugin-react-hooks": "^4.6.2",
     "npm-check-updates": "^16.14.20",
     "prettier": "^3.3.2",
+    "ts-node": "^10.9.2",
     "typescript": "5.5.3"
   }
 }

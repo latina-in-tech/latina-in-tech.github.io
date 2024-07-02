@@ -2,6 +2,14 @@ import { DateTime } from 'luxon';
 import * as z from 'zod';
 export type Minute = number;
 
+export const speakerSchema = z.object({
+  name: z.string(),
+  role: z.string(),
+  company: z.string().optional(),
+  thumbnail: z.string(),
+  linkedinUrl: z.string().url()
+});
+
 export const slidesSchema = z.object({
   url: z.string().url(),
   title: z.string(),
@@ -19,22 +27,26 @@ export const eventSchema = z.object({
   title: z.string(),
   description: z.string(),
   tags: z.array(z.string()),
-  speakers: z.array(z.string()).optional(),
+  speakers: z
+    .array(z.string())
+    .transform(speakersAsString => {
+      return speakersAsString.map(speaker => {
+        const maybeSpeaker = speakerSchema.safeParse(JSON.parse(speaker));
+        if (!maybeSpeaker.success) {
+          throw new Error(
+            `Error parsing speaker: ${maybeSpeaker.error.errors.map(e => `${e.path} - ${e.message}`).join(', ')}`
+          );
+        }
+        return maybeSpeaker.data;
+      });
+    })
+    .optional(),
   slides: z.array(z.string()).optional(),
   signup: z.string().optional()
 });
 
 export type IEvent = z.infer<typeof eventSchema>;
-
 export type ISlides = z.infer<typeof slidesSchema>;
-
-export const speakerSchema = z.object({
-  name: z.string(),
-  role: z.string(),
-  company: z.string().optional(),
-  thumbnail: z.string(),
-  linkedinUrl: z.string().url()
-});
 
 export const EVENT_FIELDS = [
   'title',
