@@ -55,6 +55,6 @@
     "eslint-plugin-react-hooks": "^4.6.2",
     "npm-check-updates": "^16.14.20",
     "prettier": "^3.3.2",
-    "typescript": "5.5.2"
+    "typescript": "5.5.3"
   }
 }
