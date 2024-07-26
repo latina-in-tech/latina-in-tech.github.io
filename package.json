@@ -15,7 +15,7 @@
   "dependencies": {
     "add-to-calendar-button-react": "^2.6.18",
     "autoprefixer": "^10.4.19",
-    "firebase": "^10.12.3",
+    "firebase": "^10.12.4",
     "flag-icons": "^7.2.3",
     "gray-matter": "^4.0.3",
     "image-size": "^1.1.1",
