@@ -14,12 +14,12 @@
   },
   "dependencies": {
     "add-to-calendar-button-react": "^2.6.18",
-    "autoprefixer": "^10.4.19",
+    "autoprefixer": "^10.4.20",
     "firebase": "^10.12.4",
     "flag-icons": "^7.2.3",
     "gray-matter": "^4.0.3",
     "image-size": "^1.1.1",
-    "luxon": "^3.4.4",
+    "luxon": "^3.5.0",
     "next": "14.2.5",
     "postcss": "^8.4.40",
     "react": "18.3.1",
@@ -54,7 +54,7 @@
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react": "^7.35.0",
     "eslint-plugin-react-hooks": "^4.6.2",
-    "npm-check-updates": "^16.14.20",
+    "npm-check-updates": "^17.1.1",
     "prettier": "^3.3.3",
     "ts-node": "^10.9.2",
     "typescript": "5.5.4"
