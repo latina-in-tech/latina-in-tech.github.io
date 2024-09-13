@@ -68,7 +68,7 @@ const NewFeedback: NextPage<Props> = ({ events: events }: Props) => {
       setShowSuccess(true);
       setShowError(false);
       setSentFeedback(true);
-    } catch (e) {
+    } catch {
       setShowSuccess(false);
       setShowError(true);
     } finally {
