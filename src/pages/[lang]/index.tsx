@@ -19,7 +19,7 @@ import { getAllCommunityMembers } from '@/utils/community';
 import { getAllLocales, setLocaleAttribute } from '@/utils/locale';
 import { useRouter } from 'next/router';
 import { Locale, i18n } from 'i18n.config';
-import { getDictionary } from '@/utils/dictionary';
+import { Dictionary, getDictionary } from '@/utils/dictionary';
 import Head from '@/components/HeadComponent';
 import { CommunityMemberOrError } from '@/model/communityMember';
 
@@ -28,20 +28,14 @@ const MAX_PAST_EVENTS = 3;
 type StaticProps = {
   events: IEvent[];
   communityMembers: Array<CommunityMemberOrError>;
-  translations: {
-    nextEventsTitle: string;
-    nextEventsSubtitle: string;
-    previousEventsTitle: string;
-    previousEventsSubtitle: string;
-    andManyOthers: string;
-  };
+  translations: Dictionary;
 };
 export const getStaticProps: GetStaticProps = (async context => {
   const lang = context.params?.lang as string;
   const dictionary = await getDictionary(lang as Locale);
   const events = getAllEvents();
   const communityMembers = getAllCommunityMembers();
-  return { props: { events, communityMembers, translations: dictionary.home } };
+  return { props: { events, communityMembers, translations: dictionary } };
 }) satisfies GetStaticProps<StaticProps>;
 
 const Home: React.FC<StaticProps> = ({
@@ -75,8 +69,7 @@ const Home: React.FC<StaticProps> = ({
 
   const metadata = {
     title: 'LiT - Latina In Tech',
-    description:
-      'Community che raccoglie gli sviluppatori della provincia di Latina',
+    description: translations.home.communityDescription,
     keywords: [
       'Latina',
       'User Group',
@@ -95,21 +88,21 @@ const Home: React.FC<StaticProps> = ({
       </Head>
       <Header lang={locale} />
       <main className='flex flex-col gap-6 px-4 pb-8'>
-        <Hero />
+        <Hero translations={translations} />
 
         <div className='mb-4 hidden md:block' />
 
         {nextEvents.length > 0 && (
           <EventsList
-            heading={translations.nextEventsTitle}
-            caption={translations.nextEventsSubtitle}
+            heading={translations.home.nextEventsTitle}
+            caption={translations.home.nextEventsSubtitle}
             events={nextEvents}
           />
         )}
         {pastEventsPreview.length > 0 && (
           <EventsList
-            heading={translations.previousEventsTitle}
-            caption={translations.previousEventsSubtitle}
+            heading={translations.home.previousEventsTitle}
+            caption={translations.home.previousEventsSubtitle}
             events={pastEventsPreview}
           />
         )}
@@ -119,15 +112,15 @@ const Home: React.FC<StaticProps> = ({
               href={`/${router.query.lang}/events`}
               className='text-primary hover:text-primary-dark dark:text-primary-lighter dark:hover:text-primary-light mt-2 text-lg'
             >
-              {translations.andManyOthers}
+              {translations.home.andManyOthers}
             </a>
           </div>
         )}
         <div className='mb-2' />
         <Sponsors />
-        <Newsletter />
-        <Community members={communityMembers} />
-        <LeaveFeedback />
+        <Newsletter translations={translations} />
+        <Community members={communityMembers} translations={translations} />
+        <LeaveFeedback translations={translations} />
       </main>
     </>
   );
