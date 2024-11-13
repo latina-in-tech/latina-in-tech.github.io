@@ -12,28 +12,35 @@ import { TextArea } from '@/components/TextArea';
 import { PaperAirplaneIcon, HomeIcon } from '@heroicons/react/24/outline';
 import { saveFeedback } from '@/service/feedback/save';
 import { Alert } from '@/components/Alert';
-import { i18n } from 'i18n.config';
+import { i18n, Locale } from 'i18n.config';
 import { useRouter } from 'next/router';
 import { getAllLocales } from '@/utils/locale';
+import { Dictionary, getDictionary } from '@/utils/dictionary';
 
 type Props = {
   events: [IEvent];
+  translations: Dictionary;
 };
 
-const NOT_CAME_REASONS = [
-  'Motivi Personali',
-  'Non ho avuto tempo ma avrei voluto',
-  'Non mi interessava il programma',
-  'Non ne sapevo nulla'
+type NotCameReason = keyof Dictionary['feedback']['notCameReasons'];
+const NOT_CAME_REASONS: NotCameReason[] = [
+  'PERSONAL',
+  'NO_TIME_BUT_WANTED',
+  'NO_INTEREST',
+  'DID_NOT_KNOW'
 ];
 
 const MAX_RATE = 5;
 
-const NewFeedback: NextPage<Props> = ({ events: events }: Props) => {
+const NewFeedback: NextPage<Props> = ({ events, translations }: Props) => {
   const router = useRouter();
   const locale = i18n.locales.filter(
     locale => router?.query.lang === locale
   )[0];
+
+  const localizedNotCameReasons = NOT_CAME_REASONS.map(
+    reason => translations.feedback.notCameReasons[reason]
+  );
 
   const pastEvents = useMemo(() => filterPastEvents(events), [events]);
 
@@ -41,7 +48,9 @@ const NewFeedback: NextPage<Props> = ({ events: events }: Props) => {
 
   const [hasPartecipatedLastEvent, setHasPartecipatedLastEvent] =
     useState(false);
-  const [notCameReason, setNotCameReason] = useState(NOT_CAME_REASONS[0]);
+  const [notCameReason, setNotCameReason] = useState(
+    localizedNotCameReasons[0]
+  );
   const [generalRate, setGeneralRate] = useState(0);
   const [eventRate, setEventRate] = useState(0);
   const [hasLearned, setHasLearned] = useState(false);
@@ -82,7 +91,7 @@ const NewFeedback: NextPage<Props> = ({ events: events }: Props) => {
         <title>LiT - Feedback</title>
         <meta
           name='description'
-          content='Lascia un feedback sulla tua esperienza con Latina In Tech!'
+          content={translations.feedback.metaDescription}
         />
         <meta
           name='keywords'
@@ -94,38 +103,41 @@ const NewFeedback: NextPage<Props> = ({ events: events }: Props) => {
       <main className='flex flex-col gap-6 px-4 pb-4 sm:mt-8'>
         <div className='flex flex-col items-center'>
           <h2 className='text-3xl font-bold dark:text-slate-200 sm:text-4xl'>
-            Feedback
+            {translations.feedback.feedback}
           </h2>
           <p className='mx-auto mt-2 max-w-2xl text-m text-center text-gray-500 dark:text-slate-400 sm:mt-4'>
-            Partecipa attivamente alla vita della community esprimendo la tua
-            opinione su quanto portato avanti finora e su come migliorarlo
+            {translations.feedback.partecipateActively}
           </p>
 
           <div className='flex flex-col items-center gap-4 mt-8'>
             <div className='flex flex-col gap-4 justify-center items-center'>
               <p className='text-center font-bold'>
-                Hai partecipato all&apos;ultimo evento, <i>{lastEvent.title}</i>
-                &nbsp;di&nbsp;
+                {translations.feedback.didYouAttendLastEvent}
+                <i>{lastEvent.title}</i>
+                {translations.feedback.of}
                 {DateTime.fromISO(lastEvent.date).toLocaleString(
                   DateTime.DATE_HUGE,
-                  { locale: 'it' }
+                  { locale }
                 )}
                 ?
               </p>
               <Switch
                 checked={hasPartecipatedLastEvent}
-                label={hasPartecipatedLastEvent ? 'Si' : 'No'}
+                label={
+                  hasPartecipatedLastEvent
+                    ? translations.feedback.yes
+                    : translations.feedback.no
+                }
                 onChange={() => {
                   setHasPartecipatedLastEvent(!hasPartecipatedLastEvent);
                 }}
               />
             </div>
-
             {hasPartecipatedLastEvent && (
               <>
                 <div className='flex flex-col gap-4 justify-center items-center'>
                   <p className='text-center font-bold'>
-                    Quanto è stato interessante l&apos;evento?
+                    {translations.feedback.howWouldYouRateEvent}
                   </p>
                   <Rate
                     rate={eventRate}
@@ -136,12 +148,15 @@ const NewFeedback: NextPage<Props> = ({ events: events }: Props) => {
 
                 <div className='flex flex-col gap-4 justify-center items-center'>
                   <p className='text-center font-bold'>
-                    C&apos;è qualcosa che ti ha particolarmente colpito durante
-                    l&apos;evento?
+                    {translations.feedback.isThereAnythingYouLiked}
                   </p>
                   <Switch
                     checked={hasLearned}
-                    label={hasLearned ? 'Si' : 'No'}
+                    label={
+                      hasLearned
+                        ? translations.feedback.yes
+                        : translations.feedback.no
+                    }
                     onChange={() => {
                       setHasLearned(!hasLearned);
                     }}
@@ -151,26 +166,24 @@ const NewFeedback: NextPage<Props> = ({ events: events }: Props) => {
                 {hasLearned && (
                   <div className='flex flex-col gap-4 justify-center items-center'>
                     <p className='text-center font-bold'>
-                      Per favore, descrivi brevemente la cosa più interessante
-                      dello scorso evento:
+                      {translations.feedback.describeShortMostInteresting}
                     </p>
                     <TextArea
                       content={mostImpressive}
                       onChange={newVal => setMostImpressive(newVal)}
-                      placeholder='Cosa ti ha colpito di più?'
+                      placeholder={translations.feedback.whatYouLikedMost}
                     />
                   </div>
                 )}
               </>
             )}
-
             {!hasPartecipatedLastEvent && (
               <div className='flex flex-col gap-4 justify-center items-center'>
                 <p className='text-center font-bold'>
-                  Ci dispiace che non ci sei stato, puoi dirci il motivo?
+                  {translations.feedback.weAreSorryYouDidNotAttend}
                 </p>
                 <Radio
-                  options={NOT_CAME_REASONS}
+                  options={localizedNotCameReasons}
                   selected={notCameReason}
                   onSelected={selected => setNotCameReason(selected)}
                 />
@@ -179,7 +192,7 @@ const NewFeedback: NextPage<Props> = ({ events: events }: Props) => {
 
             <div className='flex flex-col gap-4 justify-center items-center'>
               <p className='text-center font-bold'>
-                Complessivamente quanto sei soddisfatto della community?
+                {translations.feedback.howMuchAreYouSatisfied}
               </p>
               <Rate
                 rate={generalRate}
@@ -187,54 +200,49 @@ const NewFeedback: NextPage<Props> = ({ events: events }: Props) => {
                 setRate={newRate => setGeneralRate(newRate)}
               />
             </div>
-
             <div className='flex flex-col gap-4 justify-center items-center'>
               <p className='text-center font-bold'>
-                Hai dei consigli generali per migliorare la community?
+                {translations.feedback.doYouHaveSuggestions}
               </p>
               <TextArea
                 content={generalHints}
                 onChange={newVal => setGeneralHints(newVal)}
-                placeholder='Scrivi ulteriori feedback...'
+                placeholder={translations.feedback.writeAdditionalFeedback}
               />
             </div>
-
             {showSuccess && (
               <Alert
-                title='Grazie!'
+                title={translations.feedback.thankYou}
                 onGoBackToHome={() => (window.location.href = './../')}
-                content='Abbiamo ricevuto il tuo feedback, grazie del contributo alla community! Puoi tornare alla Home.'
+                content={translations.feedback.weReceivedYourFeedback}
                 type='success'
                 onDismiss={() => setShowSuccess(false)}
               />
             )}
-
             {sentFeedback && (
               <button
                 onClick={() => (window.location.href = './../')}
                 className='flex items-center justify-between gap-2 rounded-md mt-4 mb-4 border border-transparent bg-primary bg-opacity-80 px-4 py-3 text-base font-medium text-white shadow-sm backdrop-blur-sm hover:bg-primary-light sm:px-8'
               >
-                Torna Indietro
+                {translations.feedback.goBack}
                 <HomeIcon className='h-6 w-6' />
               </button>
             )}
-
             {showError && (
               <Alert
-                title='Errore'
-                content='Impossibile salvare feedback, si prega di riprovare'
+                title={translations.feedback.errorTitle}
+                content={translations.feedback.errorDesc}
                 type='error'
                 onDismiss={() => setShowError(false)}
               />
             )}
-
             {!sentFeedback && (
               <button
                 disabled={isLoading}
                 onClick={sendFeedback}
                 className='flex items-center justify-between gap-2 rounded-md mt-4 mb-4 border border-transparent bg-primary bg-opacity-80 px-4 py-3 text-base font-medium text-white shadow-sm backdrop-blur-sm hover:bg-primary-light sm:px-8'
               >
-                Invia Feedback
+                {translations.feedback.sendFeedback}
                 <PaperAirplaneIcon className='h-6 w-6' />
               </button>
             )}
@@ -262,7 +270,9 @@ export const getStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async context => {
+  const lang = context.params?.lang as string;
+  const translations = await getDictionary(lang as Locale);
   const events = getAllEvents();
-  return { props: { events } };
+  return { props: { events, translations } };
 };

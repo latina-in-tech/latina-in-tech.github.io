@@ -6,8 +6,11 @@ import {
   BsTwitter,
   BsFillHouseDoorFill
 } from 'react-icons/bs';
-import { i18n } from 'i18n.config';
+import { i18n, Locale } from 'i18n.config';
 import { useRouter } from 'next/router';
+import { Dictionary, getDictionary } from '@/utils/dictionary';
+import { GetStaticProps } from 'next';
+import { getAllLocales } from '@/utils/locale';
 
 type Admin = {
   name: string;
@@ -149,7 +152,32 @@ const AdminCard: React.FC<Admin> = ({
   );
 };
 
-const AdminTeam = () => {
+type AdminTeamProps = {
+  translations: Dictionary;
+};
+
+export const getStaticProps: GetStaticProps = (async context => {
+  const lang = context.params?.lang as string;
+  const dictionary = await getDictionary(lang as Locale);
+  return { props: { translations: dictionary } };
+}) satisfies GetStaticProps<AdminTeamProps>;
+
+export const getStaticPaths = async () => {
+  const locales = getAllLocales();
+
+  return {
+    paths: locales.map(locale => {
+      return {
+        params: {
+          lang: locale
+        }
+      };
+    }),
+    fallback: false
+  };
+};
+
+const AdminTeam = ({ translations }: AdminTeamProps) => {
   const router = useRouter();
   const locale = i18n.locales.filter(
     locale => router?.query.lang === locale
@@ -162,11 +190,10 @@ const AdminTeam = () => {
         <div className='w-[100%] md:w-fit p-4 m-4 justify-center rounded-md shadow-md bg-slate-200 dark:bg-slate-800'>
           <div className='flex flex-col items-center justify-center space-y-5 mb-4 sm:space-y-4 md:max-w-xl lg:max-w-3xl xl:max-w-none'>
             <h2 className='text-3xl font-bold dark:text-slate-200 sm:text-4xl text-center'>
-              Il team di Latina In Tech
+              {translations.admin.adminTeam}
             </h2>
             <p className='mx-auto max-w-2xl text-m text-center text-gray-500 dark:text-slate-400 sm:mt-2'>
-              Un gruppo di persone che condividono la passione per la tecnologia
-              e per il proprio territorio.
+              {translations.admin.groupOfPeople}
             </p>
           </div>
           <div className='grid grid-cols-1 justify-items-center md:grid-cols-3 lg:grid-cols-4 gap-4'>
@@ -179,7 +206,7 @@ const AdminTeam = () => {
           {admins.filter(a => !(a.active ?? true)).length > 0 && (
             <div>
               <h2 className='text-2xl font-bold dark:text-slate-200 sm:text-2xl text-center mt-4 mb-2'>
-                Sono stati membri del team
+                {translations.admin.wereAdmin}
               </h2>
               <div className='grid grid-cols-1 justify-items-center md:grid-cols-3 lg:grid-cols-4 gap-4'>
                 {admins

@@ -43,7 +43,13 @@ const EventWidget: React.FC<Props> = ({ event }: Props) => {
   }, [isPast]);
 
   return (
-    <Link href={`${router.query.lang}/events/${event.slug}`} legacyBehavior>
+    <Link
+      href={{
+        pathname: '/[lang]/events/[slug]',
+        query: { lang: router.query.lang, slug: event.slug }
+      }}
+      legacyBehavior
+    >
       <div className={getEventWidgetClasses()}>
         {renderEventImage()}
         <div className='flex flex-1 flex-col gap-2 p-4'>

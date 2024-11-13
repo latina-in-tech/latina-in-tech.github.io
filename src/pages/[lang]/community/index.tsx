@@ -2,6 +2,7 @@ import React, { useEffect, useMemo } from 'react';
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
 import {
   CommunityMemberError,
+  CommunityMemberOrError,
   CommunityMemberValid,
   isCommunityError,
   isCommunityMember
@@ -10,6 +11,8 @@ import { getAllCommunityMembers } from '@/utils/community';
 import { isDevEnv } from '@/utils/dev';
 import CommunityMember from '@/components/CommunityMember';
 import { getAllLocales } from '@/utils/locale';
+import { Dictionary, getDictionary } from '@/utils/dictionary';
+import { Locale } from 'i18n.config';
 
 /**
  * display the list of community members
@@ -21,7 +24,7 @@ import { getAllLocales } from '@/utils/locale';
  */
 const CommunityMemberList: React.FC<
   InferGetStaticPropsType<typeof getStaticProps>
-> = ({ members }) => {
+> = ({ members, translations }) => {
   const [isClient, setIsClient] = React.useState(false);
   const errors: CommunityMemberError[] = useMemo(
     () => members.filter(isCommunityError),
@@ -61,13 +64,10 @@ const CommunityMemberList: React.FC<
   return (
     <div className='flex flex-col items-center justify-center'>
       <h2 className='text-xl font-bold text-gray-900 dark:text-slate-200 uppercase text-center'>
-        LiT Community Members
+        {translations.communityMembers.communityMembers}
       </h2>
       <p className='text-lg text-gray-700 dark:text-slate-200 text-center max-w-screen-md my-2'>
-        partecipi alle iniziative della community o ci segui online? in ogni
-        caso sei uno di noi!
-        <br />
-        se vuoi comparire in questo elenco, niente di più semplice,{' '}
+        {translations.communityMembers.doYouAttendOrFollowUs} &nbsp;
         <a
           href={
             'https://github.com/latina-in-tech/latina-in-tech.github.io/blob/main/docs/community/README.md'
@@ -76,7 +76,7 @@ const CommunityMemberList: React.FC<
           target={'_blank'}
           rel={'noreferrer'}
         >
-          leggi qui!
+          {translations.communityMembers.readHere}
         </a>
       </p>
       <div className='grid grid-cols-2 lg:grid-cols-4 md:grid-cols-3 mt-4 max-w-screen-md gap-x-4 gap-y-6'>
@@ -103,10 +103,20 @@ export const getStaticPaths = async () => {
   };
 };
 
-export const getStaticProps = (() => ({
-  props: { members: getAllCommunityMembers() }
-})) satisfies GetStaticProps<{
-  members: ReturnType<typeof getAllCommunityMembers>;
-}>;
+type StaticProps = {
+  members: Array<CommunityMemberOrError>;
+  translations: Dictionary;
+};
+
+export const getStaticProps = (async context => {
+  const lang = context.params?.lang as string;
+  const translations = await getDictionary(lang as Locale);
+  return {
+    props: {
+      members: getAllCommunityMembers(),
+      translations
+    }
+  };
+}) satisfies GetStaticProps<StaticProps>;
 
 export default CommunityMemberList;
