@@ -16,6 +16,8 @@ type Admin = {
   github?: string;
   twitter?: string;
   website?: string;
+  // default is true
+  active?: boolean;
 };
 
 const admins: ReadonlyArray<Admin> = [
@@ -40,12 +42,14 @@ const admins: ReadonlyArray<Admin> = [
   {
     name: 'Fabrizio Dalla Bona',
     image: '/assets/admin/team/f-dalla-bona.png',
-    linkedIn: 'https://www.linkedin.com/in/fabriziodallabona/'
+    linkedIn: 'https://www.linkedin.com/in/fabriziodallabona/',
+    active: false
   },
   {
     name: 'Francesco Di Muro',
     image: '/assets/admin/team/f-di-muro.png',
-    linkedIn: 'https://www.linkedin.com/in/francesco-di-muro/'
+    linkedIn: 'https://www.linkedin.com/in/francesco-di-muro/',
+    active: false
   },
   {
     name: 'Fabio Adipietro',
@@ -72,14 +76,15 @@ const AdminCard: React.FC<Admin> = ({
   image,
   github,
   twitter,
-  website
+  website,
+  active = true
 }) => {
   return (
     <div
       className={`w-[220px] flex flex-col items-center p-4 bg-gradient-to-b from-primary-dark to-primary-light dark:from-primary-light dark:to-primary-dark hover:from-pink-500 hover:to-yellow-500 rounded-md shadow-md`}
     >
       <img
-        className='object-cover w-32 h-32 mb-4 rounded-full shadow-md'
+        className={`object-cover w-32 h-32 mb-4 rounded-full shadow-md ${active ? 'grayscale-0' : 'grayscale'}`}
         src={image}
         alt='avatar'
       />
@@ -165,10 +170,26 @@ const AdminTeam = () => {
             </p>
           </div>
           <div className='grid grid-cols-1 justify-items-center md:grid-cols-3 lg:grid-cols-4 gap-4'>
-            {admins.map(admin => (
-              <AdminCard key={admin.name} {...admin} />
-            ))}
+            {admins
+              .filter(a => a.active ?? true)
+              .map(admin => (
+                <AdminCard key={admin.name} {...admin} />
+              ))}
           </div>
+          {admins.filter(a => !(a.active ?? true)).length > 0 && (
+            <div>
+              <h2 className='text-2xl font-bold dark:text-slate-200 sm:text-2xl text-center mt-4 mb-2'>
+                Sono stati membri del team di admin
+              </h2>
+              <div className='grid grid-cols-1 justify-items-center md:grid-cols-3 lg:grid-cols-4 gap-4'>
+                {admins
+                  .filter(a => !(a.active ?? true))
+                  .map(admin => (
+                    <AdminCard key={admin.name} {...admin} />
+                  ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

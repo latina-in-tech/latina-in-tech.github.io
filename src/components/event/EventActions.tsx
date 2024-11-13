@@ -55,7 +55,10 @@ const EventActions: React.FC<Props> = ({ event }: Props) => {
       {isPast ? (
         <EventAction Icon={CalendarIcon} label={formattedDate} />
       ) : (
-        <div onClick={event => event.stopPropagation()}>
+        <div
+          onClick={event => event.stopPropagation()}
+          style={{ width: 'fit-content' }}
+        >
           <AddToCalendar
             eventDuration={event.duration || defaultEventDuration}
             description={event.description}
