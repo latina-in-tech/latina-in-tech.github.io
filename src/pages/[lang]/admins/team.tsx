@@ -179,7 +179,7 @@ const AdminTeam = () => {
           {admins.filter(a => !(a.active ?? true)).length > 0 && (
             <div>
               <h2 className='text-2xl font-bold dark:text-slate-200 sm:text-2xl text-center mt-4 mb-2'>
-                Sono stati membri del team di admin
+                Sono stati membri del team
               </h2>
               <div className='grid grid-cols-1 justify-items-center md:grid-cols-3 lg:grid-cols-4 gap-4'>
                 {admins
