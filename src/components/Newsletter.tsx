@@ -1,7 +1,12 @@
+import { Dictionary } from '@/utils/dictionary';
 import React from 'react';
 import { MdOutlineMarkEmailRead } from 'react-icons/md';
 
-export const Newsletter = () => {
+type NewsletterProps = {
+  translations: Dictionary;
+};
+
+export const Newsletter = ({ translations }: NewsletterProps) => {
   return (
     <section className='sm:my-10'>
       <div className='mx-auto px-4 sm:px-6 lg:px-8'>
@@ -9,16 +14,14 @@ export const Newsletter = () => {
           <div className='relative mx-auto grid max-w-2xl grid-cols-1 gap-x-32 gap-y-14 text-gray-900 dark:text-slate-200 xl:max-w-none xl:grid-cols-2'>
             <div>
               <h2 className='text-4xl font-extrabold tracking-tight  sm:text-4xl'>
-                <span>Rimaniamo in contatto?</span>
+                <span>{translations.newsletter.shallWeStayInTouch}</span>
                 <br />
                 <span className='bg-gradient-to-br from-primary-dark to-primary-light dark:from-primary dark:to-primary-lighter bg-clip-text text-transparent'>
-                  Tieniti sempre aggiornato.
+                  {translations.newsletter.stayUpdated}
                 </span>
               </h2>
               <p className='mt-2 text-lg'>
-                Unisciti alla nostra community! Iscriviti per non perderti gli
-                eventi e le attività che organizzeremo. Stay connected, stay
-                tech-savvy!
+                {translations.newsletter.joinOurCommunityAndDoNotMissAnyUpdates}
               </p>
             </div>
             <form
@@ -29,7 +32,7 @@ export const Newsletter = () => {
               target='_self'
             >
               <h3 className='text-lg font-semibold tracking-tight text-primary-dark dark:text-primary-light'>
-                Iscriviti alla nostra newsletter
+                {translations.newsletter.signUp}
                 <span aria-hidden='true'>↓</span>
               </h3>
               <span className='hidden'>
@@ -52,7 +55,7 @@ export const Newsletter = () => {
                   name='EMAIL'
                   id='mce-EMAIL'
                   required
-                  placeholder='Indirizzo email'
+                  placeholder={translations.newsletter.emailAddress}
                   className='-my-2.5 flex-auto border-none bg-transparent pl-6 pr-2.5 text-base text-slate-900 placeholder:text-slate-400 focus:ring-0'
                 />
                 <button
@@ -60,7 +63,7 @@ export const Newsletter = () => {
                   type='submit'
                 >
                   <span className='sr-only sm:not-sr-only'>
-                    Iscriviti subito
+                    {translations.newsletter.signupNow}
                   </span>
                   <span className='sm:hidden'>
                     <MdOutlineMarkEmailRead />

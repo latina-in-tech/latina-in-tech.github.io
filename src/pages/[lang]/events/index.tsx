@@ -5,15 +5,20 @@ import { GetStaticProps, NextPage } from 'next';
 import { getAllEvents } from '@/utils/mdxUtils';
 import { IEvent, sortEvents } from '@/model/event';
 import Head from 'next/head';
-import { i18n } from 'i18n.config';
+import { i18n, Locale } from 'i18n.config';
 import { useRouter } from 'next/router';
 import { getAllLocales } from '@/utils/locale';
+import { Dictionary, getDictionary } from '@/utils/dictionary';
 
-const EventsPage: NextPage<{ events: [IEvent] }> = ({
-  events
-}: {
+type EventsPageProps = {
   events: [IEvent];
-}) => {
+  translations: Dictionary;
+};
+
+const EventsPage: NextPage<EventsPageProps> = ({
+  events,
+  translations
+}: EventsPageProps) => {
   const router = useRouter();
   const locale = i18n.locales.filter(
     locale => router?.query.lang === locale
@@ -23,13 +28,13 @@ const EventsPage: NextPage<{ events: [IEvent] }> = ({
   return (
     <>
       <Head>
-        <title>LiT - Eventi</title>
+        <title>{translations.events.title}</title>
       </Head>
       <Header lang={locale} />
       <div className='p-4'>
         <EventsList
-          heading='Eventi'
-          caption='Qui puoi vedere tutti gli eventi della community Latina In Tech!'
+          heading={translations.events.events}
+          caption={translations.events.hereYouCanSee}
           events={sortedEvents}
         />
       </div>
@@ -54,7 +59,9 @@ export const getStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async context => {
   const events = getAllEvents();
-  return { props: { events } };
+  const lang = context.params?.lang as string;
+  const translations = await getDictionary(lang as Locale);
+  return { props: { events, translations } };
 };
