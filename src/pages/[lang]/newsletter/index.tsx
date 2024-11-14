@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { i18n, Locale } from 'i18n.config';
 import { Dictionary, getDictionary } from '@/utils/dictionary';
 import { GetStaticProps } from 'next';
+import { getAllLocales } from '@/utils/locale';
 
 type StaticProps = {
   translations: Dictionary;
@@ -27,6 +28,21 @@ const NewsletterPage = ({ translations }: StaticProps) => {
       <Newsletter translations={translations} />
     </>
   );
+};
+
+export const getStaticPaths = async () => {
+  const locales = getAllLocales();
+
+  return {
+    paths: locales.map(locale => {
+      return {
+        params: {
+          lang: locale
+        }
+      };
+    }),
+    fallback: false
+  };
 };
 
 export default NewsletterPage;
