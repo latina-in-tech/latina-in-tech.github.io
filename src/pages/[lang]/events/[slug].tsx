@@ -189,7 +189,8 @@ const EventPage: React.FC<Props> = ({ source, frontMatter: event }: Props) => {
               'ol',
               'br',
               'h1',
-              'h2'
+              'h2',
+              'img'
             ]}
           >
             {source}
