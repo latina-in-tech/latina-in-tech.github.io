@@ -6,8 +6,11 @@ import {
   BsTwitter,
   BsFillHouseDoorFill
 } from 'react-icons/bs';
-import { i18n } from 'i18n.config';
+import { i18n, Locale } from 'i18n.config';
 import { useRouter } from 'next/router';
+import { Dictionary, getDictionary } from '@/utils/dictionary';
+import { GetStaticProps } from 'next';
+import { getAllLocales } from '@/utils/locale';
 
 type Admin = {
   name: string;
@@ -16,6 +19,8 @@ type Admin = {
   github?: string;
   twitter?: string;
   website?: string;
+  // default is true
+  active?: boolean;
 };
 
 const admins: ReadonlyArray<Admin> = [
@@ -40,12 +45,14 @@ const admins: ReadonlyArray<Admin> = [
   {
     name: 'Fabrizio Dalla Bona',
     image: '/assets/admin/team/f-dalla-bona.png',
-    linkedIn: 'https://www.linkedin.com/in/fabriziodallabona/'
+    linkedIn: 'https://www.linkedin.com/in/fabriziodallabona/',
+    active: false
   },
   {
     name: 'Francesco Di Muro',
     image: '/assets/admin/team/f-di-muro.png',
-    linkedIn: 'https://www.linkedin.com/in/francesco-di-muro/'
+    linkedIn: 'https://www.linkedin.com/in/francesco-di-muro/',
+    active: false
   },
   {
     name: 'Fabio Adipietro',
@@ -72,14 +79,15 @@ const AdminCard: React.FC<Admin> = ({
   image,
   github,
   twitter,
-  website
+  website,
+  active = true
 }) => {
   return (
     <div
       className={`w-[220px] flex flex-col items-center p-4 bg-gradient-to-b from-primary-dark to-primary-light dark:from-primary-light dark:to-primary-dark hover:from-pink-500 hover:to-yellow-500 rounded-md shadow-md`}
     >
       <img
-        className='object-cover w-32 h-32 mb-4 rounded-full shadow-md'
+        className={`object-cover w-32 h-32 mb-4 rounded-full shadow-md ${active ? 'grayscale-0' : 'grayscale'}`}
         src={image}
         alt='avatar'
       />
@@ -144,7 +152,32 @@ const AdminCard: React.FC<Admin> = ({
   );
 };
 
-const AdminTeam = () => {
+type AdminTeamProps = {
+  translations: Dictionary;
+};
+
+export const getStaticProps: GetStaticProps = (async context => {
+  const lang = context.params?.lang as string;
+  const dictionary = await getDictionary(lang as Locale);
+  return { props: { translations: dictionary } };
+}) satisfies GetStaticProps<AdminTeamProps>;
+
+export const getStaticPaths = async () => {
+  const locales = getAllLocales();
+
+  return {
+    paths: locales.map(locale => {
+      return {
+        params: {
+          lang: locale
+        }
+      };
+    }),
+    fallback: false
+  };
+};
+
+const AdminTeam = ({ translations }: AdminTeamProps) => {
   const router = useRouter();
   const locale = i18n.locales.filter(
     locale => router?.query.lang === locale
@@ -157,18 +190,33 @@ const AdminTeam = () => {
         <div className='w-[100%] md:w-fit p-4 m-4 justify-center rounded-md shadow-md bg-slate-200 dark:bg-slate-800'>
           <div className='flex flex-col items-center justify-center space-y-5 mb-4 sm:space-y-4 md:max-w-xl lg:max-w-3xl xl:max-w-none'>
             <h2 className='text-3xl font-bold dark:text-slate-200 sm:text-4xl text-center'>
-              Il team di Latina In Tech
+              {translations.admin.adminTeam}
             </h2>
             <p className='mx-auto max-w-2xl text-m text-center text-gray-500 dark:text-slate-400 sm:mt-2'>
-              Un gruppo di persone che condividono la passione per la tecnologia
-              e per il proprio territorio.
+              {translations.admin.groupOfPeople}
             </p>
           </div>
           <div className='grid grid-cols-1 justify-items-center md:grid-cols-3 lg:grid-cols-4 gap-4'>
-            {admins.map(admin => (
-              <AdminCard key={admin.name} {...admin} />
-            ))}
+            {admins
+              .filter(a => a.active ?? true)
+              .map(admin => (
+                <AdminCard key={admin.name} {...admin} />
+              ))}
           </div>
+          {admins.filter(a => !(a.active ?? true)).length > 0 && (
+            <div>
+              <h2 className='text-2xl font-bold dark:text-slate-200 sm:text-2xl text-center mt-4 mb-2'>
+                {translations.admin.wereAdmin}
+              </h2>
+              <div className='grid grid-cols-1 justify-items-center md:grid-cols-3 lg:grid-cols-4 gap-4'>
+                {admins
+                  .filter(a => !(a.active ?? true))
+                  .map(admin => (
+                    <AdminCard key={admin.name} {...admin} />
+                  ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

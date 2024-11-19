@@ -4,10 +4,15 @@ import latina from '../../public/assets/latina.jpg';
 import navigationLinks from '@/model/navigation';
 import { useTelegramGroupInfo } from '@/utils/telegram';
 import React from 'react';
+import { Dictionary } from '@/utils/dictionary';
 
 const telegramNav = navigationLinks.find(item => item.name === 'Telegram');
 
-const Hero: React.FC = () => {
+type HeroProps = {
+  translations: Dictionary;
+};
+
+const Hero: React.FC<HeroProps> = ({ translations }: HeroProps) => {
   const [maybeGroupInfo] = useTelegramGroupInfo(telegramNav?.href ?? '');
   return (
     <div className='relative'>
@@ -26,15 +31,16 @@ const Hero: React.FC = () => {
           </div>
           <div className='relative px-4 py-16 sm:px-6 sm:py-24 lg:py-32 lg:px-8'>
             <h1 className='text-center text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl'>
-              <span className='block text-white'>La community degli</span>
+              <span className='block text-white'>
+                {translations.hero.communityOf}
+              </span>
               <span className='block bg-primary-lighter bg-clip-text text-transparent'>
-                Informatici Pontini
+                {translations.hero.pontiniDev}
               </span>
             </h1>
             <div className='py-2 bg-opacity-50 mx-auto mt-6 max-w-lg rounded-md border border-transparent bg-slate-400 sm:max-w-3xl'>
               <p className='text-center text-xl text-slate-100'>
-                Eventi gratuiti per favorire la condivisione di conoscenze e la
-                crescita professionale.
+                {translations.hero.freeEventsForProfessionalGrowth}
               </p>
             </div>
             <div className='mx-auto mt-10 flex justify-center'>
@@ -44,14 +50,15 @@ const Hero: React.FC = () => {
                   target='_blank'
                   className='flex items-center justify-between gap-2 rounded-md border border-transparent bg-primary bg-opacity-80 px-4 py-3 text-base font-medium text-white shadow-sm backdrop-blur-sm hover:bg-primary-dark sm:px-8'
                 >
-                  Unisciti al Gruppo Telegram!
+                  {translations.hero.joinUsOnTelegram}
                   {telegramNav.icon && <telegramNav.icon></telegramNav.icon>}
                 </Link>
               )}
             </div>
             {telegramNav && maybeGroupInfo && (
               <div className='mx-auto mt-2 flex justify-center text-gray-400'>
-                {maybeGroupInfo.members} membri {maybeGroupInfo.online} online
+                {maybeGroupInfo.members} {translations.hero.members}{' '}
+                {maybeGroupInfo.online} {translations.hero.online}
               </div>
             )}
           </div>
