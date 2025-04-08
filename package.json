@@ -13,7 +13,7 @@
     "check:events": "ts-node src/scripts/checkEvents.ts"
   },
   "dependencies": {
-    "add-to-calendar-button-react": "^2.6.19",
+    "add-to-calendar-button-react": "^2.8.7",
     "autoprefixer": "^10.4.20",
     "firebase": "^10.12.4",
     "flag-icons": "^7.2.3",
