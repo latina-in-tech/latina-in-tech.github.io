@@ -19,7 +19,7 @@ const navigationLinks = [
   },
   {
     name: 'Telegram',
-    href: 'https://t.me/+QazM4E1vaUM3NDQ0',
+    href: 'https://t.me/+b9tlUx8a-MA3MzE0',
     icon: TelegramIcon,
     current: false
   },
