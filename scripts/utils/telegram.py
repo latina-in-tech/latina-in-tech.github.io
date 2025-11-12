@@ -33,7 +33,7 @@ def get_telegram_chat_and_thread_ids() -> None:
                         "chat_id": chat_id,
                         "thread_id": thread_id,
                         "text": text,
-                        "from": f"{sender.get("username")} ({sender.get('first_name', "")} {sender.get('last_name', "")})",
+                        "from": f'{sender.get("username")} ({sender.get("first_name", "")} {sender.get("last_name", "")})',
                     }
                 )
                 can_stop = True
