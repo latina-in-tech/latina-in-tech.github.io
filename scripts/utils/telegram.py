@@ -67,5 +67,6 @@ def send_telegram_image_message(caption: str, image_blob: bytes) -> None:
             "parse_mode": "MarkdownV2",
         },
         files={"photo": image_blob},
+        timeout=10,
     )
     send.raise_for_status()
