@@ -59,7 +59,7 @@ def send_telegram_text_message(text: str) -> None:
 
 def send_telegram_image_message(caption: str, image_blob: bytes) -> None:
     send = requests.post(
-        f"https://api.telegram.org/bot{BOT_TOKEN}/sendPhoto",
+        f"{API}/sendPhoto",
         data={
             "chat_id": CHAT_ID,
             "message_thread_id": THREAD_ID,
