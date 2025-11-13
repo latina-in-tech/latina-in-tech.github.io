@@ -4,8 +4,11 @@ from pathlib import Path
 from typing import Optional, List, Dict
 from datetime import datetime, timezone, timedelta
 
-from scripts.utils.resource import LAST_NOTIFIED_PATH, EVENTS_PATH
-from scripts.utils.telegram import send_telegram_text_message
+from scripts.utils.resource import LAST_NOTIFIED_PATH, EVENTS_PATH, EVENTS_IMAGES_PATH
+from scripts.utils.telegram import (
+    send_telegram_text_message,
+    send_telegram_image_message,
+)
 
 
 class Event:
@@ -22,7 +25,7 @@ class Event:
         self._description: str = ""
         self._place: str = ""
         self._maps: str = ""
-        self._thumbnail: str = ""
+        self._thumbnail: Optional[Path]
         self._tags: List[str] = []
         self._speakers: List[Dict] = []
         self._slides: List[Dict] = []
@@ -71,7 +74,13 @@ class Event:
         self._description = self._extract_field(frontmatter, "description")
         self._place = self._extract_field(frontmatter, "place")
         self._maps = self._extract_field(frontmatter, "maps")
-        self._thumbnail = self._extract_field(frontmatter, "thumbnail")
+        thumbnail = self._extract_field(frontmatter, "thumbnail")
+        if thumbnail:
+            thumbnail = thumbnail.split("/")[-1]
+            thumbnail = Path(EVENTS_IMAGES_PATH) / thumbnail
+            if thumbnail.exists():
+                self._thumbnail = thumbnail
+
         self._youtube_url = self._extract_field(frontmatter, "youtubeUrl")
         self._signup = self._extract_field(frontmatter, "signup")
 
@@ -152,7 +161,7 @@ class Event:
         return self._maps
 
     @property
-    def thumbnail(self) -> str:
+    def thumbnail(self) -> Optional[Path]:
         return self._thumbnail
 
     @property
@@ -179,12 +188,12 @@ class Event:
     def duration(self) -> Optional[int]:
         return self._duration
 
-    def to_telegram_markdown(self) -> str:
-        """Generate a Telegram-formatted markdown message for the event."""
+    def to_telegram_html(self) -> str:
+        """Generate a Telegram-formatted HTML message for the event."""
         lines = []
 
         # Title
-        lines.append(f"*{self._escape_markdown(self.title)}*\n")
+        lines.append(f"<b>{self._escape_html(self.title)}</b>\n")
 
         # Date and time
         # Converti in timezone di Roma (UTC+1 o UTC+2)
@@ -194,16 +203,22 @@ class Event:
         )
         date_str = event_time_rome.strftime("%d/%m/%Y")
         time_str = event_time_rome.strftime("%H:%M")
-        lines.append(f"📅 *Data:* {date_str} alle {time_str}")
+        lines.append(f"📅 <b>Data:</b> {date_str} alle {time_str}")
 
         if self.duration:
-            lines.append(f"⏱ *Durata:* {self.duration} minuti")
+            lines.append(f"🕣 <b>Durata:</b> {self.duration} minuti")
 
         # Place
         if self.place:
-            lines.append(f"📍 *Luogo:* {self._escape_markdown(self.place)}")
+            lines.append(f"📍 <b>Luogo:</b> {self._escape_html(self.place)}")
             if self.maps:
-                lines.append(f"🗺 [Mappa]({self.maps})")
+                lines.append(f'🗺 <a href="{self.maps}">Mappa</a>')
+
+        lines.append("")
+
+        # Links
+        if self.signup:
+            lines.append(f'🎫 <a href="{self.signup}">Registrati qui</a>')
 
         lines.append("")
 
@@ -211,23 +226,30 @@ class Event:
         if self.description:
             clean_desc = re.sub(r"<br\s*/?>", "\n", self.description)
             clean_desc = re.sub(r"<.*?>", "", clean_desc)
-            lines.append(self._escape_markdown(clean_desc))
+            lines.append(self._escape_html(clean_desc))
             lines.append("")
 
         # Speakers
         if self.speakers:
-            lines.append("*👥 Speaker:*")
+            lines.append("<b>👥 Speaker:</b>")
             for speaker in self.speakers:
                 linkedin_url = speaker.get("linkedinUrl", None)
-                speaker_info = f"• {speaker.get('name', 'N/A')}"
+                speaker_name = speaker.get("name", "N/A")
+                speaker_parts = [speaker_name]
+
                 if speaker.get("role"):
-                    speaker_info += f" - {speaker['role']}"
+                    speaker_parts.append(f" - {speaker['role']}")
                 if speaker.get("company"):
-                    speaker_info += f" @ {speaker['company']}"
-                speaker_info = self._escape_markdown(speaker_info)
+                    speaker_parts.append(f" @ {speaker['company']}")
+
+                speaker_info = "".join(speaker_parts)
+
                 if linkedin_url:
-                    speaker_info = f" ([{speaker_info}]({linkedin_url}))"
-                lines.append(speaker_info)
+                    lines.append(
+                        f'• <a href="{linkedin_url}">{self._escape_html(speaker_info)}</a>'
+                    )
+                else:
+                    lines.append(f"• {self._escape_html(speaker_info)}")
             lines.append("")
 
         # Tags
@@ -238,39 +260,16 @@ class Event:
             lines.append(tags_str)
             lines.append("")
 
-        # Links
-        if self.signup:
-            lines.append(f"🎫 [Registrati qui]({self.signup})")
-
         if self.youtube_url:
-            lines.append(f"📺 [Guarda la registrazione]({self.youtube_url})")
+            lines.append(f'📺 <a href="{self.youtube_url}">Guarda la registrazione</a>')
 
-        return "\n".join(lines)
+        return "\n".join(lines)[:1024]
 
-    def _escape_markdown(self, text: str) -> str:
-        """Escape special characters for Telegram MarkdownV2."""
-        special_chars = [
-            "_",
-            "*",
-            "[",
-            "]",
-            "(",
-            ")",
-            "~",
-            "`",
-            ">",
-            "#",
-            "+",
-            "-",
-            "=",
-            "|",
-            "{",
-            "}",
-            ".",
-            "!",
-        ]
-        for char in special_chars:
-            text = text.replace(char, f"\\{char}")
+    def _escape_html(self, text: str) -> str:
+        """Escape special characters for Telegram HTML."""
+        text = text.replace("&", "&amp;")
+        text = text.replace("<", "&lt;")
+        text = text.replace(">", "&gt;")
         return text
 
     def __eq__(self, other):
@@ -350,4 +349,9 @@ def notify_last_event():
         print("No new event to notify")
         return
     print(f"New event to notify: {to_notify}")
-    send_telegram_text_message(to_notify.to_telegram_markdown())
+    if to_notify.thumbnail:
+        send_telegram_image_message(
+            to_notify.to_telegram_html(), to_notify.thumbnail.read_bytes()
+        )
+        return
+    send_telegram_text_message(to_notify.to_telegram_html())

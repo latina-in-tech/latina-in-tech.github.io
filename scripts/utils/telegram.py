@@ -50,7 +50,7 @@ def send_telegram_text_message(text: str) -> None:
             "chat_id": CHAT_ID,
             "message_thread_id": THREAD_ID,
             "text": text,
-            "parse_mode": "MarkdownV2",
+            "parse_mode": "HTML",
         },
         timeout=10,
     )
@@ -64,7 +64,7 @@ def send_telegram_image_message(caption: str, image_blob: bytes) -> None:
             "chat_id": CHAT_ID,
             "message_thread_id": THREAD_ID,
             "caption": caption,
-            "parse_mode": "MarkdownV2",
+            "parse_mode": "HTML",
         },
         files={"photo": image_blob},
         timeout=10,
