@@ -33,7 +33,7 @@ def get_telegram_chat_and_thread_ids() -> None:
                         "chat_id": chat_id,
                         "thread_id": thread_id,
                         "text": text,
-                        "from": f"{sender.get("username")} ({sender.get('first_name', "")} {sender.get('last_name', "")})",
+                        "from": f'{sender.get("username")} ({sender.get("first_name", "")} {sender.get("last_name", "")})',
                     }
                 )
                 can_stop = True
@@ -59,7 +59,7 @@ def send_telegram_text_message(text: str) -> None:
 
 def send_telegram_image_message(caption: str, image_blob: bytes) -> None:
     send = requests.post(
-        f"https://api.telegram.org/bot{BOT_TOKEN}/sendPhoto",
+        f"{API}/sendPhoto",
         data={
             "chat_id": CHAT_ID,
             "message_thread_id": THREAD_ID,
@@ -67,5 +67,6 @@ def send_telegram_image_message(caption: str, image_blob: bytes) -> None:
             "parse_mode": "MarkdownV2",
         },
         files={"photo": image_blob},
+        timeout=10,
     )
     send.raise_for_status()
