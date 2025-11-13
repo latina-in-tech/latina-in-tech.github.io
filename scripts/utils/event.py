@@ -1,37 +1,50 @@
+import re
 from pathlib import Path
 from typing import Optional
 from datetime import datetime
 
-from scripts.utils.resource import SCRIPTS_PATH, LAST_NOTIFIED_PATH, EVENTS_PATH
+from scripts.utils.resource import LAST_NOTIFIED_PATH, EVENTS_PATH
 
 
 class Event:
+
+    _DATE_PATTERN = re.compile(r"^(\d{8})")
 
     def __init__(self):
         self._file: Path
         self._when: datetime
 
-    @staticmethod
-    def from_file_path(file_path: Path) -> Optional["Event"]:
+    @classmethod
+    def from_file_path(cls, file_path: Path) -> Optional["Event"]:
         event = Event()
-        file_path = Path(file_path)
         if not file_path.exists() or not file_path.is_file():
             return None
         event._file = Path(file_path)
-        event_file_name = file_path.stem  # e.g., "20240405-event-name"
-        if len(event_file_name) != 8:  # expecting "YYYYMMDD"
+        event_file_name = file_path.stem  # e.g., "20240405.mdx"
+        match = cls._DATE_PATTERN.match(event_file_name)
+        if not match:
             return None
-        year, month, day = (
-            int(event_file_name[0:4]),
-            int(event_file_name[4:6]),
-            int(event_file_name[6:8]),
-        )
-        event._when = datetime(year, month, day)
+
+        date_str = match.group(1)
+        try:
+            year = int(date_str[0:4])
+            month = int(date_str[4:6])
+            day = int(date_str[6:8])
+            when = datetime(year, month, day)
+        except (ValueError, IndexError):
+            return None
+        event._when = when
         return event
 
     @property
     def file_name(self) -> str:
+        """Returns the name of the event file."""
         return self._file.name
+
+    @property
+    def when(self) -> datetime:
+        """Returns the event date."""
+        return self._when
 
     def __eq__(self, other):
         if isinstance(other, Event):
@@ -57,6 +70,12 @@ class Event:
         if isinstance(other, Event):
             return self._when <= other._when
         return False
+
+    def __hash__(self) -> int:
+        return hash((self._file, self._when))
+
+    def __repr__(self) -> str:
+        return f"Event(file={self._file.name}, when={self._when.date()})"
 
 
 def get_last_notified_event() -> Optional["Event"]:
@@ -103,4 +122,4 @@ def notify_last_event():
     if to_notify is None:
         print("No new event to notify")
         return
-    print(f"New event to notify: {to_notify.file_name}")
+    print(f"New event to notify: {to_notify}")
