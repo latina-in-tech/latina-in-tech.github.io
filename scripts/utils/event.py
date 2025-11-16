@@ -48,6 +48,9 @@ def get_event_to_notify() -> Optional["Event"]:
     return last_event
 
 
+def save_last_notified_event(event: "Event") -> None:
+    LAST_NOTIFIED_PATH.write_text(event.file_name)
+
 def notify_last_event():
     to_notify = get_event_to_notify()
     if to_notify is None:
@@ -58,5 +61,7 @@ def notify_last_event():
         send_telegram_image_message(
             to_notify.to_telegram_html(), to_notify.thumbnail.read_bytes()
         )
-        return
-    send_telegram_text_message(to_notify.to_telegram_html())
+    else:
+        send_telegram_text_message(to_notify.to_telegram_html())
+    save_last_notified_event(to_notify)
+    
