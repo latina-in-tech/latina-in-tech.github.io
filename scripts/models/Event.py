@@ -4,12 +4,13 @@ from pathlib import Path
 from typing import Optional, List, Dict
 from datetime import datetime, timezone, timedelta
 
-from scripts.utils.resource import EVENTS_IMAGES_PATH
-
+from utils.resource import EVENTS_IMAGES_PATH
+LIT_EVENT_URL = "https://www.latinaintech.org/it/events/"
+TELEGRAM_CAPTION_LIMIT = 1024
 
 class Event:
 
-    _DATE_PATTERN = re.compile(r"^(\d{8})")
+    _DATE_PATTERN = re.compile(r"^(\d{8}.*)")
     _FRONTMATTER_PATTERN = re.compile(r"^---\n(.*?)\n---", re.DOTALL)
     _ROME_TZ = timezone(timedelta(hours=1))  # UTC+1 (CET) o UTC+2 (CEST) in estate
 
@@ -191,9 +192,13 @@ class Event:
         # Title
         lines.append(f"<b>{self._escape_html(self.title)}</b>\n")
 
+         # Links
+        if self.signup:
+            lines.append(f'🎫 <a href="{self.signup}">Registrati qui</a>')
+
+        lines.append("")
+
         # Date and time
-        # Converti in timezone di Roma (UTC+1 o UTC+2)
-        # Per semplicità usiamo UTC+1, ma in produzione si dovrebbe gestire l'ora legale
         event_time_rome = self._date.replace(tzinfo=timezone.utc).astimezone(
             self._ROME_TZ
         )
@@ -206,15 +211,12 @@ class Event:
 
         # Place
         if self.place:
-            lines.append(f"📍 <b>Luogo:</b> {self._escape_html(self.place)}")
             if self.maps:
-                lines.append(f'🗺 <a href="{self.maps}">Mappa</a>')
-
-        lines.append("")
-
-        # Links
-        if self.signup:
-            lines.append(f'🎫 <a href="{self.signup}">Registrati qui</a>')
+                lines.append(
+                    f'📍 <a href="{self.maps}">{self._escape_html(self.place)}</a>'
+                )
+            else:
+                lines.append(f'📍 <a href="{self.maps}">Mappa</a>')
 
         lines.append("")
 
@@ -259,7 +261,13 @@ class Event:
         if self.youtube_url:
             lines.append(f'📺 <a href="{self.youtube_url}">Guarda la registrazione</a>')
 
-        return "\n".join(lines)[:1024]
+        event_url = f"{LIT_EVENT_URL}{self._file.stem}"
+        more = f'\n🔗 <a href="{event_url}">continua a leggere...</a>'
+        content = "\n".join(lines)
+        if len(content) + len(more) > TELEGRAM_CAPTION_LIMIT: # telegram caption limit
+            ellipsis = "..."
+            content = content[: TELEGRAM_CAPTION_LIMIT - len(more) - len(ellipsis)] + ellipsis + more
+        return content
 
     def _escape_html(self, text: str) -> str:
         """Escape special characters for Telegram HTML."""

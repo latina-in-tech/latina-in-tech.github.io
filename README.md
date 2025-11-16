@@ -30,6 +30,10 @@ To build & start run following commands:
 
 Note: Ensure you have configured prettier (code formatting) in your IDE (see https://prettier.io/docs/en/editors). We use it for a common code style guide for the project and team.
 
+## 🛠 Python Automation Scripts
+
+All instructions for the helper scripts now live in `scripts/README.md`. Follow that guide to set up the virtual environment, configure `.env`, and learn how secrets are managed locally vs production.
+
 ## 👏 Contributing
 
 First of all, **THANK YOU** for choosing to contribute to this project!

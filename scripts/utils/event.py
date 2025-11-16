@@ -1,8 +1,8 @@
 from typing import Optional
 
-from scripts.models.Event import Event
-from scripts.utils.resource import LAST_NOTIFIED_PATH, EVENTS_PATH, EVENTS_IMAGES_PATH
-from scripts.utils.telegram import (
+from models.Event import Event
+from utils.resource import LAST_NOTIFIED_PATH, EVENTS_PATH, EVENTS_IMAGES_PATH
+from utils.telegram import (
     send_telegram_text_message,
     send_telegram_image_message,
 )
@@ -29,7 +29,6 @@ def get_events() -> list["Event"]:
         event = Event.from_file_path(file)
         if event is not None:
             events.append(event)
-    events.sort(reverse=True)
     return events
 
 
@@ -41,6 +40,8 @@ def get_event_to_notify() -> Optional["Event"]:
     all_events = get_events()
     if len(all_events) == 0:
         return None
+    # events are comparable by their date (coming from the filename)
+    all_events.sort(reverse=True)
     last_event = all_events[0]
     if last_event <= last_notified_event:
         return None

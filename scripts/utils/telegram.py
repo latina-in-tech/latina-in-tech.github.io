@@ -5,6 +5,9 @@ BOT_TOKEN = os.environ["BOT_TOKEN"]
 CHAT_ID = int(os.environ["CHAT_ID"])
 THREAD_ID = int(os.environ["THREAD_ID"])
 
+print(f"BOT_TOKEN={BOT_TOKEN}")
+print(f"CHAT_ID={CHAT_ID}")
+print(f"THREAD_ID={THREAD_ID}")
 
 API = f"https://api.telegram.org/bot{BOT_TOKEN}"
 
