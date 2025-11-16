@@ -3,7 +3,7 @@ name: Notify Last Event
 on:
   push:
     branches:
-      - main
+      - notify-telegram-on-new-event
 
 permissions:
   contents: write
