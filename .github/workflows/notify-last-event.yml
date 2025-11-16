@@ -31,9 +31,9 @@ jobs:
 
       - name: Run notify_event script
         env:
-          BOT_TOKEN: ${{ secrets.TELEGRAM_NOTIFY_EVENT_BOT_TOKEN }}
-          CHAT_ID: ${{ secrets.TELEGRAM_NOTIFY_EVENT_CHAT_ID }}
-          THREAD_ID: ${{ secrets.TELEGRAM_NOTIFY_EVENT_THREAD_ID }}
+          TELEGRAM_NOTIFY_EVENT_BOT_TOKEN: ${{ secrets.TELEGRAM_NOTIFY_EVENT_BOT_TOKEN }}
+          TELEGRAM_NOTIFY_EVENT_CHAT_ID: ${{ secrets.TELEGRAM_NOTIFY_EVENT_CHAT_ID }}
+          TELEGRAM_NOTIFY_EVENT_THREAD_ID: ${{ secrets.TELEGRAM_NOTIFY_EVENT_THREAD_ID }}
         run: python scripts/notify_event.py
 
       - name: Commit updated last_notified_event.dat
