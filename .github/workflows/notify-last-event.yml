@@ -1,0 +1,49 @@
+name: Notify Last Event
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  notify:
+    if: ${{ github.actor != 'github-actions[bot]' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r scripts/requirements.txt
+
+      - name: Run notify_event script
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          CHAT_ID: ${{ secrets.CHAT_ID }}
+          THREAD_ID: ${{ secrets.THREAD_ID }}
+        run: python scripts/notify_event.py
+
+      - name: Commit updated last_notified_event.dat
+        run: |
+          if git status --porcelain scripts/last_notified_event.dat | grep -q .; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add scripts/last_notified_event.dat
+            git commit -m "chore: update last notified event"
+            git push
+          else
+            echo "No changes to commit"
+          fi
