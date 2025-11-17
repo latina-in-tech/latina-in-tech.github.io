@@ -28,17 +28,6 @@ def get_events() -> list["Event"]:
     for file in EVENTS_PATH.glob("*.mdx"):
         event = Event.from_file_path(file)
         if event is not None:
-            try:
-                if event.thumbnail:
-                    send_telegram_image_message(
-                        event.to_telegram_html(), event.thumbnail.read_bytes()
-                    )
-                else:
-                    send_telegram_text_message(event.to_telegram_html())
-                import time
-                time.sleep(2)
-            except Exception as e:
-                print(f"Error while notifying event {event}: {e}")
             events.append(event)
     return events
 

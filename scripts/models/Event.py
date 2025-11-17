@@ -4,6 +4,9 @@ from pathlib import Path
 from typing import Optional, List, Dict
 from datetime import datetime, timezone, timedelta
 
+from bs4 import BeautifulSoup
+import markdown
+
 from utils.resource import EVENTS_IMAGES_PATH
 LIT_EVENT_URL = "https://www.latinaintech.org/it/events/"
 TELEGRAM_CAPTION_LIMIT = 1024
@@ -220,9 +223,9 @@ class Event:
 
         # Description (remove HTML tags)
         if self.description:
-            clean_desc = re.sub(r"<br\s*/?>", "\n", self.description)
-            clean_desc = re.sub(r"<.*?>", "", clean_desc)
-            lines.append(self._escape_html(clean_desc))
+            lines.append(self.markdown_to_html(self.description)
+                         .replace("\n", " ")
+                         .replace("  ", " "))
             lines.append("")
 
         # Speakers
@@ -270,16 +273,25 @@ class Event:
         content = ""
         for line in lines:
             if len("\n".join(limited_lines + [line, more])) > TELEGRAM_CAPTION_LIMIT:
-                # check if the current line contains HTML tags, if so, we can't cut it
-                if len(line) != len(self._escape_html(line)):
-                    limited_lines.append(more)
-                    break
+                # since we are going to truncate, check only the text by removing any markup
+                plain_line = self._strip_html(line)
                 # we can cat the line 
-                new_line = line[: TELEGRAM_CAPTION_LIMIT - len("\n".join(limited_lines)) - len(more) - 3] + "..." + more
+                new_line = plain_line[: TELEGRAM_CAPTION_LIMIT - len("\n".join(limited_lines)) - len(more) - 3] + "..." + more
                 limited_lines.append(new_line)
                 break
             limited_lines.append(line)
         return "\n".join(limited_lines)
+    
+    def markdown_to_html(self,text: str) -> str:
+        html = markdown.markdown(text.replace("<br/>", "\n"), output_format="html5")
+        soup = BeautifulSoup(html, "html.parser")
+        for tag in soup.find_all(["p", "strong", "em", "br"]):
+            tag.unwrap()
+        return soup.prettify()
+    
+    def _strip_html(self,html: str) -> str:
+        soup = BeautifulSoup(html, "html.parser")
+        return soup.get_text(" ", strip=True)
 
     def _escape_html(self, text: str) -> str:
         """Escape special characters for Telegram HTML."""
