@@ -196,8 +196,6 @@ class Event:
         if self.signup:
             lines.append(f'🎫 <a href="{self.signup}">Registrati qui</a>')
 
-        lines.append("")
-
         # Date and time
         event_time_rome = self._date.replace(tzinfo=timezone.utc).astimezone(
             self._ROME_TZ
@@ -264,10 +262,24 @@ class Event:
         event_url = f"{LIT_EVENT_URL}{self._file.stem}"
         more = f'\n🔗 <a href="{event_url}">continua a leggere...</a>'
         content = "\n".join(lines)
-        if len(content) + len(more) > TELEGRAM_CAPTION_LIMIT: # telegram caption limit
-            ellipsis = "..."
-            content = content[: TELEGRAM_CAPTION_LIMIT - len(more) - len(ellipsis)] + ellipsis + more
-        return content
+        if len(content) < TELEGRAM_CAPTION_LIMIT: # telegram caption limit
+            # the content fits within the limit
+            return "\n".join(lines)
+        
+        limited_lines = []
+        content = ""
+        for line in lines:
+            if len("\n".join(limited_lines + [line, more])) > TELEGRAM_CAPTION_LIMIT:
+                # check if the current line contains HTML tags, if so, we can't cut it
+                if len(line) != len(self._escape_html(line)):
+                    limited_lines.append(more)
+                    break
+                # we can cat the line 
+                new_line = line[: TELEGRAM_CAPTION_LIMIT - len("\n".join(limited_lines)) - len(more) - 3] + "..." + more
+                limited_lines.append(new_line)
+                break
+            limited_lines.append(line)
+        return "\n".join(limited_lines)
 
     def _escape_html(self, text: str) -> str:
         """Escape special characters for Telegram HTML."""

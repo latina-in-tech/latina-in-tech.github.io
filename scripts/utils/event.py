@@ -28,6 +28,17 @@ def get_events() -> list["Event"]:
     for file in EVENTS_PATH.glob("*.mdx"):
         event = Event.from_file_path(file)
         if event is not None:
+            try:
+                if event.thumbnail:
+                    send_telegram_image_message(
+                        event.to_telegram_html(), event.thumbnail.read_bytes()
+                    )
+                else:
+                    send_telegram_text_message(event.to_telegram_html())
+                import time
+                time.sleep(2)
+            except Exception as e:
+                print(f"Error while notifying event {event}: {e}")
             events.append(event)
     return events
 
@@ -57,11 +68,14 @@ def notify_last_event():
         print("No new event to notify")
         return
     print(f"New event to notify: {to_notify}")
-    if to_notify.thumbnail:
-        send_telegram_image_message(
-            to_notify.to_telegram_html(), to_notify.thumbnail.read_bytes()
-        )
-    else:
-        send_telegram_text_message(to_notify.to_telegram_html())
-    save_last_notified_event(to_notify)
+    try:
+        if to_notify.thumbnail:
+            send_telegram_image_message(
+                to_notify.to_telegram_html(), to_notify.thumbnail.read_bytes()
+            )
+        else:
+            send_telegram_text_message(to_notify.to_telegram_html())
+        save_last_notified_event(to_notify)
+    except Exception as e:
+        print(f"Error while notifying event {to_notify}: {e}")
     
