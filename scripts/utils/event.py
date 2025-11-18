@@ -60,10 +60,10 @@ def notify_last_event():
     try:
         if to_notify.thumbnail:
             send_telegram_image_message(
-                to_notify.to_telegram_html(), to_notify.thumbnail.read_bytes()
+                to_notify.generate_telegram_message(), to_notify.thumbnail.read_bytes()
             )
         else:
-            send_telegram_text_message(to_notify.to_telegram_html())
+            send_telegram_text_message(to_notify.generate_telegram_message())
         save_last_notified_event(to_notify)
     except Exception as e:
         print(f"Error while notifying event {to_notify}: {e}")
