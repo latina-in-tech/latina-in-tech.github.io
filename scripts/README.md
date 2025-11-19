@@ -34,12 +34,3 @@ python scripts/notify_event.py
 ```
 
 If you need to override variables temporarily, run via `python -m dotenv -f scripts/.env run <command>`.
-
-## 5. How Event Notifications Work
-
-1. **State tracking**: `scripts/last_notified_event.dat` stores the filename (slug) of the last event announced. If the file is missing or empty the script exits without posting, which prevents accidental spam.
-2. **Event discovery**: `scripts/utils/event.py` scans `_events/*.mdx`, builds `Event` objects, and sorts them by the date encoded in each filename. When the latest event is newer than the slug stored in `last_notified_event.dat`, it becomes the candidate to notify.
-3. **Message rendering**: the selected `Event` exposes `to_telegram_html()` for the caption and, if a `thumbnail` path is available, the image is read from `public/assets/events`.
-4. **Telegram delivery**: `scripts/utils/telegram.py` sends either `send_telegram_image_message` or `send_telegram_text_message` using the credentials from `.env`. After a successful post the script writes the event slug back to `last_notified_event.dat`, so subsequent runs remain idempotent.
-
-This same flow runs in CI via `.github/workflows/notify-last-event.yml`, where the secrets are injected from GitHub Actions.
