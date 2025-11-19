@@ -10,7 +10,7 @@
      - `signup`: the link to the eventbrite page - **string**
      - `thumbnail`: the path to the thumbnail of the event (the image filename should be the same as the event filename but in the folder `assets/events`)  - **string**
      - `title`: the title of the event - **string**
-     - `description`: a brief description of the event - **string**
+     - `description`: a brief description of the event (you can use MARKDOWN, no ~HTML~) - **string**
      - `slides`: an array of string representing JSON object containing the following fields:
        - `url`: the link to the slides - **string**
        - `speakerName`: the name of the speaker - **string**
