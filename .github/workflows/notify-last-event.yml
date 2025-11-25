@@ -1,0 +1,53 @@
+name: Notify Last Event
+
+on:
+  workflow_run:
+    workflows:
+      - CI/CD
+    types:
+      - completed
+
+permissions:
+  contents: write
+
+jobs:
+  notify:
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          repository: ${{ github.event.workflow_run.repository.full_name }}
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r scripts/requirements.txt
+
+      - name: Run notify_event script
+        env:
+          TELEGRAM_NOTIFY_EVENT_BOT_TOKEN: ${{ secrets.TELEGRAM_NOTIFY_EVENT_BOT_TOKEN }}
+          TELEGRAM_NOTIFY_EVENT_CHAT_ID: ${{ secrets.TELEGRAM_NOTIFY_EVENT_CHAT_ID }}
+          TELEGRAM_NOTIFY_EVENT_THREAD_ID: ${{ secrets.TELEGRAM_NOTIFY_EVENT_THREAD_ID }}
+        run: python scripts/notify_event.py
+
+      - name: Commit updated last_notified_event.dat
+        run: |
+          if git status --porcelain scripts/last_notified_event.dat | grep -q .; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add scripts/last_notified_event.dat
+            git commit -m "chore: update last notified event"
+            git push
+          else
+            echo "No changes to commit"
+          fi
