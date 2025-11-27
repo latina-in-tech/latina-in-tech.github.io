@@ -256,14 +256,6 @@ class Event:
                     lines.append(f"• {strip_html(speaker_info)}")
             lines.append("")
 
-        # Tags
-        if self.tags:
-            tags_str = " ".join(
-                [f"#{tag.replace(' ', '_').replace('-', '_')}" for tag in self.tags]
-            )
-            lines.append(tags_str)
-            lines.append("")
-
         if self.youtube_url:
             lines.append(f'📺 <a href="{self.youtube_url}">Guarda la registrazione</a>')
 
