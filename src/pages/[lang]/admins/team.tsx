@@ -30,7 +30,8 @@ const admins: ReadonlyArray<Admin> = [
     linkedIn: 'https://www.linkedin.com/in/andrea-coluzzi/',
     github: 'https://github.com/coluzziandrea',
     twitter: 'https://twitter.com/andreacoluzzi94',
-    website: 'https://www.coluzziandrea.com/'
+    website: 'https://www.coluzziandrea.com/',
+    active: false
   },
   {
     name: 'Antonio Ionta',
@@ -65,7 +66,7 @@ const admins: ReadonlyArray<Admin> = [
     image: '/assets/admin/team/m-boschi.png',
     linkedIn: 'https://www.linkedin.com/in/matteo-boschi/',
     github: 'https://github.com/Undermaken',
-    website: 'http://matteoboschi.com/'
+    website: 'https://matteoboschi.com/'
   },
   {
     name: 'Lorenzo Tronchin',
