@@ -40,7 +40,8 @@ const admins: ReadonlyArray<Admin> = [
   {
     name: 'Fabizio Cafolla',
     image: '/assets/admin/team/f-cafolla.png',
-    linkedIn: 'https://www.linkedin.com/in/fabrizio-cafolla/'
+    linkedIn: 'https://www.linkedin.com/in/fabrizio-cafolla/',
+    active: false
   },
   {
     name: 'Fabrizio Dalla Bona',
