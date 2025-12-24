@@ -30,7 +30,8 @@ const admins: ReadonlyArray<Admin> = [
     linkedIn: 'https://www.linkedin.com/in/andrea-coluzzi/',
     github: 'https://github.com/coluzziandrea',
     twitter: 'https://twitter.com/andreacoluzzi94',
-    website: 'https://www.coluzziandrea.com/'
+    website: 'https://www.coluzziandrea.com/',
+    active: false
   },
   {
     name: 'Antonio Ionta',
@@ -40,7 +41,8 @@ const admins: ReadonlyArray<Admin> = [
   {
     name: 'Fabizio Cafolla',
     image: '/assets/admin/team/f-cafolla.png',
-    linkedIn: 'https://www.linkedin.com/in/fabrizio-cafolla/'
+    linkedIn: 'https://www.linkedin.com/in/fabrizio-cafolla/',
+    active: false
   },
   {
     name: 'Fabrizio Dalla Bona',
@@ -64,7 +66,7 @@ const admins: ReadonlyArray<Admin> = [
     image: '/assets/admin/team/m-boschi.png',
     linkedIn: 'https://www.linkedin.com/in/matteo-boschi/',
     github: 'https://github.com/Undermaken',
-    website: 'http://matteoboschi.com/'
+    website: 'https://matteoboschi.com/'
   },
   {
     name: 'Lorenzo Tronchin',
@@ -196,12 +198,17 @@ const AdminTeam = ({ translations }: AdminTeamProps) => {
               {translations.admin.groupOfPeople}
             </p>
           </div>
-          <div className='grid grid-cols-1 justify-items-center md:grid-cols-3 lg:grid-cols-4 gap-4'>
-            {admins
-              .filter(a => a.active ?? true)
-              .map(admin => (
-                <AdminCard key={admin.name} {...admin} />
-              ))}
+          <div>
+            <h2 className='text-2xl font-bold dark:text-slate-200 sm:text-2xl text-center mt-4 mb-2'>
+              {translations.admin.areAdmin}
+            </h2>
+            <div className='grid grid-cols-1 justify-items-center md:grid-cols-3 lg:grid-cols-4 gap-4'>
+              {admins
+                .filter(a => a.active ?? true)
+                .map(admin => (
+                  <AdminCard key={admin.name} {...admin} />
+                ))}
+            </div>
           </div>
           {admins.filter(a => !(a.active ?? true)).length > 0 && (
             <div>

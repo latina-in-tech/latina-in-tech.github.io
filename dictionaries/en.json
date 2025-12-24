@@ -67,7 +67,8 @@
     "admin": {
         "adminTeam": "Latina In Tech Admin Team",
         "groupOfPeople": "A group of people who share passion about technology and their local area.",
-        "wereAdmin": "They had been admins"
+        "wereAdmin": "No longer active members",
+        "areAdmin": "Admins"
     },
     "events": {
         "title": "LiT - Events",
