@@ -67,7 +67,8 @@
     "admin": {
         "adminTeam": "Il team di Latina In Tech",
         "groupOfPeople": "Un gruppo di persone che condividono la passione per la tecnologia e per il proprio territorio.",
-        "wereAdmin": "Sono stati membri del team"
+        "wereAdmin": "Membri non più attivi",
+        "areAdmin": "Admin"
     },
     "events": {
         "title": "LiT - Eventi",
