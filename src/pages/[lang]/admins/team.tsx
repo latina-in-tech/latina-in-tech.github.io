@@ -1,11 +1,6 @@
 import React from 'react';
 import Header from '@/components/Header';
-import {
-  BsLinkedin,
-  BsGithub,
-  BsTwitter,
-  BsFillHouseDoorFill
-} from 'react-icons/bs';
+import { BsLinkedin, BsGithub, BsFillHouseDoorFill } from 'react-icons/bs';
 import { i18n, Locale } from 'i18n.config';
 import { useRouter } from 'next/router';
 import { Dictionary, getDictionary } from '@/utils/dictionary';
@@ -17,7 +12,6 @@ type Admin = {
   image: string;
   linkedIn: string;
   github?: string;
-  twitter?: string;
   website?: string;
   // default is true
   active?: boolean;
@@ -29,7 +23,6 @@ const admins: ReadonlyArray<Admin> = [
     image: '/assets/admin/team/a-coluzzi.png',
     linkedIn: 'https://www.linkedin.com/in/andrea-coluzzi/',
     github: 'https://github.com/coluzziandrea',
-    twitter: 'https://twitter.com/andreacoluzzi94',
     website: 'https://www.coluzziandrea.com/',
     active: false
   },
@@ -80,7 +73,6 @@ const AdminCard: React.FC<Admin> = ({
   linkedIn,
   image,
   github,
-  twitter,
   website,
   active = true
 }) => {
@@ -121,19 +113,6 @@ const AdminCard: React.FC<Admin> = ({
               >
                 <span className='sr-only'>GitHub</span>
                 <BsGithub />
-              </a>
-            </li>
-          )}
-          {twitter && (
-            <li>
-              <a
-                href={twitter}
-                className='text-slate-800 hover:text-slate-600 dark:text-slate-100 dark:hover:text-white'
-                target='_blank'
-                rel='noreferrer'
-              >
-                <span className='sr-only'>Twitter</span>
-                <BsTwitter />
               </a>
             </li>
           )}

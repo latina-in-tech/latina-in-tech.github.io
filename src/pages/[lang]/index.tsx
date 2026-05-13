@@ -11,7 +11,6 @@ import { getAllEvents } from '@/utils/mdxUtils';
 import { GetStaticProps } from 'next';
 import React, { useMemo } from 'react';
 import { Sponsors } from '@/components/Sponsors';
-import { LeaveFeedback } from '@/components/LeaveFeedback';
 import EventsList from '@/components/event/EventsList';
 import { Newsletter } from '@/components/Newsletter';
 import Community from '@/pages/[lang]/community';
@@ -120,7 +119,6 @@ const Home: React.FC<StaticProps> = ({
         <Sponsors />
         <Newsletter translations={translations} />
         <Community members={communityMembers} translations={translations} />
-        <LeaveFeedback translations={translations} />
       </main>
     </>
   );

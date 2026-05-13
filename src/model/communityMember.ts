@@ -4,7 +4,6 @@ export const CommunityMemberSchema = z.object({
   bio: z.string().min(5).max(30),
   picture: z.string(),
   linkedin: z.string().optional(),
-  twitter: z.string().optional(),
   github: z.string().optional(),
   website: z.string().optional()
 });
