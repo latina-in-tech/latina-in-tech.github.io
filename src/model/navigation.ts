@@ -1,7 +1,5 @@
 import {
   FaTelegram as TelegramIcon,
-  FaTwitter as TwitterIcon,
-  FaFacebook as FacebookIcon,
   FaLinkedin as LinkedinIcon,
   FaGithub as GithubIcon,
   FaYoutube as YoutubeIcon,
@@ -24,12 +22,6 @@ const navigationLinks = [
     current: false
   },
   {
-    name: 'Twitter',
-    href: 'https://twitter.com/theLITCommunity',
-    icon: TwitterIcon,
-    current: false
-  },
-  {
     name: 'Linkedin',
     href: 'https://www.linkedin.com/company/latina-in-tech',
     icon: LinkedinIcon,
@@ -39,12 +31,6 @@ const navigationLinks = [
     name: 'Instagram',
     href: 'https://www.instagram.com/latinaintech_/',
     icon: InstagramIcon,
-    current: false
-  },
-  {
-    name: 'Facebook',
-    href: 'https://www.facebook.com/LatinaInTech/',
-    icon: FacebookIcon,
     current: false
   },
   {

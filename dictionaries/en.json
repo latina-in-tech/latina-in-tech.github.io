@@ -33,37 +33,6 @@
         "doYouAttendOrFollowUs": "Do you usually attend our events or follow us on social media? Either way you are part of our community! If you want to be listed here, it's very easy,",
         "readHere": "read here!"
     },
-    "feedback": {
-        "feedback": "Feedback",
-        "leaveFeedback": "Leave your feedback to help us improve our community!",
-        "submitFeedback": "Submit a Feedback!",
-        "metaDescription": "Leave your feedback to help us improve our community!",
-        "partecipateActively": "Do partecipate actively to the community life, sharing your opinion on our work and how to improve!",
-        "didYouAttendLastEvent": "Did you attend the last event, ",
-        "of": " of ",
-        "yes": "Yes",
-        "no": "No",
-        "howWouldYouRateEvent": "How would you rate the event?",
-        "isThereAnythingYouLiked": "Is there anything you liked about the event?",
-        "describeShortMostInteresting": "Describe in a few words the most interesting thing you found during the event:",
-        "whatYouLikedMost": "What you liked most?",
-        "weAreSorryYouDidNotAttend":"We are sorry you did not attend the last event, can you tell us why?",
-        "howMuchAreYouSatisfied": "How much are you satisfied with the community?",
-        "doYouHaveSuggestions": "Do you have any suggestions for us?",
-        "writeAdditionalFeedback": "Write additional feedback...",
-        "weReceivedYourFeedback": "We received your feedback, thank you for your time! You can go back to the home now.",
-        "goBack": "Go Back",
-        "errorDesc": "An error occurred, please try again.",
-        "sendFeedback": "Send Feedback",
-        "thankYou": "Thank you!",
-        "errorTitle": "Error",
-        "notCameReasons": {
-            "PERSONAL": "Personal reasons",
-            "NO_TIME_BUT_WANTED": "I wanted to come but I had no time",
-            "NO_INTEREST": "I was not interested in the topic",
-            "DID_NOT_KNOW": "I did not know about the event"
-        }
-    },
     "admin": {
         "adminTeam": "Latina In Tech Admin Team",
         "groupOfPeople": "A group of people who share passion about technology and their local area.",
