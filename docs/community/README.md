@@ -21,6 +21,7 @@ bio: Junior Developer
 picture: gdesossi.png
 linkedin: https://www.linkedin.com/in/giulio-de-rossi/
 github: https://github.com/gdesossi
+twitter: https://twitter.com/gdesossi
 website: https://www.gdesossi.com/
 ```
 - here is the structure of the fields:
@@ -29,6 +30,7 @@ website: https://www.gdesossi.com/
    - `picture`: the name of the picture file
    - `linkedin`: your linkedin url profile
    - `github`: your github url profile
+   - `twitter`: your twitter url profile
    - `website`: your personal url website
 
 <img src="imgs/fields_mapping.png" />
