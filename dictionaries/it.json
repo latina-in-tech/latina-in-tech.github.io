@@ -33,37 +33,6 @@
         "doYouAttendOrFollowUs": "partecipi alle iniziative della community o ci segui online? in ogni caso sei uno di noi! Se vuoi comparire in questo elenco, niente di più semplice,",
         "readHere": "leggi qui!"
     },
-    "feedback": {
-        "feedback": "Feedback",
-        "leaveFeedback": "Lascia un feedback per migliorare la community!",        
-        "submitFeedback": "Invia il Feedback!",
-        "metaDescription": "Lascia un feedback sulla tua esperienza con Latina In Tech!",        
-        "partecipateActively": "Partecipa attivamente alla vita della community esprimendo la tua opinione su quanto portato avanti finora e su come migliorarlo!",
-        "didYouAttendLastEvent": "Hai partecipato all'ultimo evento, ",
-        "of": " di ",
-        "yes": "Si",
-        "no": "No",
-        "howWouldYouRateEvent": "Quanto è stato interessante l'evento?",
-        "isThereAnythingYouLiked": "C'è qualcosa che ti ha particolarmente colpito durante l'evento?",
-        "describeShortMostInteresting": "Per favore, descrivi brevemente la cosa più interessante dello scorso evento:",
-        "whatYouLikedMost": "Cosa ti ha colpito di più?",
-        "weAreSorryYouDidNotAttend":"Ci dispiace che non ci sei stato, puoi dirci il motivo?",
-        "howMuchAreYouSatisfied": "Complessivamente quanto sei soddisfatto della community?",
-        "doYouHaveSuggestions": "Hai dei consigli generali per migliorare la community?",
-        "writeAdditionalFeedback": "Scrivi ulteriori feedback...",
-        "weReceivedYourFeedback": "Abbiamo ricevuto il tuo feedback, grazie del contributo alla community! Puoi tornare alla Home.",
-        "goBack": "Torna Indietro",
-        "errorDesc": "Impossibile salvare feedback, si prega di riprovare",
-        "sendFeedback": "Invia Feedback",
-        "thankYou": "Grazie!",
-        "errorTitle": "Errore",
-        "notCameReasons": {
-            "PERSONAL": "Motivi Personali",
-            "NO_TIME_BUT_WANTED": "Non ho avuto tempo ma avrei voluto",
-            "NO_INTEREST": "Non mi interessava il programma",
-            "DID_NOT_KNOW": "Non ne sapevo nulla"
-        }
-    },
     "admin": {
         "adminTeam": "Il team di Latina In Tech",
         "groupOfPeople": "Un gruppo di persone che condividono la passione per la tecnologia e per il proprio territorio.",

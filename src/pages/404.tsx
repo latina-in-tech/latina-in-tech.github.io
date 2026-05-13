@@ -15,7 +15,6 @@ const oldPaths = [
   '/',
   '/admins/team',
   '/events/\\d+',
-  '/feedback/new',
   '/newsletter',
   '/community'
 ].map(p => {

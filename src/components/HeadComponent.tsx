@@ -20,22 +20,11 @@ type Props = {
         alt: string;
       };
     };
-    twitter?: {
-      type: string;
-      title: string;
-      description: string;
-      image: string & {
-        width: string;
-        height: string;
-        alt: string;
-      };
-    };
   };
 };
 
 export default function HeadComponent({ children, metadata }: Props) {
   const opengraph = metadata.opengraph;
-  const twitter = metadata.twitter;
 
   return (
     <Head>
@@ -55,17 +44,6 @@ export default function HeadComponent({ children, metadata }: Props) {
             property='og:locale:alternate'
             content={opengraph.locale.alternate}
           />
-        </>
-      )}
-      {twitter && (
-        <>
-          <meta name='twitter:card' content={twitter.type} />
-          <meta name='twitter:title' content={twitter.title} />
-          <meta name='twitter:description' content={twitter.description} />
-          <meta name='twitter:image' content={twitter.image} />
-          <meta name='twitter:image:width' content={twitter.image.width} />
-          <meta name='twitter:image:height' content={twitter.image.height} />
-          <meta name='twitter:image:alt' content={twitter.image.alt} />
         </>
       )}
       {children}
