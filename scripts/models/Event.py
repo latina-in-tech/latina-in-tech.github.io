@@ -1,5 +1,6 @@
 import re
 import json
+from html import escape
 from pathlib import Path
 from typing import Optional, List, Dict
 from datetime import datetime, timezone, timedelta
@@ -7,7 +8,7 @@ from datetime import datetime, timezone, timedelta
 from bs4 import BeautifulSoup
 import markdown
 
-from utils.string import markdown_to_html, strip_html
+from utils.string import html_text_length, markdown_to_html, strip_html, truncate_html
 from utils.resource import EVENTS_IMAGES_PATH
 
 LIT_EVENT_URL = "https://www.latinaintech.org/it/events/"
@@ -196,11 +197,13 @@ class Event:
         lines = []
 
         # Title
-        lines.append(f"<b>{strip_html(self.title)}</b>\n")
+        lines.append(f"<b>{escape(strip_html(self.title))}</b>\n")
 
         # Links
         if self.signup:
-            lines.append(f'🎫 <a href="{self.signup}">Registrati qui</a>')
+            lines.append(
+                f'🎫 <a href="{escape(self.signup, quote=True)}">Registrati qui</a>'
+            )
 
         # Date and time
         event_time_rome = self._date.replace(tzinfo=timezone.utc).astimezone(
@@ -217,20 +220,17 @@ class Event:
         if self.place:
             if self.maps:
                 lines.append(
-                    f'📍 <a href="{self.maps}">{strip_html(self.place)}</a>'
+                    f'📍 <a href="{escape(self.maps, quote=True)}">'
+                    f"{escape(strip_html(self.place))}</a>"
                 )
             else:
-                lines.append(f'📍 <a href="{self.maps}">Mappa</a>')
+                lines.append(f'📍 <a href="{escape(self.maps, quote=True)}">Mappa</a>')
 
         lines.append("")
 
-        # Description (remove HTML tags)
+        # Description
         if self.description:
-            lines.append(
-                markdown_to_html(self.description)
-                .replace("\n", " ")
-                .replace("  ", " ")
-            )
+            lines.append(markdown_to_html(self.description))
             lines.append("")
 
         # Speakers
@@ -250,43 +250,27 @@ class Event:
 
                 if linkedin_url:
                     lines.append(
-                        f'• <a href="{linkedin_url}">{strip_html(speaker_info)}</a>'
+                        f'• <a href="{escape(linkedin_url, quote=True)}">'
+                        f"{escape(strip_html(speaker_info))}</a>"
                     )
                 else:
-                    lines.append(f"• {strip_html(speaker_info)}")
+                    lines.append(f"• {escape(strip_html(speaker_info))}")
             lines.append("")
 
         if self.youtube_url:
-            lines.append(f'📺 <a href="{self.youtube_url}">Guarda la registrazione</a>')
+            lines.append(
+                f'📺 <a href="{escape(self.youtube_url, quote=True)}">'
+                "Guarda la registrazione</a>"
+            )
 
         event_url = f"{LIT_EVENT_URL}{self._file.stem}"
-        more = f'\n🔗 <a href="{event_url}">continua a leggere...</a>'
         content = "\n".join(lines)
-        if len(content) < TELEGRAM_CAPTION_LIMIT:  # telegram caption limit
-            # the content fits within the limit
-            return "\n".join(lines)
+        if html_text_length(content) <= TELEGRAM_CAPTION_LIMIT:
+            return content
 
-        limited_lines = []
-        for line in lines:
-            if len("\n".join(limited_lines + [line, more])) > TELEGRAM_CAPTION_LIMIT:
-                # since we are going to truncate, check only the text by removing any markup
-                plain_line = strip_html(line)
-                # we can cat the line
-                new_line = (
-                    plain_line[
-                        : TELEGRAM_CAPTION_LIMIT
-                        - len("\n".join(limited_lines))
-                        - len(more)
-                        - 3
-                    ]
-                    + "..."
-                    + more
-                )
-                limited_lines.append(new_line)
-                break
-            limited_lines.append(line)
-        return "\n".join(limited_lines)
-
+        more = f'...\n🔗 <a href="{event_url}">continua a leggere...</a>'
+        available_length = TELEGRAM_CAPTION_LIMIT - html_text_length(more)
+        return truncate_html(content, available_length).rstrip() + more
 
 
     def __eq__(self, other):
