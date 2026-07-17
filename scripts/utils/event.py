@@ -44,6 +44,7 @@ def get_event_to_notify() -> Optional["Event"]:
     all_events.sort(reverse=True)
     last_event = all_events[0]
     if last_event <= last_notified_event:
+        print("We already notified the last event, no new event to notify")
         return None
     return last_event
 

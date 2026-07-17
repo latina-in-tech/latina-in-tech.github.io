@@ -32,3 +32,7 @@ npm run dev
 then if there are any errors, they will be shown directly in the page.
 
 <img src="./error.png">
+
+## Event notifications
+
+Read [Event Notification Automation](./notify-event.md) to understand when Telegram notifications are sent and what developers must check before publishing a new event.
