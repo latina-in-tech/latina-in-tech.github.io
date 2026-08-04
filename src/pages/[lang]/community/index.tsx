@@ -10,6 +10,7 @@ import {
 import { getAllCommunityMembers } from '@/utils/community';
 import { isDevEnv } from '@/utils/dev';
 import CommunityMember from '@/components/CommunityMember';
+import Section from '@/components/Section';
 import { getAllLocales } from '@/utils/locale';
 import { Dictionary, getDictionary } from '@/utils/dictionary';
 import { Locale } from 'i18n.config';
@@ -62,29 +63,30 @@ const CommunityMemberList: React.FC<
     );
   }
   return (
-    <div className='flex flex-col items-center justify-center'>
-      <h2 className='text-xl font-bold text-gray-900 dark:text-slate-200 uppercase text-center'>
-        {translations.communityMembers.communityMembers}
-      </h2>
-      <p className='text-lg text-gray-700 dark:text-slate-200 text-center max-w-screen-md my-2'>
-        {translations.communityMembers.doYouAttendOrFollowUs} &nbsp;
-        <a
-          href={
-            'https://github.com/latina-in-tech/latina-in-tech.github.io/blob/main/docs/community/README.md'
-          }
-          className={'text-blue-500 dark:text-blue-400'}
-          target={'_blank'}
-          rel={'noreferrer'}
-        >
-          {translations.communityMembers.readHere}
-        </a>
-      </p>
-      <div className='grid grid-cols-2 lg:grid-cols-4 md:grid-cols-3 mt-4 max-w-screen-md gap-x-4 gap-y-6'>
+    <Section
+      title={translations.communityMembers.communityMembers}
+      subtitle={
+        <>
+          {translations.communityMembers.doYouAttendOrFollowUs} &nbsp;
+          <a
+            href={
+              'https://github.com/latina-in-tech/latina-in-tech.github.io/blob/main/docs/community/README.md'
+            }
+            className='font-semibold text-primary hover:text-primary-dark dark:text-primary-lighter dark:hover:text-primary-light'
+            target={'_blank'}
+            rel={'noreferrer'}
+          >
+            {translations.communityMembers.readHere}
+          </a>
+        </>
+      }
+    >
+      <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3'>
         {validMembers.map(({ data }, index) => (
           <CommunityMember key={`cm_${index}_${data.fullname}`} member={data} />
         ))}
       </div>
-    </div>
+    </Section>
   );
 };
 

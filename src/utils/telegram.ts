@@ -1,63 +1,62 @@
-import { useCallback, useEffect, useState } from 'react';
+export type TelegramGroupInfo = {
+  members: number;
+  online?: number;
+};
 
-type TelegramGroupInfoResult =
-  | {
-      members: number;
-      online: number;
-    }
-  | undefined;
+const FETCH_TIMEOUT_MS = 10_000;
 
 /**
- * this hook returns the number of members and online members of a telegram group
- * it also returns a function to refresh the data
+ * telegram renders thousands with spaces (and sometimes narrow spaces),
+ * so we just keep the digits
  */
-export const useTelegramGroupInfo = (
+const parseCount = (raw: string | undefined): number | undefined => {
+  const digits = raw?.replace(/\D/g, '');
+  return digits ? Number(digits) : undefined;
+};
+
+/**
+ * reads the members / online counters from the public preview page of a
+ * telegram group.
+ *
+ * this runs at build time (getStaticProps) on purpose: the browser cannot
+ * fetch t.me directly because it serves no CORS headers, which is why this
+ * used to go through a third party proxy. server side there is no CORS at
+ * all, so no proxy is involved and the number is already in the HTML on
+ * first paint.
+ *
+ * the counters are as fresh as the last deploy, and any failure is silent:
+ * the caller gets `undefined` and hides the counter.
+ */
+export const fetchTelegramGroupInfo = async (
   telegramGroupUrl: string
-): [TelegramGroupInfoResult, () => void] => {
-  const [result, setResult] = useState<TelegramGroupInfoResult>();
-  const fetchData = useCallback(() => {
-    // if the url is not defined, we don't have to do anything
-    if (!telegramGroupUrl) {
-      return;
+): Promise<TelegramGroupInfo | undefined> => {
+  if (!telegramGroupUrl) {
+    return undefined;
+  }
+  try {
+    const response = await fetch(telegramGroupUrl, {
+      signal: AbortSignal.timeout(FETCH_TIMEOUT_MS)
+    });
+    if (!response.ok) {
+      return undefined;
     }
-    // we have to use a proxy in order to avoid CORS issues
-    fetch('https://api.codetabs.com/v1/proxy/?quest=' + telegramGroupUrl)
-      .then(response => response.text())
-      .then(html => {
-        // try to find the block that contains the members and online numbers
-        // warning: this is a very fragile solution since the html structure can change at any time
-        const parser = new DOMParser();
-        const parsedDocument = parser.parseFromString(html, 'text/html');
-        const membersDivBlock =
-          parsedDocument.getElementsByClassName('tgme_page_extra');
-        const membersHtml: string | undefined = membersDivBlock[0]?.innerHTML;
-        if (!membersHtml) {
-          return;
-        }
-        const membersAndOnline = membersHtml
-          .replace(/(members|online|\s+)/g, '')
-          .split(',');
-        if (membersAndOnline.length !== 2) {
-          return;
-        }
-        const [members, online] = membersAndOnline.map(x => parseInt(x, 10));
-        if (isNaN(members) || isNaN(online)) {
-          return;
-        }
-        setResult({
-          members,
-          online
-        });
-      })
-      .catch(e => {
-        // fail silently in production
-        if (process && process.env.NODE_ENV === 'development') {
-          console.error(e);
-        }
-      });
-  }, [telegramGroupUrl]);
-  useEffect(() => {
-    void fetchData();
-  }, [fetchData]);
-  return [result, fetchData];
+    const html = await response.text();
+    // warning: this depends on telegram's markup, which can change at any time
+    const extra = /tgme_page_extra["'][^>]*>([^<]*)</i.exec(html)?.[1];
+    if (!extra) {
+      return undefined;
+    }
+    const members = parseCount(
+      /([\d\s.,]+)(?:members|subscribers)/i.exec(extra)?.[1]
+    );
+    if (members === undefined) {
+      return undefined;
+    }
+    return {
+      members,
+      online: parseCount(/([\d\s.,]+)online/i.exec(extra)?.[1])
+    };
+  } catch {
+    return undefined;
+  }
 };

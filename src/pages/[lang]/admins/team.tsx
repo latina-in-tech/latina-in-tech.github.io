@@ -1,13 +1,15 @@
 import React from 'react';
+import Head from 'next/head';
+import Image from 'next/image';
 import Header from '@/components/Header';
+import Section from '@/components/Section';
 import {
   BsLinkedin,
   BsGithub,
   BsTwitter,
   BsFillHouseDoorFill
 } from 'react-icons/bs';
-import { i18n, Locale } from 'i18n.config';
-import { useRouter } from 'next/router';
+import { Locale } from 'i18n.config';
 import { Dictionary, getDictionary } from '@/utils/dictionary';
 import { GetStaticProps } from 'next';
 import { getAllLocales } from '@/utils/locale';
@@ -71,9 +73,30 @@ const admins: ReadonlyArray<Admin> = [
   {
     name: 'Lorenzo Tronchin',
     image: '/assets/admin/team/ltronchin.jpg',
-    linkedIn: 'https://www.linkedin.com/in/lorenzotronchin/'
+    linkedIn: 'https://www.linkedin.com/in/lorenzotronchin/',
+    active: false
   }
 ];
+
+const isActive = (admin: Admin): boolean => admin.active ?? true;
+
+const AdminLink: React.FC<{
+  href: string;
+  label: string;
+  Icon: typeof BsLinkedin;
+}> = ({ href, label, Icon }) => (
+  <li>
+    <a
+      href={href}
+      className='block rounded text-slate-500 transition-colors hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary dark:text-slate-400 dark:hover:text-primary-lighter'
+      target='_blank'
+      rel='noreferrer'
+    >
+      <span className='sr-only'>{label}</span>
+      <Icon className='h-5 w-5' />
+    </a>
+  </li>
+);
 
 const AdminCard: React.FC<Admin> = ({
   name,
@@ -81,87 +104,55 @@ const AdminCard: React.FC<Admin> = ({
   image,
   github,
   twitter,
-  website,
-  active = true
+  website
 }) => {
   return (
-    <div
-      className={`w-[220px] flex flex-col items-center p-4 bg-gradient-to-b from-primary-dark to-primary-light dark:from-primary-light dark:to-primary-dark hover:from-pink-500 hover:to-yellow-500 rounded-md shadow-md`}
-    >
-      <img
-        className={`object-cover w-32 h-32 mb-4 rounded-full shadow-md ${active ? 'grayscale-0' : 'grayscale'}`}
+    <div className='flex flex-col items-center rounded-2xl bg-white p-5 text-center shadow-sm ring-1 ring-slate-200 transition-shadow hover:shadow-md dark:bg-slate-800 dark:ring-slate-700'>
+      <Image
+        width={96}
+        height={96}
+        className='h-24 w-24 rounded-full object-cover ring-2 ring-slate-200 dark:ring-slate-600'
         src={image}
-        alt='avatar'
+        alt={name}
       />
-      <div className='text-center mt-2'>
-        <p className='text-md font-semibold text-slate-800 dark:text-slate-100'>
-          {name.toUpperCase()}
-        </p>
-        <ul className='flex mt-2 justify-center gap-6 sm:gap-3'>
-          {website && (
-            <li>
-              <a
-                href={website}
-                className='text-slate-800 hover:text-slate-600 dark:text-slate-100 dark:hover:text-white'
-                target='_blank'
-                rel='noreferrer'
-              >
-                <span className='sr-only'>Website</span>
-                <BsFillHouseDoorFill />
-              </a>
-            </li>
-          )}
-          {github && (
-            <li>
-              <a
-                href={github}
-                className='text-slate-800 hover:text-slate-600 dark:text-slate-100 dark:hover:text-white'
-                target='_blank'
-                rel='noreferrer'
-              >
-                <span className='sr-only'>GitHub</span>
-                <BsGithub />
-              </a>
-            </li>
-          )}
-          {twitter && (
-            <li>
-              <a
-                href={twitter}
-                className='text-slate-800 hover:text-slate-600 dark:text-slate-100 dark:hover:text-white'
-                target='_blank'
-                rel='noreferrer'
-              >
-                <span className='sr-only'>Twitter</span>
-                <BsTwitter />
-              </a>
-            </li>
-          )}
-          <li>
-            <a
-              href={linkedIn}
-              className='text-slate-800 hover:text-slate-600 dark:text-slate-100 dark:hover:text-white'
-              target='_blank'
-              rel='noreferrer'
-            >
-              <span className='sr-only'>LinkedIn</span>
-              <BsLinkedin />
-            </a>
-          </li>
-        </ul>
-      </div>
+      <p className='mt-4 text-sm font-semibold text-slate-900 dark:text-slate-100'>
+        {name}
+      </p>
+      <ul className='mt-3 flex justify-center gap-4'>
+        {website && (
+          <AdminLink
+            href={website}
+            label='Website'
+            Icon={BsFillHouseDoorFill}
+          />
+        )}
+        {github && <AdminLink href={github} label='GitHub' Icon={BsGithub} />}
+        {twitter && <AdminLink href={twitter} label='X' Icon={BsTwitter} />}
+        <AdminLink href={linkedIn} label='LinkedIn' Icon={BsLinkedin} />
+      </ul>
     </div>
   );
 };
 
+const AdminGrid: React.FC<{ members: ReadonlyArray<Admin> }> = ({
+  members
+}) => (
+  <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4'>
+    {members.map(admin => (
+      <AdminCard key={admin.name} {...admin} />
+    ))}
+  </div>
+);
+
 type AdminTeamProps = {
   translations: Dictionary;
+  lang: Locale;
 };
 
 export const getStaticProps: GetStaticProps = (async context => {
-  const lang = context.params?.lang as string;
-  const dictionary = await getDictionary(lang as Locale);
-  return { props: { translations: dictionary } };
+  const lang = context.params?.lang as Locale;
+  const dictionary = await getDictionary(lang);
+  return { props: { translations: dictionary, lang } };
 }) satisfies GetStaticProps<AdminTeamProps>;
 
 export const getStaticPaths = async () => {
@@ -179,54 +170,39 @@ export const getStaticPaths = async () => {
   };
 };
 
-const AdminTeam = ({ translations }: AdminTeamProps) => {
-  const router = useRouter();
-  const locale = i18n.locales.filter(
-    locale => router?.query.lang === locale
-  )[0];
+const AdminTeam = ({ translations, lang }: AdminTeamProps) => {
+  const activeAdmins = admins.filter(isActive);
+  const formerAdmins = admins.filter(admin => !isActive(admin));
 
   return (
-    <div>
-      <Header lang={locale} />
-      <div className='flex justify-center items-center'>
-        <div className='w-[100%] md:w-fit p-4 m-4 justify-center rounded-md shadow-md bg-slate-200 dark:bg-slate-800'>
-          <div className='flex flex-col items-center justify-center space-y-5 mb-4 sm:space-y-4 md:max-w-xl lg:max-w-3xl xl:max-w-none'>
-            <h2 className='text-3xl font-bold dark:text-slate-200 sm:text-4xl text-center'>
-              {translations.admin.adminTeam}
-            </h2>
-            <p className='mx-auto max-w-2xl text-m text-center text-gray-500 dark:text-slate-400 sm:mt-2'>
-              {translations.admin.groupOfPeople}
-            </p>
-          </div>
-          <div>
-            <h2 className='text-2xl font-bold dark:text-slate-200 sm:text-2xl text-center mt-4 mb-2'>
-              {translations.admin.areAdmin}
-            </h2>
-            <div className='grid grid-cols-1 justify-items-center md:grid-cols-3 lg:grid-cols-4 gap-4'>
-              {admins
-                .filter(a => a.active ?? true)
-                .map(admin => (
-                  <AdminCard key={admin.name} {...admin} />
-                ))}
-            </div>
-          </div>
-          {admins.filter(a => !(a.active ?? true)).length > 0 && (
-            <div>
-              <h2 className='text-2xl font-bold dark:text-slate-200 sm:text-2xl text-center mt-4 mb-2'>
-                {translations.admin.wereAdmin}
-              </h2>
-              <div className='grid grid-cols-1 justify-items-center md:grid-cols-3 lg:grid-cols-4 gap-4'>
-                {admins
-                  .filter(a => !(a.active ?? true))
-                  .map(admin => (
-                    <AdminCard key={admin.name} {...admin} />
-                  ))}
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
+    <>
+      <Head>
+        <title>LiT - {translations.admin.adminTeam}</title>
+      </Head>
+      <Header lang={lang} />
+      <main className='flex flex-col gap-8 px-4 pb-16 pt-4 sm:px-6 lg:px-8'>
+        <header className='mx-auto w-full max-w-7xl'>
+          <h1 className='whitespace-pre-line text-3xl font-extrabold tracking-tight text-gray-900 dark:text-slate-100 sm:text-4xl'>
+            {translations.admin.adminTeam}
+          </h1>
+          <p className='mt-2 whitespace-pre-line text-lg text-slate-600 dark:text-slate-400'>
+            {translations.admin.groupOfPeople}
+          </p>
+        </header>
+
+        {activeAdmins.length > 0 && (
+          <Section title={translations.admin.areAdmin}>
+            <AdminGrid members={activeAdmins} />
+          </Section>
+        )}
+
+        {formerAdmins.length > 0 && (
+          <Section title={translations.admin.wereAdmin}>
+            <AdminGrid members={formerAdmins} />
+          </Section>
+        )}
+      </main>
+    </>
   );
 };
 

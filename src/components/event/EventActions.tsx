@@ -6,12 +6,14 @@ import {
   MapPinIcon,
   TicketIcon
 } from '@heroicons/react/24/outline';
-import { DateTime } from 'luxon';
 import { SlSocialYoutube } from 'react-icons/sl';
 import Link from 'next/link';
+import { i18n, Locale } from 'i18n.config';
+import { formatDateTime } from '@/utils/date';
 
 type Props = {
   event: IEvent;
+  lang?: Locale;
 };
 
 const EventAction = ({
@@ -41,14 +43,12 @@ const EventAction = ({
   );
 };
 
-const EventActions: React.FC<Props> = ({ event }: Props) => {
-  const eventDate = useMemo(() => DateTime.fromISO(event.date), [event.date]);
+const EventActions: React.FC<Props> = ({
+  event,
+  lang = i18n.defaultLocale
+}: Props) => {
   const isPast = useMemo(() => isPastEvent(event), [event]);
-
-  const formattedDate = eventDate.toLocaleString(
-    DateTime.DATETIME_MED_WITH_WEEKDAY,
-    { locale: 'it' }
-  );
+  const formattedDate = formatDateTime(event.date, lang);
 
   return (
     <div className='flex flex-col gap-2'>
@@ -59,7 +59,7 @@ const EventActions: React.FC<Props> = ({ event }: Props) => {
           <AddToCalendar
             eventDuration={event.duration || defaultEventDuration}
             description={event.description}
-            eventDateTime={eventDate}
+            eventDate={event.date}
             place={event.maps}
             name={event.title}
           />

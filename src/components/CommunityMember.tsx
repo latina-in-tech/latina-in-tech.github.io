@@ -17,39 +17,28 @@ const imageHeight = 48;
 const CommunityMember: React.FC<{ member: CommunityMemberT }> = ({
   member
 }) => {
-  const [showLinks, setShowLinks] = React.useState(false);
   const hasLinks = hasAnyLinks(member);
   return (
-    <div
-      className={'flex items-start'}
-      onClick={() => (hasLinks ? setShowLinks(s => !s) : undefined)}
-      style={{ cursor: hasLinks ? 'pointer' : 'default' }}
-    >
+    <div className='flex items-start gap-3 rounded-2xl bg-white p-3 shadow-sm ring-1 ring-slate-200 transition-shadow hover:shadow-md dark:bg-slate-800 dark:ring-slate-700'>
       <Image
         height={imageHeight}
         width={imageHeight}
         src={`/assets/community/${member.picture}`}
-        className={`ring-2 dark:ring-gray-100 ring-gray-500 rounded-full ${showLinks ? 'grayscale-0' : 'grayscale'} hover:grayscale-0 transition-all duration-300`}
+        className='h-12 w-12 flex-shrink-0 rounded-full object-cover ring-2 ring-slate-200 dark:ring-slate-600'
         alt={member.fullname}
       />
-      <div className={'flex flex-col text-left ml-2 max-w-30'}>
+      <div className={'flex min-w-0 flex-col text-left'}>
         <p
           className={
-            'text-sm leading-5 dark:text-slate-100 text-slate-800 font-normal'
+            'text-sm font-semibold leading-5 text-slate-900 dark:text-slate-100'
           }
         >
           {member.fullname}
         </p>
-        {!showLinks && (
-          <p
-            className={
-              'flex text-sm h-6 dark:text-slate-400 text-slate-600 font-normal'
-            }
-          >
-            {member.bio}
-          </p>
-        )}
-        {hasLinks && showLinks && <CommunityMemberLinks member={member} />}
+        <p className='text-sm leading-5 text-slate-600 dark:text-slate-400'>
+          {member.bio}
+        </p>
+        {hasLinks && <CommunityMemberLinks member={member} />}
       </div>
     </div>
   );

@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import latina from '../../public/assets/latina.jpg';
+import logo from '../../public/android-chrome-512x512.png';
 import navigationLinks from '@/model/navigation';
-import { useTelegramGroupInfo } from '@/utils/telegram';
+import { TelegramGroupInfo } from '@/utils/telegram';
 import React from 'react';
 import { Dictionary } from '@/utils/dictionary';
 
@@ -10,61 +10,78 @@ const telegramNav = navigationLinks.find(item => item.name === 'Telegram');
 
 type HeroProps = {
   translations: Dictionary;
+  eventsCount: number;
+  telegramGroupInfo?: TelegramGroupInfo;
 };
 
-const Hero: React.FC<HeroProps> = ({ translations }: HeroProps) => {
-  const [maybeGroupInfo] = useTelegramGroupInfo(telegramNav?.href ?? '');
+const Hero: React.FC<HeroProps> = ({
+  translations,
+  eventsCount,
+  telegramGroupInfo
+}: HeroProps) => {
+  const [eventsSinceBefore, eventsSinceAfter] =
+    translations.hero.eventsSince.split('{count}');
   return (
-    <div className='relative'>
-      <div className='absolute inset-x-0 bottom-0 h-1/2 dark:bg-black dark:bg-opacity-10'></div>
-      <div className='mx-auto max-w-7xl sm:px-6 lg:px-8'>
-        <div className='relative shadow-xl sm:overflow-hidden sm:rounded-2xl'>
-          <div className='absolute inset-0'>
-            <Image
-              priority
-              fill
-              src={latina}
-              alt='Piazza del Popolo'
-              className='object-cover'
-            ></Image>
-            <div className='absolute inset-0 bg-gradient-to-r from-primary-light to-primary-dark mix-blend-multiply'></div>
-          </div>
-          <div className='relative px-4 py-16 sm:px-6 sm:py-24 lg:py-32 lg:px-8'>
-            <h1 className='text-center text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl'>
-              <span className='block text-white'>
-                {translations.hero.communityOf}
-              </span>
-              <span className='block bg-primary-lighter bg-clip-text text-transparent'>
-                {translations.hero.pontiniDev}
-              </span>
-            </h1>
-            <div className='py-2 bg-opacity-50 mx-auto mt-6 max-w-lg rounded-md border border-transparent bg-slate-400 sm:max-w-3xl'>
-              <p className='text-center text-xl text-slate-100'>
-                {translations.hero.freeEventsForProfessionalGrowth}
+    <section className='relative isolate overflow-hidden'>
+      <div
+        aria-hidden='true'
+        className='absolute inset-x-0 top-0 -z-10 h-2/3 bg-gradient-to-b from-primary/5 to-transparent'
+      />
+      <div className='mx-auto flex max-w-3xl flex-col items-center px-4 py-12 text-center sm:py-16'>
+        <Image
+          priority
+          src={logo}
+          alt='Latina In Tech'
+          className='h-28 w-28 sm:h-32 sm:w-32'
+        />
+        <h1 className='mt-6 text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl'>
+          <span className='block text-gray-900 dark:text-slate-100'>
+            {translations.hero.communityOf}
+          </span>
+          <span className='block bg-gradient-to-r from-primary to-primary-light bg-clip-text text-transparent dark:from-primary-light dark:to-primary-lighter'>
+            {translations.hero.pontiniDev}
+          </span>
+        </h1>
+        {/* whitespace-pre-line: a \n in the dictionaries becomes a line break */}
+        <p className='mt-4 max-w-2xl whitespace-pre-line text-lg text-slate-600 dark:text-slate-400'>
+          {translations.hero.tagline}
+        </p>
+        <p className='mt-3 whitespace-pre-line text-base font-semibold text-slate-700 dark:text-slate-300'>
+          {eventsSinceBefore}
+          <span className='text-primary dark:text-primary-lighter'>
+            {eventsCount}
+          </span>
+          {eventsSinceAfter}
+        </p>
+        {telegramNav && (
+          <div className='mt-8 flex flex-wrap items-center justify-center gap-3'>
+            <Link
+              href={telegramNav.href}
+              target='_blank'
+              className='inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-base font-semibold text-white shadow-sm transition-colors hover:bg-primary-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900'
+            >
+              {translations.hero.joinUsOnTelegram}
+              {telegramNav.icon && <telegramNav.icon></telegramNav.icon>}
+            </Link>
+            {telegramGroupInfo && (
+              <p className='inline-flex items-center gap-2 rounded-xl bg-white px-4 py-3 text-sm font-semibold text-slate-700 ring-1 ring-slate-200 dark:bg-slate-800 dark:text-slate-200 dark:ring-slate-700'>
+                <span className='h-2 w-2 rounded-full bg-green-500' />
+                <span>
+                  {telegramGroupInfo.members} {translations.hero.members}
+                  {telegramGroupInfo.online !== undefined && (
+                    <span className='font-normal text-slate-500 dark:text-slate-400'>
+                      {' '}
+                      &middot; {telegramGroupInfo.online}{' '}
+                      {translations.hero.online}
+                    </span>
+                  )}
+                </span>
               </p>
-            </div>
-            <div className='mx-auto mt-10 flex justify-center'>
-              {telegramNav && (
-                <Link
-                  href={telegramNav.href}
-                  target='_blank'
-                  className='flex items-center justify-between gap-2 rounded-md border border-transparent bg-primary bg-opacity-80 px-4 py-3 text-base font-medium text-white shadow-sm backdrop-blur-sm hover:bg-primary-dark sm:px-8'
-                >
-                  {translations.hero.joinUsOnTelegram}
-                  {telegramNav.icon && <telegramNav.icon></telegramNav.icon>}
-                </Link>
-              )}
-            </div>
-            {telegramNav && maybeGroupInfo && (
-              <div className='mx-auto mt-2 flex justify-center text-gray-400'>
-                {maybeGroupInfo.members} {translations.hero.members}{' '}
-                {maybeGroupInfo.online} {translations.hero.online}
-              </div>
             )}
           </div>
-        </div>
+        )}
       </div>
-    </div>
+    </section>
   );
 };
 
