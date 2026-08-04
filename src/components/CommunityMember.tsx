@@ -17,14 +17,9 @@ const imageHeight = 48;
 const CommunityMember: React.FC<{ member: CommunityMemberT }> = ({
   member
 }) => {
-  const [showLinks, setShowLinks] = React.useState(false);
   const hasLinks = hasAnyLinks(member);
   return (
-    <div
-      className='flex items-start gap-3 rounded-2xl bg-white p-3 shadow-sm ring-1 ring-slate-200 transition-shadow hover:shadow-md dark:bg-slate-800 dark:ring-slate-700'
-      onClick={() => (hasLinks ? setShowLinks(s => !s) : undefined)}
-      style={{ cursor: hasLinks ? 'pointer' : 'default' }}
-    >
+    <div className='flex items-start gap-3 rounded-2xl bg-white p-3 shadow-sm ring-1 ring-slate-200 transition-shadow hover:shadow-md dark:bg-slate-800 dark:ring-slate-700'>
       <Image
         height={imageHeight}
         width={imageHeight}
@@ -40,12 +35,10 @@ const CommunityMember: React.FC<{ member: CommunityMemberT }> = ({
         >
           {member.fullname}
         </p>
-        {!showLinks && (
-          <p className='text-sm leading-5 text-slate-600 dark:text-slate-400'>
-            {member.bio}
-          </p>
-        )}
-        {hasLinks && showLinks && <CommunityMemberLinks member={member} />}
+        <p className='text-sm leading-5 text-slate-600 dark:text-slate-400'>
+          {member.bio}
+        </p>
+        {hasLinks && <CommunityMemberLinks member={member} />}
       </div>
     </div>
   );

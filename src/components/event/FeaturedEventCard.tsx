@@ -41,16 +41,17 @@ const FeaturedEventCard: React.FC<Props> = ({
   };
 
   return (
-    <article className='overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-primary/40 dark:bg-slate-800 dark:ring-primary-lighter/40'>
-      <div className='grid lg:grid-cols-[24rem_1fr]'>
+    <article className='mx-auto max-w-4xl overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-primary/40 dark:bg-slate-800 dark:ring-primary-lighter/40'>
+      <div className='flex flex-col'>
+        {/* the covers are 16:9, so the whole image is visible: no cropping */}
         <Link
           href={href}
-          className='group relative block aspect-video overflow-hidden bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary dark:bg-slate-900 lg:aspect-auto lg:h-full'
+          className='group relative block aspect-video overflow-hidden bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary dark:bg-slate-900'
         >
           <Image
             fill
             priority
-            sizes='(min-width: 1024px) 24rem, 100vw'
+            sizes='(min-width: 1024px) 56rem, 100vw'
             src={event.thumbnail}
             alt={`Event cover image ${event.title}`}
             className='object-cover transition-transform duration-300 group-hover:scale-105'
