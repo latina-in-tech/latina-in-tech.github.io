@@ -1,4 +1,6 @@
-import { compareDates, isInThePast } from '@/utils/date';
+// relative on purpose: this module is loaded by check:events through ts-node,
+// which does not resolve the @/ alias
+import { compareDates, isInThePast } from '../utils/date';
 import * as z from 'zod';
 export type Minute = number;
 

@@ -1,5 +1,7 @@
 import { DateTime } from 'luxon';
-import { Locale } from 'i18n.config';
+// type only: this module is pulled in by check:events through ts-node, which
+// cannot resolve this specifier at runtime
+import type { Locale } from 'i18n.config';
 
 /**
  * every date handled by the site comes from the event front matter as an ISO
