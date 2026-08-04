@@ -80,7 +80,7 @@ const Home: React.FC<StaticProps> = ({
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <Header lang={lang} />
-      <main className='flex flex-col gap-16 px-4 pb-16 sm:px-6 lg:px-8'>
+      <main className='flex flex-col gap-6 px-4 pb-16 sm:px-6 lg:px-8'>
         <Hero
           translations={translations}
           eventsCount={events.length}
@@ -93,10 +93,10 @@ const Home: React.FC<StaticProps> = ({
           initialCount={INITIAL_EVENTS_COUNT}
           expandable
         />
-        <Sponsors />
-        
+
         <Community members={communityMembers} translations={translations} />
         <Newsletter translations={translations} />
+        <Sponsors />
       </main>
     </>
   );
