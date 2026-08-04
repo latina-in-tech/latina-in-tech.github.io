@@ -42,10 +42,11 @@ const Hero: React.FC<HeroProps> = ({
             {translations.hero.pontiniDev}
           </span>
         </h1>
-        <p className='mt-4 max-w-2xl text-lg text-slate-600 dark:text-slate-400'>
+        {/* whitespace-pre-line: a \n in the dictionaries becomes a line break */}
+        <p className='mt-4 max-w-2xl whitespace-pre-line text-lg text-slate-600 dark:text-slate-400'>
           {translations.hero.tagline}
         </p>
-        <p className='mt-3 text-base font-semibold text-slate-700 dark:text-slate-300'>
+        <p className='mt-3 whitespace-pre-line text-base font-semibold text-slate-700 dark:text-slate-300'>
           {eventsSinceBefore}
           <span className='text-primary dark:text-primary-lighter'>
             {eventsCount}
