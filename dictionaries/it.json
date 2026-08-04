@@ -21,7 +21,8 @@
     "hero": {
         "communityOf": "La community degli",
         "pontiniDev": "Informatici Pontini",
-        "tagline": "Tecnologia, conoscenza e persone del territorio pontino: dal 2023 {count} incontri gratuiti e aperti a tutti.",
+        "tagline": "Un punto d’incontro per chi lavora nella tecnologia, vuole imparare qualcosa di nuovo e crede nella forza della condivisione e delle relazioni.",
+        "eventsSince": "Dal 2023 abbiamo organizzato {count} eventi gratuiti e aperti a tutti",
         "joinUsOnTelegram": "Unisciti al Gruppo Telegram!",
          "members": "Membri",
         "online": "Online"

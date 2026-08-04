@@ -21,7 +21,8 @@
     "hero": {
         "communityOf": "The community of",
         "pontiniDev": "Developers from Latina",
-        "tagline": "Technology, knowledge and people from the Latina area: since 2023, {count} free meetups open to everyone.",
+        "tagline": "A meeting point for people who work in tech, want to learn something new and believe in the power of sharing and relationships.",
+        "eventsSince": "Since 2023 we have organised {count} free events, open to everyone",
         "joinUsOnTelegram": "Join us on Telegram!",
         "members": "Members",
         "online": "Online"

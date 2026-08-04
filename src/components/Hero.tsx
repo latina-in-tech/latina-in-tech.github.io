@@ -19,10 +19,8 @@ const Hero: React.FC<HeroProps> = ({
   eventsCount,
   telegramGroupInfo
 }: HeroProps) => {
-  const tagline = translations.hero.tagline.replace(
-    '{count}',
-    String(eventsCount)
-  );
+  const [eventsSinceBefore, eventsSinceAfter] =
+    translations.hero.eventsSince.split('{count}');
   return (
     <section className='relative isolate overflow-hidden'>
       <div
@@ -44,8 +42,15 @@ const Hero: React.FC<HeroProps> = ({
             {translations.hero.pontiniDev}
           </span>
         </h1>
-        <p className='mt-4 max-w-xl text-lg text-slate-600 dark:text-slate-400'>
-          {tagline}
+        <p className='mt-4 max-w-2xl text-lg text-slate-600 dark:text-slate-400'>
+          {translations.hero.tagline}
+        </p>
+        <p className='mt-3 text-base font-semibold text-slate-700 dark:text-slate-300'>
+          {eventsSinceBefore}
+          <span className='text-primary dark:text-primary-lighter'>
+            {eventsCount}
+          </span>
+          {eventsSinceAfter}
         </p>
         {telegramNav && (
           <div className='mt-8 flex flex-wrap items-center justify-center gap-3'>
