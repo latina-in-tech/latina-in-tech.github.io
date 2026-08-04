@@ -19,7 +19,7 @@ export const Newsletter = ({ translations }: NewsletterProps) => {
         id='mc-embedded-subscribe-form'
         name='mc-embedded-subscribe-form'
         target='_self'
-        className='mx-auto max-w-xl'
+        className='max-w-xl'
       >
         <label className='sr-only' htmlFor='mce-EMAIL'>
           {translations.newsletter.signUp}
