@@ -48,7 +48,7 @@ export const Newsletter = ({ translations }: NewsletterProps) => {
             className='w-full flex-auto border-none bg-transparent px-4 text-base text-slate-900 placeholder:text-slate-400 focus:ring-0 dark:text-slate-100'
           />
           <button
-            className='inline-flex items-center justify-center rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-primary-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-primary sm:px-6'
+            className='inline-flex flex-shrink-0 items-center justify-center whitespace-nowrap rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-primary-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-primary sm:px-6'
             type='submit'
           >
             <span className='sr-only sm:not-sr-only'>
