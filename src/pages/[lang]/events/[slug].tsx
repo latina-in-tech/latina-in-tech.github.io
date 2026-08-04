@@ -12,8 +12,7 @@ import Header from '@/components/Header';
 import EventActions from '@/components/event/EventActions';
 import { Helmet } from 'react-helmet';
 import { ZodSchema } from 'zod';
-import { i18n } from 'i18n.config';
-import { useRouter } from 'next/router';
+import { Locale } from 'i18n.config';
 import { getAllLocales } from '@/utils/locale';
 import {
   ArrowTopRightOnSquareIcon,
@@ -23,6 +22,7 @@ import {
 type Props = {
   source: string;
   frontMatter: IEvent;
+  lang: Locale;
 };
 
 type ParseItemsReturn<T> = {
@@ -54,12 +54,11 @@ const parseItems = <T,>(
   );
 };
 
-const EventPage: React.FC<Props> = ({ source, frontMatter: event }: Props) => {
-  const router = useRouter();
-  const locale = i18n.locales.filter(
-    locale => router?.query.lang === locale
-  )[0];
-
+const EventPage: React.FC<Props> = ({
+  source,
+  frontMatter: event,
+  lang
+}: Props) => {
   const slidesObjects = useMemo(
     () => parseItems(event.slides ?? [], slidesSchema),
     [event.slides]
@@ -77,7 +76,7 @@ const EventPage: React.FC<Props> = ({ source, frontMatter: event }: Props) => {
       <Helmet>
         <title>LiT - {event.title}</title>
       </Helmet>
-      <Header lang={locale} />
+      <Header lang={lang} />
       <main className='bg-slate-50/70 px-4 pb-16 pt-8 dark:bg-slate-900 sm:px-6 sm:pt-12 lg:px-8'>
         <article className='mx-auto max-w-7xl'>
           <header className='mx-auto mb-10 max-w-4xl text-center sm:mb-14'>
@@ -118,7 +117,7 @@ const EventPage: React.FC<Props> = ({ source, frontMatter: event }: Props) => {
               )}
 
               <div className='[&>div>a:nth-child(2)_svg]:h-7 [&>div>a:nth-child(2)_svg]:w-7 [&>div>a:nth-child(2)_svg]:shrink-0'>
-                <EventActions event={event} />
+                <EventActions event={event} lang={lang} />
               </div>
 
               {speakers.length > 0 && (
@@ -289,16 +288,18 @@ export default EventPage;
 
 interface Iparams extends ParsedUrlQuery {
   slug: string;
+  lang: Locale;
 }
 
 export const getStaticProps: GetStaticProps = async context => {
-  const { slug } = context.params as Iparams;
+  const { slug, lang } = context.params as Iparams;
   const { content } = getEvent(slug);
   const events = getEventFromSlug(slug);
   return {
     props: {
       source: content,
-      frontMatter: events
+      frontMatter: events,
+      lang
     }
   };
 };

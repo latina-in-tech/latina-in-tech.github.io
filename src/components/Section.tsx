@@ -12,7 +12,7 @@ type Props = {
  * its own title, so the page reads as a list of contexts.
  */
 const Section: React.FC<Props> = ({ title, subtitle, children, footer }) => (
-  <section className='mx-auto w-full max-w-7xl rounded-2xl bg-slate-100 p-6 ring-1 ring-slate-200 dark:bg-slate-950 dark:ring-slate-800 sm:p-8'>
+  <section className='mx-auto max-w-7xl rounded-2xl bg-slate-100 p-6 ring-1 ring-slate-200 dark:bg-slate-950 dark:ring-slate-800 sm:p-8'>
     <header>
       <h2 className='text-2xl font-extrabold tracking-tight text-gray-900 dark:text-slate-100 sm:text-3xl'>
         {title}

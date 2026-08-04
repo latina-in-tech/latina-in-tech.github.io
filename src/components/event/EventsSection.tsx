@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import Link from 'next/link';
+import { Locale } from 'i18n.config';
 import {
   filterComingEvents,
   filterPastEvents,
@@ -17,7 +18,7 @@ const STEP = 6;
 
 type Props = {
   events: IEvent[];
-  lang: string;
+  lang: Locale;
   translations: EventsTranslations;
   heading?: string;
   caption?: string;

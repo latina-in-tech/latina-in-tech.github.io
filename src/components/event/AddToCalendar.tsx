@@ -1,10 +1,11 @@
-import React, { useCallback, useMemo } from 'react';
-import { DateTime } from 'luxon';
+import React, { useMemo } from 'react';
 import { Minute } from '@/model/event';
 import { AddToCalendarButton } from 'add-to-calendar-button-react';
+import { toCalendarSlot } from '@/utils/date';
 
 export type AddToCalendarProps = {
-  eventDateTime: DateTime;
+  /** ISO date of the event, as stored in the front matter */
+  eventDate: string;
   eventDuration: Minute;
   place: string;
   name: string;
@@ -14,38 +15,24 @@ export type AddToCalendarProps = {
 export const defaultEventDuration: Minute = 120;
 
 export const AddToCalendar: React.FC<AddToCalendarProps> = ({
-  eventDateTime,
+  eventDate,
   eventDuration,
   place,
   name,
   description
 }) => {
-  const startDate = useMemo(
-    () =>
-      `${eventDateTime.year}-${eventDateTime.month
-        .toString()
-        .padStart(2, '0')}-${eventDateTime.day.toString().padStart(2, '0')}`,
-    [eventDateTime.day, eventDateTime.month, eventDateTime.year]
-  );
-  const formatTime = useCallback(
-    (date: DateTime) =>
-      `${date.hour.toString().padStart(2, '0')}:${date.minute
-        .toString()
-        .padStart(2, '0')}`,
-    []
-  );
-  const eventEndDateTime = useMemo(
-    () => eventDateTime.plus({ minutes: eventDuration }),
-    [eventDateTime, eventDuration]
+  const { date, startTime, endTime } = useMemo(
+    () => toCalendarSlot(eventDate, eventDuration),
+    [eventDate, eventDuration]
   );
 
   return (
     <AddToCalendarButton
       name={name}
       description={description}
-      startDate={startDate}
-      startTime={formatTime(eventDateTime)}
-      endTime={formatTime(eventEndDateTime)}
+      startDate={date}
+      startTime={startTime}
+      endTime={endTime}
       timeZone='Europe/Rome'
       location={place}
       buttonStyle='date'

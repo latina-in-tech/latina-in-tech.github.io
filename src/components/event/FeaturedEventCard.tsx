@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import React, { useMemo } from 'react';
-import { DateTime } from 'luxon';
+import React from 'react';
+import { Locale } from 'i18n.config';
+import { formatLongDate, formatTime } from '@/utils/date';
 import { IEvent } from '@/model/event';
 import EventActions from './EventActions';
 import EventStatusRibbon from './EventStatusRibbon';
@@ -9,7 +10,7 @@ import { EventsTranslations } from './types';
 
 type Props = {
   event: IEvent;
-  lang: string;
+  lang: Locale;
   translations: EventsTranslations;
 };
 
@@ -22,18 +23,8 @@ const FeaturedEventCard: React.FC<Props> = ({
   lang,
   translations
 }: Props) => {
-  const eventDate = useMemo(
-    () => DateTime.fromISO(event.date).setLocale(lang),
-    [event.date, lang]
-  );
-
-  const dateLabel = eventDate.toLocaleString({
-    weekday: 'long',
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric'
-  });
-  const timeLabel = eventDate.toLocaleString(DateTime.TIME_SIMPLE);
+  const dateLabel = formatLongDate(event.date, lang);
+  const timeLabel = formatTime(event.date, lang);
 
   const href = {
     pathname: '/[lang]/events/[slug]',
@@ -95,7 +86,7 @@ const FeaturedEventCard: React.FC<Props> = ({
           )}
 
           <div className='mt-auto'>
-            <EventActions event={event} />
+            <EventActions event={event} lang={lang} />
           </div>
         </div>
       </div>

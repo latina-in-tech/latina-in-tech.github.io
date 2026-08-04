@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import React, { useMemo } from 'react';
-import { DateTime } from 'luxon';
+import { Locale } from 'i18n.config';
+import { formatShortDate, formatTime } from '@/utils/date';
 import {
   MapPinIcon,
   PresentationChartLineIcon
@@ -15,7 +16,7 @@ const MAX_VISIBLE_TAGS = 3;
 
 type Props = {
   event: IEvent;
-  lang: string;
+  lang: Locale;
   translations: EventsTranslations;
 };
 
@@ -25,18 +26,8 @@ type Props = {
  */
 const EventCard: React.FC<Props> = ({ event, lang, translations }: Props) => {
   const isPast = useMemo(() => isPastEvent(event), [event]);
-  const eventDate = useMemo(
-    () => DateTime.fromISO(event.date).setLocale(lang),
-    [event.date, lang]
-  );
-
-  const dateLabel = eventDate.toLocaleString({
-    weekday: 'short',
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric'
-  });
-  const timeLabel = eventDate.toLocaleString(DateTime.TIME_SIMPLE);
+  const dateLabel = formatShortDate(event.date, lang);
+  const timeLabel = formatTime(event.date, lang);
 
   const visibleTags = event.tags.slice(0, MAX_VISIBLE_TAGS);
   const hiddenTagsCount = event.tags.length - visibleTags.length;

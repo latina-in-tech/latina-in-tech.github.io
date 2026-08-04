@@ -135,7 +135,7 @@ const sponsors: ReadonlyArray<Sponsor> = [
 ];
 
 const logoClasses =
-  'h-12 w-full object-contain opacity-50 transition-opacity duration-200 group-hover:opacity-100';
+  'h-12 w-full object-contain transition-transform duration-200 group-hover:scale-105';
 
 export const Sponsors = () => {
   return (

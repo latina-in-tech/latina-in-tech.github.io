@@ -94,8 +94,9 @@ const Home: React.FC<StaticProps> = ({
           expandable
         />
         <Sponsors />
-        <Newsletter translations={translations} />
+        
         <Community members={communityMembers} translations={translations} />
+        <Newsletter translations={translations} />
       </main>
     </>
   );

@@ -1,4 +1,4 @@
-import { DateTime } from 'luxon';
+import { compareDates, isInThePast } from '@/utils/date';
 import * as z from 'zod';
 export type Minute = number;
 
@@ -63,11 +63,10 @@ export const EVENT_FIELDS = [
   'slides'
 ];
 
-export const isPastEvent = (event: IEvent): boolean =>
-  DateTime.fromISO(event.date) < DateTime.now();
+export const isPastEvent = (event: IEvent): boolean => isInThePast(event.date);
 
 export const isComingEvent = (event: IEvent): boolean =>
-  DateTime.fromISO(event.date) >= DateTime.now();
+  !isInThePast(event.date);
 
 export const filterPastEvents = (events: IEvent[]) =>
   events.filter(isPastEvent);
@@ -76,8 +75,8 @@ export const filterComingEvents = (events: IEvent[]) =>
   events.filter(isComingEvent);
 
 export const sortEvents = (events: IEvent[], order: 'asc' | 'desc' = 'desc') =>
-  events.sort(
-    (a, b) =>
-      DateTime.fromISO((order === 'asc' ? a : b).date).toMillis() -
-      DateTime.fromISO((order === 'asc' ? b : a).date).toMillis()
+  events.sort((a, b) =>
+    order === 'asc'
+      ? compareDates(a.date, b.date)
+      : compareDates(b.date, a.date)
   );
