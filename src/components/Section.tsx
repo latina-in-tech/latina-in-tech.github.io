@@ -1,0 +1,31 @@
+import React from 'react';
+
+type Props = {
+  title: string;
+  subtitle?: React.ReactNode;
+  children: React.ReactNode;
+  footer?: React.ReactNode;
+};
+
+/**
+ * shared shell for the home page blocks: every section is a card exposing
+ * its own title, so the page reads as a list of contexts.
+ */
+const Section: React.FC<Props> = ({ title, subtitle, children, footer }) => (
+  <section className='mx-auto w-full max-w-7xl rounded-2xl bg-slate-50 p-6 ring-1 ring-slate-200 dark:bg-slate-900/40 dark:ring-slate-700 sm:p-8'>
+    <header className='text-center'>
+      <h2 className='text-2xl font-extrabold tracking-tight text-gray-900 dark:text-slate-100 sm:text-3xl'>
+        {title}
+      </h2>
+      {subtitle && (
+        <p className='mx-auto mt-2 max-w-2xl text-base text-slate-600 dark:text-slate-400'>
+          {subtitle}
+        </p>
+      )}
+    </header>
+    <div className='mt-8'>{children}</div>
+    {footer && <div className='mt-8'>{footer}</div>}
+  </section>
+);
+
+export default Section;

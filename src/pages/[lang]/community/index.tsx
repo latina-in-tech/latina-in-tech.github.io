@@ -10,6 +10,7 @@ import {
 import { getAllCommunityMembers } from '@/utils/community';
 import { isDevEnv } from '@/utils/dev';
 import CommunityMember from '@/components/CommunityMember';
+import Section from '@/components/Section';
 import { getAllLocales } from '@/utils/locale';
 import { Dictionary, getDictionary } from '@/utils/dictionary';
 import { Locale } from 'i18n.config';
@@ -62,29 +63,30 @@ const CommunityMemberList: React.FC<
     );
   }
   return (
-    <div className='flex flex-col items-center justify-center'>
-      <h2 className='text-center text-2xl font-bold tracking-tight text-gray-900 dark:text-slate-100'>
-        {translations.communityMembers.communityMembers}
-      </h2>
-      <p className='my-2 max-w-screen-md text-center text-base text-slate-600 dark:text-slate-400'>
-        {translations.communityMembers.doYouAttendOrFollowUs} &nbsp;
-        <a
-          href={
-            'https://github.com/latina-in-tech/latina-in-tech.github.io/blob/main/docs/community/README.md'
-          }
-          className='font-semibold text-primary hover:text-primary-dark dark:text-primary-lighter dark:hover:text-primary-light'
-          target={'_blank'}
-          rel={'noreferrer'}
-        >
-          {translations.communityMembers.readHere}
-        </a>
-      </p>
-      <div className='mt-6 grid max-w-screen-lg grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3'>
+    <Section
+      title={translations.communityMembers.communityMembers}
+      subtitle={
+        <>
+          {translations.communityMembers.doYouAttendOrFollowUs} &nbsp;
+          <a
+            href={
+              'https://github.com/latina-in-tech/latina-in-tech.github.io/blob/main/docs/community/README.md'
+            }
+            className='font-semibold text-primary hover:text-primary-dark dark:text-primary-lighter dark:hover:text-primary-light'
+            target={'_blank'}
+            rel={'noreferrer'}
+          >
+            {translations.communityMembers.readHere}
+          </a>
+        </>
+      }
+    >
+      <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3'>
         {validMembers.map(({ data }, index) => (
           <CommunityMember key={`cm_${index}_${data.fullname}`} member={data} />
         ))}
       </div>
-    </div>
+    </Section>
   );
 };
 

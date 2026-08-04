@@ -4,6 +4,7 @@ import React, { useMemo } from 'react';
 import { DateTime } from 'luxon';
 import { IEvent } from '@/model/event';
 import EventActions from './EventActions';
+import EventStatusRibbon from './EventStatusRibbon';
 import { EventsTranslations } from './types';
 
 type Props = {
@@ -53,6 +54,10 @@ const FeaturedEventCard: React.FC<Props> = ({
             src={event.thumbnail}
             alt={`Event cover image ${event.title}`}
             className='object-cover transition-transform duration-300 group-hover:scale-105'
+          />
+          <EventStatusRibbon
+            isPast={false}
+            label={translations.upcomingBadge}
           />
         </Link>
 

@@ -7,6 +7,7 @@ import {
   isComingEvent,
   sortEvents
 } from '@/model/event';
+import Section from '@/components/Section';
 import EventCard from './EventCard';
 import FeaturedEventCard from './FeaturedEventCard';
 import { EventsTranslations } from './types';
@@ -63,18 +64,33 @@ const EventsSection: React.FC<Props> = ({
   }
 
   return (
-    <section className='mx-auto w-full max-w-7xl'>
-      <div className='text-center'>
-        <h2 className='text-3xl font-extrabold tracking-tight text-gray-900 dark:text-slate-100 sm:text-4xl'>
-          {heading ?? translations.title}
-        </h2>
-        <p className='mx-auto mt-3 max-w-2xl text-lg text-slate-600 dark:text-slate-400'>
-          {caption ?? translations.subtitle}
-        </p>
-      </div>
-
+    <Section
+      title={heading ?? translations.title}
+      subtitle={caption ?? translations.subtitle}
+      footer={
+        expandable && (
+          <div className='flex flex-col items-center gap-3'>
+            {hasMore && (
+              <button
+                type='button'
+                onClick={() => setVisibleCount(count => count + STEP)}
+                className='rounded-xl bg-white px-6 py-3 text-base font-semibold text-primary ring-1 ring-slate-200 transition-colors hover:bg-primary/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary dark:bg-slate-800 dark:text-primary-lighter dark:ring-slate-700 dark:hover:bg-primary-lighter/10'
+              >
+                {translations.showMore}
+              </button>
+            )}
+            <Link
+              href={{ pathname: '/[lang]/events', query: { lang } }}
+              className='text-sm font-semibold text-primary transition-colors hover:text-primary-dark dark:text-primary-lighter dark:hover:text-primary-light'
+            >
+              {translations.seeAll}
+            </Link>
+          </div>
+        )
+      }
+    >
       {featuredEvent && (
-        <div className='mt-10'>
+        <div className='mb-6'>
           <FeaturedEventCard
             event={featuredEvent}
             lang={lang}
@@ -84,7 +100,7 @@ const EventsSection: React.FC<Props> = ({
       )}
 
       {visibleEvents.length > 0 && (
-        <div className='mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3'>
+        <div className='grid gap-6 sm:grid-cols-2 lg:grid-cols-3'>
           {visibleEvents.map(event => (
             <EventCard
               key={event.slug}
@@ -95,27 +111,7 @@ const EventsSection: React.FC<Props> = ({
           ))}
         </div>
       )}
-
-      {expandable && (
-        <div className='mt-10 flex flex-col items-center gap-3'>
-          {hasMore && (
-            <button
-              type='button'
-              onClick={() => setVisibleCount(count => count + STEP)}
-              className='rounded-xl px-6 py-3 text-base font-semibold text-primary ring-1 ring-slate-200 transition-colors hover:bg-primary/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary dark:text-primary-lighter dark:ring-slate-700 dark:hover:bg-primary-lighter/10'
-            >
-              {translations.showMore}
-            </button>
-          )}
-          <Link
-            href={{ pathname: '/[lang]/events', query: { lang } }}
-            className='text-sm font-semibold text-primary transition-colors hover:text-primary-dark dark:text-primary-lighter dark:hover:text-primary-light'
-          >
-            {translations.seeAll}
-          </Link>
-        </div>
-      )}
-    </section>
+    </Section>
   );
 };
 

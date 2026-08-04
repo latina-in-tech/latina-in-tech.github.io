@@ -16,6 +16,7 @@ import ngRomeLogo from '../../public/assets/sponsors/ngrome.png';
 import kcdLogo from '../../public/assets/sponsors/kcd.svg';
 import React from 'react';
 import Link from 'next/link';
+import Section from '@/components/Section';
 
 type Sponsor = {
   name: string;
@@ -138,11 +139,8 @@ const logoClasses =
 
 export const Sponsors = () => {
   return (
-    <section className='mx-auto w-full max-w-7xl text-center'>
-      <h2 className='text-sm font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400'>
-        Community Partners
-      </h2>
-      <div className='mt-6 grid grid-cols-3 items-center gap-x-6 gap-y-8 sm:grid-cols-4 lg:grid-cols-6'>
+    <Section title='Community Partners'>
+      <div className='grid grid-cols-3 items-center gap-x-6 gap-y-8 sm:grid-cols-4 lg:grid-cols-6'>
         {sponsors.map(s => (
           <Link
             key={s.name}
@@ -163,6 +161,6 @@ export const Sponsors = () => {
           </Link>
         ))}
       </div>
-    </section>
+    </Section>
   );
 };

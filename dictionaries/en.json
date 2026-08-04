@@ -5,6 +5,7 @@
             "title": "Events",
             "subtitle": "Talks, workshops and meetups from the community: what's coming and the whole archive.",
             "upcomingBadge": "Upcoming",
+            "pastBadge": "Past",
             "nextEventBadge": "Next event",
             "showMore": "Show more events",
             "seeAll": "See all events",
@@ -20,14 +21,13 @@
     "hero": {
         "communityOf": "The community of",
         "pontiniDev": "Developers from Latina",
-        "freeEventsForProfessionalGrowth": "Free events to empower knowledge sharing and professional growth.",
+        "tagline": "Technology, knowledge and people from the Latina area: since 2023, {count} free meetups open to everyone.",
         "joinUsOnTelegram": "Join us on Telegram!",
         "members": "Members",
         "online": "Online"
     },
     "newsletter": {
         "shallWeStayInTouch": "Shall we stay in touch?",
-        "stayUpdated": "Stay always updated.",
         "joinOurCommunityAndDoNotMissAnyUpdates": "Join our community! Sign up for our newsletter and don't miss any updates on events and news. Stay connected, stay tech-savvy!",
         "signUp": "Sign Up for Newsletter",
         "emailAddress": "Email Address",

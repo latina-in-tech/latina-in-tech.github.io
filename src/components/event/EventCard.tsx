@@ -8,6 +8,7 @@ import {
 } from '@heroicons/react/24/outline';
 import { SlSocialYoutube } from 'react-icons/sl';
 import { IEvent, isPastEvent } from '@/model/event';
+import EventStatusRibbon from './EventStatusRibbon';
 import { EventsTranslations } from './types';
 
 const MAX_VISIBLE_TAGS = 3;
@@ -62,15 +63,14 @@ const EventCard: React.FC<Props> = ({ event, lang, translations }: Props) => {
           alt={`Event cover image ${event.title}`}
           className='object-cover transition-transform duration-300 group-hover:scale-105'
         />
+        <EventStatusRibbon
+          isPast={isPast}
+          label={isPast ? translations.pastBadge : translations.upcomingBadge}
+        />
       </div>
 
       <div className='flex flex-1 flex-col gap-3 p-4'>
         <div className='flex flex-wrap items-center gap-2'>
-          {!isPast && (
-            <span className='rounded-full bg-primary px-2.5 py-1 text-xs font-semibold text-white'>
-              {translations.upcomingBadge}
-            </span>
-          )}
           <span className='text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400'>
             {dateLabel} &middot; {timeLabel}
           </span>

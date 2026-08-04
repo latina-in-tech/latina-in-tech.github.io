@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import logo from '../../public/android-chrome-512x512.png';
 import navigationLinks from '@/model/navigation';
-import { useTelegramGroupInfo } from '@/utils/telegram';
+import { TelegramGroupInfo } from '@/utils/telegram';
 import React from 'react';
 import { Dictionary } from '@/utils/dictionary';
 
@@ -10,10 +10,19 @@ const telegramNav = navigationLinks.find(item => item.name === 'Telegram');
 
 type HeroProps = {
   translations: Dictionary;
+  eventsCount: number;
+  telegramGroupInfo?: TelegramGroupInfo;
 };
 
-const Hero: React.FC<HeroProps> = ({ translations }: HeroProps) => {
-  const [maybeGroupInfo] = useTelegramGroupInfo(telegramNav?.href ?? '');
+const Hero: React.FC<HeroProps> = ({
+  translations,
+  eventsCount,
+  telegramGroupInfo
+}: HeroProps) => {
+  const tagline = translations.hero.tagline.replace(
+    '{count}',
+    String(eventsCount)
+  );
   return (
     <section className='relative isolate overflow-hidden'>
       <div
@@ -36,30 +45,35 @@ const Hero: React.FC<HeroProps> = ({ translations }: HeroProps) => {
           </span>
         </h1>
         <p className='mt-4 max-w-xl text-lg text-slate-600 dark:text-slate-400'>
-          {translations.hero.freeEventsForProfessionalGrowth}
+          {tagline}
         </p>
         {telegramNav && (
-          <Link
-            href={telegramNav.href}
-            target='_blank'
-            className='mt-8 inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-base font-semibold text-white shadow-sm transition-colors hover:bg-primary-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900'
-          >
-            {translations.hero.joinUsOnTelegram}
-            {telegramNav.icon && <telegramNav.icon></telegramNav.icon>}
-          </Link>
+          <div className='mt-8 flex flex-wrap items-center justify-center gap-3'>
+            <Link
+              href={telegramNav.href}
+              target='_blank'
+              className='inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-base font-semibold text-white shadow-sm transition-colors hover:bg-primary-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900'
+            >
+              {translations.hero.joinUsOnTelegram}
+              {telegramNav.icon && <telegramNav.icon></telegramNav.icon>}
+            </Link>
+            {telegramGroupInfo && (
+              <p className='inline-flex items-center gap-2 rounded-xl bg-white px-4 py-3 text-sm font-semibold text-slate-700 ring-1 ring-slate-200 dark:bg-slate-800 dark:text-slate-200 dark:ring-slate-700'>
+                <span className='h-2 w-2 rounded-full bg-green-500' />
+                <span>
+                  {telegramGroupInfo.members} {translations.hero.members}
+                  {telegramGroupInfo.online !== undefined && (
+                    <span className='font-normal text-slate-500 dark:text-slate-400'>
+                      {' '}
+                      &middot; {telegramGroupInfo.online}{' '}
+                      {translations.hero.online}
+                    </span>
+                  )}
+                </span>
+              </p>
+            )}
+          </div>
         )}
-        {/* the counter is fetched client side: the row keeps its height to avoid a layout shift */}
-        <p className='mt-3 flex h-5 items-center gap-2 text-sm text-slate-500 dark:text-slate-400'>
-          {telegramNav && maybeGroupInfo && (
-            <>
-              <span className='h-2 w-2 rounded-full bg-green-500' />
-              <span>
-                {maybeGroupInfo.members} {translations.hero.members} &middot;{' '}
-                {maybeGroupInfo.online} {translations.hero.online}
-              </span>
-            </>
-          )}
-        </p>
       </div>
     </section>
   );

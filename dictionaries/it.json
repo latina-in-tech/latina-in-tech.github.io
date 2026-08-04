@@ -5,6 +5,7 @@
             "title": "Eventi",
             "subtitle": "Talk, workshop e meetup della community: quelli in arrivo e tutto l'archivio.",
             "upcomingBadge": "In arrivo",
+            "pastBadge": "Concluso",
             "nextEventBadge": "Prossimo evento",
             "showMore": "Mostra altri eventi",
             "seeAll": "Vedi tutti gli eventi",
@@ -20,14 +21,13 @@
     "hero": {
         "communityOf": "La community degli",
         "pontiniDev": "Informatici Pontini",
-        "freeEventsForProfessionalGrowth": "Eventi gratuiti per favorire la condivisione di conoscenze e la crescita professionale.",
+        "tagline": "Tecnologia, conoscenza e persone del territorio pontino: dal 2023 {count} incontri gratuiti e aperti a tutti.",
         "joinUsOnTelegram": "Unisciti al Gruppo Telegram!",
          "members": "Membri",
         "online": "Online"
     },
     "newsletter": {        
         "shallWeStayInTouch": "Rimaniamo in contatto?",
-        "stayUpdated": "Tieniti sempre aggiornato.",
         "joinOurCommunityAndDoNotMissAnyUpdates": "Unisciti alla nostra community! Iscriviti per non perderti gli eventi e le attività che organizzeremo. Stay connected, stay tech-savvy!",        
         "signUp": "Iscriviti alla nostra newsletter",        
         "emailAddress": "Indirizzo email",

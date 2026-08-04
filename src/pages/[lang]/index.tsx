@@ -15,22 +15,37 @@ import { Locale } from 'i18n.config';
 import { Dictionary, getDictionary } from '@/utils/dictionary';
 import Head from '@/components/HeadComponent';
 import { CommunityMemberOrError } from '@/model/communityMember';
+import navigationLinks from '@/model/navigation';
+import { fetchTelegramGroupInfo, TelegramGroupInfo } from '@/utils/telegram';
 
 const INITIAL_EVENTS_COUNT = 6;
+const telegramLink = navigationLinks.find(item => item.name === 'Telegram');
 
 type StaticProps = {
   events: IEvent[];
   communityMembers: Array<CommunityMemberOrError>;
   translations: Dictionary;
   lang: Locale;
+  telegramGroupInfo: TelegramGroupInfo | null;
 };
 export const getStaticProps: GetStaticProps = (async context => {
   const lang = context.params?.lang as Locale;
   const dictionary = await getDictionary(lang);
   const events = getAllEvents();
   const communityMembers = getAllCommunityMembers();
+  // fetched here, at build time: the browser cannot read t.me because of CORS
+  const telegramGroupInfo = await fetchTelegramGroupInfo(
+    telegramLink?.href ?? ''
+  );
   return {
-    props: { events, communityMembers, translations: dictionary, lang }
+    props: {
+      events,
+      communityMembers,
+      translations: dictionary,
+      lang,
+      // props must be serializable, undefined is not
+      telegramGroupInfo: telegramGroupInfo ?? null
+    }
   };
 }) satisfies GetStaticProps<StaticProps>;
 
@@ -38,7 +53,8 @@ const Home: React.FC<StaticProps> = ({
   events,
   communityMembers,
   translations,
-  lang
+  lang,
+  telegramGroupInfo
 }) => {
   React.useEffect(() => {
     setLocaleAttribute(lang);
@@ -65,7 +81,11 @@ const Home: React.FC<StaticProps> = ({
       </Head>
       <Header lang={lang} />
       <main className='flex flex-col gap-16 px-4 pb-16 sm:px-6 lg:px-8'>
-        <Hero translations={translations} />
+        <Hero
+          translations={translations}
+          eventsCount={events.length}
+          telegramGroupInfo={telegramGroupInfo ?? undefined}
+        />
         <EventsSection
           events={events}
           lang={lang}
