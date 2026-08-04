@@ -1,11 +1,16 @@
 {
     "home": {
         "communityDescription": "Community che raccoglie gli sviluppatori della provincia di Latina",
-        "nextEventsTitle": "Prossimi Eventi",
-        "nextEventsSubtitle": "Fissa le date e non prendere impegni per i prossimi eventi della community!",
-        "previousEventsTitle": "Eventi Passati",
-        "previousEventsSubtitle": "Peccato, questi eventi si sono già svolti! Segui la pagina per rimanere aggiornato sui prossimi appuntamenti.",
-        "andManyOthers": "...e molti  altri!"
+        "events": {
+            "title": "Eventi",
+            "subtitle": "Talk, workshop e meetup della community: quelli in arrivo e tutto l'archivio.",
+            "upcomingBadge": "In arrivo",
+            "nextEventBadge": "Prossimo evento",
+            "showMore": "Mostra altri eventi",
+            "seeAll": "Vedi tutti gli eventi",
+            "slides": "Slide",
+            "video": "Video"
+        }
     },
     "notFound": {
         "paragraph1": "Sembra che tua sia finito in un vicolo cieco.",

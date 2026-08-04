@@ -63,23 +63,23 @@ const CommunityMemberList: React.FC<
   }
   return (
     <div className='flex flex-col items-center justify-center'>
-      <h2 className='text-xl font-bold text-gray-900 dark:text-slate-200 uppercase text-center'>
+      <h2 className='text-center text-2xl font-bold tracking-tight text-gray-900 dark:text-slate-100'>
         {translations.communityMembers.communityMembers}
       </h2>
-      <p className='text-lg text-gray-700 dark:text-slate-200 text-center max-w-screen-md my-2'>
+      <p className='my-2 max-w-screen-md text-center text-base text-slate-600 dark:text-slate-400'>
         {translations.communityMembers.doYouAttendOrFollowUs} &nbsp;
         <a
           href={
             'https://github.com/latina-in-tech/latina-in-tech.github.io/blob/main/docs/community/README.md'
           }
-          className={'text-blue-500 dark:text-blue-400'}
+          className='font-semibold text-primary hover:text-primary-dark dark:text-primary-lighter dark:hover:text-primary-light'
           target={'_blank'}
           rel={'noreferrer'}
         >
           {translations.communityMembers.readHere}
         </a>
       </p>
-      <div className='grid grid-cols-2 lg:grid-cols-4 md:grid-cols-3 mt-4 max-w-screen-md gap-x-4 gap-y-6'>
+      <div className='mt-6 grid max-w-screen-lg grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3'>
         {validMembers.map(({ data }, index) => (
           <CommunityMember key={`cm_${index}_${data.fullname}`} member={data} />
         ))}

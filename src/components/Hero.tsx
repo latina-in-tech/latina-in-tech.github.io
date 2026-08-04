@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import latina from '../../public/assets/latina.jpg';
+import logo from '../../public/android-chrome-512x512.png';
 import navigationLinks from '@/model/navigation';
 import { useTelegramGroupInfo } from '@/utils/telegram';
 import React from 'react';
@@ -15,56 +15,53 @@ type HeroProps = {
 const Hero: React.FC<HeroProps> = ({ translations }: HeroProps) => {
   const [maybeGroupInfo] = useTelegramGroupInfo(telegramNav?.href ?? '');
   return (
-    <div className='relative'>
-      <div className='absolute inset-x-0 bottom-0 h-1/2 dark:bg-black dark:bg-opacity-10'></div>
-      <div className='mx-auto max-w-7xl sm:px-6 lg:px-8'>
-        <div className='relative shadow-xl sm:overflow-hidden sm:rounded-2xl'>
-          <div className='absolute inset-0'>
-            <Image
-              priority
-              fill
-              src={latina}
-              alt='Piazza del Popolo'
-              className='object-cover'
-            ></Image>
-            <div className='absolute inset-0 bg-gradient-to-r from-primary-light to-primary-dark mix-blend-multiply'></div>
-          </div>
-          <div className='relative px-4 py-16 sm:px-6 sm:py-24 lg:py-32 lg:px-8'>
-            <h1 className='text-center text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl'>
-              <span className='block text-white'>
-                {translations.hero.communityOf}
-              </span>
-              <span className='block bg-primary-lighter bg-clip-text text-transparent'>
-                {translations.hero.pontiniDev}
-              </span>
-            </h1>
-            <div className='py-2 bg-opacity-50 mx-auto mt-6 max-w-lg rounded-md border border-transparent bg-slate-400 sm:max-w-3xl'>
-              <p className='text-center text-xl text-slate-100'>
-                {translations.hero.freeEventsForProfessionalGrowth}
-              </p>
-            </div>
-            <div className='mx-auto mt-10 flex justify-center'>
-              {telegramNav && (
-                <Link
-                  href={telegramNav.href}
-                  target='_blank'
-                  className='flex items-center justify-between gap-2 rounded-md border border-transparent bg-primary bg-opacity-80 px-4 py-3 text-base font-medium text-white shadow-sm backdrop-blur-sm hover:bg-primary-dark sm:px-8'
-                >
-                  {translations.hero.joinUsOnTelegram}
-                  {telegramNav.icon && <telegramNav.icon></telegramNav.icon>}
-                </Link>
-              )}
-            </div>
-            {telegramNav && maybeGroupInfo && (
-              <div className='mx-auto mt-2 flex justify-center text-gray-400'>
-                {maybeGroupInfo.members} {translations.hero.members}{' '}
+    <section className='relative isolate overflow-hidden'>
+      <div
+        aria-hidden='true'
+        className='absolute inset-x-0 top-0 -z-10 h-2/3 bg-gradient-to-b from-primary/5 to-transparent'
+      />
+      <div className='mx-auto flex max-w-3xl flex-col items-center px-4 py-12 text-center sm:py-16'>
+        <Image
+          priority
+          src={logo}
+          alt='Latina In Tech'
+          className='h-28 w-28 sm:h-32 sm:w-32'
+        />
+        <h1 className='mt-6 text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl'>
+          <span className='block text-gray-900 dark:text-slate-100'>
+            {translations.hero.communityOf}
+          </span>
+          <span className='block bg-gradient-to-r from-primary to-primary-light bg-clip-text text-transparent dark:from-primary-light dark:to-primary-lighter'>
+            {translations.hero.pontiniDev}
+          </span>
+        </h1>
+        <p className='mt-4 max-w-xl text-lg text-slate-600 dark:text-slate-400'>
+          {translations.hero.freeEventsForProfessionalGrowth}
+        </p>
+        {telegramNav && (
+          <Link
+            href={telegramNav.href}
+            target='_blank'
+            className='mt-8 inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-base font-semibold text-white shadow-sm transition-colors hover:bg-primary-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900'
+          >
+            {translations.hero.joinUsOnTelegram}
+            {telegramNav.icon && <telegramNav.icon></telegramNav.icon>}
+          </Link>
+        )}
+        {/* the counter is fetched client side: the row keeps its height to avoid a layout shift */}
+        <p className='mt-3 flex h-5 items-center gap-2 text-sm text-slate-500 dark:text-slate-400'>
+          {telegramNav && maybeGroupInfo && (
+            <>
+              <span className='h-2 w-2 rounded-full bg-green-500' />
+              <span>
+                {maybeGroupInfo.members} {translations.hero.members} &middot;{' '}
                 {maybeGroupInfo.online} {translations.hero.online}
-              </div>
-            )}
-          </div>
-        </div>
+              </span>
+            </>
+          )}
+        </p>
       </div>
-    </div>
+    </section>
   );
 };
 

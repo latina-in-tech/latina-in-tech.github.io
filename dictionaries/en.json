@@ -1,11 +1,16 @@
 {
     "home": {
          "communityDescription": "Community that groups developers from the province of Latina",
-        "nextEventsTitle": "Next Events",
-        "nextEventsSubtitle": "Save dates and don't make commitments for upcoming community events!",
-        "previousEventsTitle": "Previous Events",
-        "previousEventsSubtitle": "Too bad, these events have already taken place! Follow the page to stay updated on upcoming events.",
-        "andManyOthers": "...and many others!"
+        "events": {
+            "title": "Events",
+            "subtitle": "Talks, workshops and meetups from the community: what's coming and the whole archive.",
+            "upcomingBadge": "Upcoming",
+            "nextEventBadge": "Next event",
+            "showMore": "Show more events",
+            "seeAll": "See all events",
+            "slides": "Slides",
+            "video": "Video"
+        }
     },
     "notFound": {
         "paragraph1": "Looks like you've stumbled into the void.",
