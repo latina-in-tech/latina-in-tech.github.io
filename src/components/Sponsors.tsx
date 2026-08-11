@@ -16,6 +16,7 @@ import ngRomeLogo from '../../public/assets/sponsors/ngrome.png';
 import kcdLogo from '../../public/assets/sponsors/kcd.svg';
 import React from 'react';
 import Link from 'next/link';
+import Section from '@/components/Section';
 
 type Sponsor = {
   name: string;
@@ -133,44 +134,33 @@ const sponsors: ReadonlyArray<Sponsor> = [
   }
 ];
 
+const logoClasses =
+  'h-12 w-full object-contain transition-transform duration-200 group-hover:scale-105';
+
 export const Sponsors = () => {
   return (
-    <div className='text-center'>
-      <h2 className='text-xl font-bold text-gray-900 dark:text-slate-200 uppercase'>
-        Community Partners
-      </h2>
-      <div className={'mx-auto mt-4 md:mt-6 flex justify-center'}>
-        <div className='grid md:grid-cols-5 grid-cols-2 gap-3 place-items-center px-6'>
-          {sponsors.map(s => (
-            <Link key={s.name} href={s.url} target='_blank'>
-              <Image
-                src={s.logo.light}
-                alt={s.name}
-                style={{
-                  height: '4rem',
-                  aspectRatio: '3/2',
-                  objectFit: 'contain'
-                }}
-                className={
-                  'rounded-md opacity-40 hover:opacity-100 w-[180px] dark:hidden'
-                }
-              />
-              <Image
-                src={s.logo.dark}
-                alt={s.name}
-                style={{
-                  height: '4rem',
-                  aspectRatio: '3/2',
-                  objectFit: 'contain'
-                }}
-                className={
-                  'rounded-md opacity-40 hover:opacity-100 w-[180px] dark:block hidden'
-                }
-              />
-            </Link>
-          ))}
-        </div>
+    <Section title='Community Partners'>
+      <div className='grid grid-cols-3 items-center gap-x-6 gap-y-8 sm:grid-cols-4 lg:grid-cols-6'>
+        {sponsors.map(s => (
+          <Link
+            key={s.name}
+            href={s.url}
+            target='_blank'
+            className='group flex items-center justify-center rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-primary'
+          >
+            <Image
+              src={s.logo.light}
+              alt={s.name}
+              className={`${logoClasses} dark:hidden`}
+            />
+            <Image
+              src={s.logo.dark}
+              alt={s.name}
+              className={`${logoClasses} hidden dark:block`}
+            />
+          </Link>
+        ))}
       </div>
-    </div>
+    </Section>
   );
 };

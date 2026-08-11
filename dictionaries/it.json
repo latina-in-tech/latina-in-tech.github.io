@@ -1,11 +1,17 @@
 {
     "home": {
         "communityDescription": "Community che raccoglie gli sviluppatori della provincia di Latina",
-        "nextEventsTitle": "Prossimi Eventi",
-        "nextEventsSubtitle": "Fissa le date e non prendere impegni per i prossimi eventi della community!",
-        "previousEventsTitle": "Eventi Passati",
-        "previousEventsSubtitle": "Peccato, questi eventi si sono già svolti! Segui la pagina per rimanere aggiornato sui prossimi appuntamenti.",
-        "andManyOthers": "...e molti  altri!"
+        "events": {
+            "title": "Eventi",
+            "subtitle": "Talk, workshop e meetup della community: quelli in arrivo e tutto l'archivio.",
+            "upcomingBadge": "In arrivo",
+            "pastBadge": "Concluso",
+            "nextEventBadge": "Prossimo evento",
+            "showMore": "Mostra altri eventi",
+            "seeAll": "Vedi tutti gli eventi",
+            "slides": "Slide",
+            "video": "Video"
+        }
     },
     "notFound": {
         "paragraph1": "Sembra che tua sia finito in un vicolo cieco.",
@@ -15,15 +21,15 @@
     "hero": {
         "communityOf": "La community degli",
         "pontiniDev": "Informatici Pontini",
-        "freeEventsForProfessionalGrowth": "Eventi gratuiti per favorire la condivisione di conoscenze e la crescita professionale.",
+        "tagline": "Un punto d’incontro per chi lavora nella tecnologia, vuole imparare qualcosa di nuovo e crede nella forza della condivisione e delle relazioni.",
+        "eventsSince": "Dal 2023 abbiamo organizzato {count} eventi gratuiti e aperti a tutti",
         "joinUsOnTelegram": "Unisciti al Gruppo Telegram!",
          "members": "Membri",
         "online": "Online"
     },
     "newsletter": {        
         "shallWeStayInTouch": "Rimaniamo in contatto?",
-        "stayUpdated": "Tieniti sempre aggiornato.",
-        "joinOurCommunityAndDoNotMissAnyUpdates": "Unisciti alla nostra community! Iscriviti per non perderti gli eventi e le attività che organizzeremo. Stay connected, stay tech-savvy!",        
+        "joinOurCommunityAndDoNotMissAnyUpdates": "Unisciti alla nostra community!\nIscriviti per non perderti gli eventi e le attività che organizzeremo.\nStay connected, stay tech-savvy!",        
         "signUp": "Iscriviti alla nostra newsletter",        
         "emailAddress": "Indirizzo email",
         "signupNow": "Iscriviti subito"
@@ -36,7 +42,7 @@
     "admin": {
         "adminTeam": "Il team di Latina In Tech",
         "groupOfPeople": "Un gruppo di persone che condividono la passione per la tecnologia e per il proprio territorio.",
-        "wereAdmin": "Membri non più attivi",
+        "wereAdmin": "Admin passati, non più attivi",
         "areAdmin": "Admin"
     },
     "events": {

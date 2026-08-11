@@ -1,11 +1,17 @@
 {
     "home": {
          "communityDescription": "Community that groups developers from the province of Latina",
-        "nextEventsTitle": "Next Events",
-        "nextEventsSubtitle": "Save dates and don't make commitments for upcoming community events!",
-        "previousEventsTitle": "Previous Events",
-        "previousEventsSubtitle": "Too bad, these events have already taken place! Follow the page to stay updated on upcoming events.",
-        "andManyOthers": "...and many others!"
+        "events": {
+            "title": "Events",
+            "subtitle": "Talks, workshops and meetups from the community: what's coming and the whole archive.",
+            "upcomingBadge": "Upcoming",
+            "pastBadge": "Past",
+            "nextEventBadge": "Next event",
+            "showMore": "Show more events",
+            "seeAll": "See all events",
+            "slides": "Slides",
+            "video": "Video"
+        }
     },
     "notFound": {
         "paragraph1": "Looks like you've stumbled into the void.",
@@ -15,14 +21,14 @@
     "hero": {
         "communityOf": "The community of",
         "pontiniDev": "Developers from Latina",
-        "freeEventsForProfessionalGrowth": "Free events to empower knowledge sharing and professional growth.",
+        "tagline": "A meeting point for people who work in tech, want to learn something new and believe in the power of sharing and relationships.",
+        "eventsSince": "Since 2023 we have organised {count} free events, open to everyone",
         "joinUsOnTelegram": "Join us on Telegram!",
         "members": "Members",
         "online": "Online"
     },
     "newsletter": {
         "shallWeStayInTouch": "Shall we stay in touch?",
-        "stayUpdated": "Stay always updated.",
         "joinOurCommunityAndDoNotMissAnyUpdates": "Join our community! Sign up for our newsletter and don't miss any updates on events and news. Stay connected, stay tech-savvy!",
         "signUp": "Sign Up for Newsletter",
         "emailAddress": "Email Address",

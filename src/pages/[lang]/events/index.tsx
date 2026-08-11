@@ -1,43 +1,40 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import Header from '@/components/Header';
-import EventsList from '@/components/event/EventsList';
+import EventsSection from '@/components/event/EventsSection';
 import { GetStaticProps, NextPage } from 'next';
 import { getAllEvents } from '@/utils/mdxUtils';
-import { IEvent, sortEvents } from '@/model/event';
+import { IEvent } from '@/model/event';
 import Head from 'next/head';
-import { i18n, Locale } from 'i18n.config';
-import { useRouter } from 'next/router';
+import { Locale } from 'i18n.config';
 import { getAllLocales } from '@/utils/locale';
 import { Dictionary, getDictionary } from '@/utils/dictionary';
 
 type EventsPageProps = {
-  events: [IEvent];
+  events: IEvent[];
   translations: Dictionary;
+  lang: Locale;
 };
 
 const EventsPage: NextPage<EventsPageProps> = ({
   events,
-  translations
+  translations,
+  lang
 }: EventsPageProps) => {
-  const router = useRouter();
-  const locale = i18n.locales.filter(
-    locale => router?.query.lang === locale
-  )[0];
-
-  const sortedEvents = useMemo(() => sortEvents(events), [events]);
   return (
     <>
       <Head>
         <title>{translations.events.title}</title>
       </Head>
-      <Header lang={locale} />
-      <div className='p-4'>
-        <EventsList
+      <Header lang={lang} />
+      <main className='px-4 pb-16 pt-4 sm:px-6 lg:px-8'>
+        <EventsSection
+          events={events}
+          lang={lang}
+          translations={translations.home.events}
           heading={translations.events.events}
           caption={translations.events.hereYouCanSee}
-          events={sortedEvents}
         />
-      </div>
+      </main>
     </>
   );
 };
@@ -61,7 +58,7 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async context => {
   const events = getAllEvents();
-  const lang = context.params?.lang as string;
-  const translations = await getDictionary(lang as Locale);
-  return { props: { events, translations } };
+  const lang = context.params?.lang as Locale;
+  const translations = await getDictionary(lang);
+  return { props: { events, translations, lang } };
 };

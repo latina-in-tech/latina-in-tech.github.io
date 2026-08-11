@@ -25,7 +25,9 @@ const NewsletterPage = ({ translations }: StaticProps) => {
   return (
     <>
       <Header lang={locale} />
-      <Newsletter translations={translations} />
+      <main className='px-4 py-8 sm:px-6 lg:px-8'>
+        <Newsletter translations={translations} />
+      </main>
     </>
   );
 };
