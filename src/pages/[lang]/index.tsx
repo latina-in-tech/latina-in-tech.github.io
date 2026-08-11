@@ -17,6 +17,7 @@ import Head from '@/components/HeadComponent';
 import { CommunityMemberOrError } from '@/model/communityMember';
 import navigationLinks from '@/model/navigation';
 import { fetchTelegramGroupInfo, TelegramGroupInfo } from '@/utils/telegram';
+import { COMMUNITY_KEYWORDS } from '@/model/site';
 
 const INITIAL_EVENTS_COUNT = 6;
 const telegramLink = navigationLinks.find(item => item.name === 'Telegram');
@@ -63,15 +64,7 @@ const Home: React.FC<StaticProps> = ({
   const metadata = {
     title: 'LiT - Latina In Tech',
     description: translations.home.communityDescription,
-    keywords: [
-      'Latina',
-      'User Group',
-      'Lazio',
-      'Roma',
-      'Sviluppatori Latina',
-      'Latina In Tech',
-      'LiT'
-    ]
+    keywords: COMMUNITY_KEYWORDS
   };
 
   return (

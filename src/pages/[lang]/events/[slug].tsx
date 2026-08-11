@@ -10,10 +10,12 @@ import rehypeRaw from 'rehype-raw';
 import Image from 'next/image';
 import Header from '@/components/Header';
 import EventActions from '@/components/event/EventActions';
-import { Helmet } from 'react-helmet';
+import Head from '@/components/HeadComponent';
 import { ZodSchema } from 'zod';
 import { Locale } from 'i18n.config';
 import { getAllLocales } from '@/utils/locale';
+import { Metadata } from '@/model/metadata';
+import { buildEventMetadata } from '@/utils/eventMetadata';
 import {
   ArrowTopRightOnSquareIcon,
   PresentationChartLineIcon
@@ -23,6 +25,7 @@ type Props = {
   source: string;
   frontMatter: IEvent;
   lang: Locale;
+  metadata: Metadata;
 };
 
 type ParseItemsReturn<T> = {
@@ -57,7 +60,8 @@ const parseItems = <T,>(
 const EventPage: React.FC<Props> = ({
   source,
   frontMatter: event,
-  lang
+  lang,
+  metadata
 }: Props) => {
   const slidesObjects = useMemo(
     () => parseItems(event.slides ?? [], slidesSchema),
@@ -68,14 +72,11 @@ const EventPage: React.FC<Props> = ({
   const speakers = useMemo(() => event.speakers ?? [], [event.speakers]);
   return (
     <>
-      {/* If you use nextjs's Head component here, you will get a warning in the console:
-    'Warning: a title element received an array with more than 1 child.'
-    I think that's because of how nextjs renders the page, but I'm not sure. 
-    Using react-helmet instead of nextjs's Head component fixes the problem.
-    */}
-      <Helmet>
-        <title>LiT - {event.title}</title>
-      </Helmet>
+      {/* react-helmet used to live here, but it does not render into the statically
+      exported html: crawlers were seeing a page with no title and no metadata at all.
+      The title is passed already composed, so it stays a single child and does not
+      trigger the 'title element received an array with more than 1 child' warning. */}
+      <Head metadata={metadata} />
       <Header lang={lang} />
       <main className='bg-slate-50/70 px-4 pb-16 pt-8 dark:bg-slate-900 sm:px-6 sm:pt-12 lg:px-8'>
         <article className='mx-auto max-w-7xl'>
@@ -299,7 +300,8 @@ export const getStaticProps: GetStaticProps = async context => {
     props: {
       source: content,
       frontMatter: events,
-      lang
+      lang,
+      metadata: buildEventMetadata(events, lang)
     }
   };
 };
